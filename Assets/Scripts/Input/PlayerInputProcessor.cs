@@ -86,6 +86,14 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
     #endregion
 
     [SerializeField] private bool printDebug;
+    [Space(10)]
+    [SerializeField] private Key upKey;
+    [SerializeField] private Key downKey;
+    [SerializeField] private Key leftKey;
+    [SerializeField] private Key rightKey;
+    [SerializeField] private Key slKey;
+    [SerializeField] private Key srKey;
+    
     private JoyConButtonDetector _buttonDetector;
     
     void OnEnable()
@@ -102,12 +110,25 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
 
     private void Update()
     {
-        Stick = _buttonDetector.StickValue; 
+        Stick = _buttonDetector.StickValue;
+        GetKeyDown();
         
         if (printDebug)
             PrintInputDebug();
 
         Reset();
+    }
+
+    public void GetKeyDown()
+    {
+        var kb = Keyboard.current;
+        if (kb == null) return;
+        if (kb[upKey].wasPressedThisFrame)    Up    = true;
+        if (kb[downKey].wasPressedThisFrame)  Down  = true;
+        if (kb[leftKey].wasPressedThisFrame)  Left  = true;
+        if (kb[rightKey].wasPressedThisFrame) Right = true;
+        if (kb[slKey].wasPressedThisFrame)    SL    = true;
+        if (kb[srKey].wasPressedThisFrame)    SR    = true;
     }
 
     private void PrintInputDebug()

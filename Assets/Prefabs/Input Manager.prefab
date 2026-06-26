@@ -56,6 +56,12 @@ MonoBehaviour:
     Stick: {x: 0, y: 0}
     Swing: 0
   printDebug: 0
+  upKey: 23
+  downKey: 25
+  leftKey: 24
+  rightKey: 26
+  slKey: 35
+  srKey: 29
 --- !u!114 &5578427975621087001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +221,12 @@ MonoBehaviour:
     Stick: {x: 0, y: 0}
     Swing: 0
   printDebug: 0
+  upKey: 37
+  downKey: 33
+  leftKey: 15
+  rightKey: 18
+  slKey: 31
+  srKey: 19
 --- !u!114 &4346764717784250478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +313,12 @@ MonoBehaviour:
     Stick: {x: 0, y: 0}
     Swing: 0
   printDebug: 0
+  upKey: 63
+  downKey: 64
+  leftKey: 61
+  rightKey: 62
+  slKey: 9
+  srKey: 52
 --- !u!114 &2183975327911683236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +405,12 @@ MonoBehaviour:
     Stick: {x: 0, y: 0}
     Swing: 0
   printDebug: 0
+  upKey: 34
+  downKey: 21
+  leftKey: 20
+  rightKey: 22
+  slKey: 32
+  srKey: 39
 --- !u!114 &4334460978958575036
 MonoBehaviour:
   m_ObjectHideFlags: 0
