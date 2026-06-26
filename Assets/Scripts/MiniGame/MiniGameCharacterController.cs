@@ -3,6 +3,8 @@ using UnityEngine;
 public class MiniGameCharacterController : MonoBehaviour
 {
     public int PlayerId { get; private set; }
+    public EffectManager Effects { get; private set; }
+
     private MiniGamePhysicsBase _physics;
     private PlayableCharacterVisual _visual;
     
@@ -16,13 +18,14 @@ public class MiniGameCharacterController : MonoBehaviour
     public void Init(int playerId)
     {
         PlayerId      = playerId;
+        Effects = MiniGameManager.Instance.Effects;
         enabled = true;
         
         if (_physics != null)
             _physics.Init(playerId);
 
         if (_visual != null)
-            _visual.Init(playerId);
+            _visual.Init(playerId, Effects);
     }
     
     private void FixedUpdate()

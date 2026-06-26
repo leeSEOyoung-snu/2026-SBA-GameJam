@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2107821272764608129}
   - component: {fileID: 7924312582454836124}
   - component: {fileID: -1839489239494090033}
+  - component: {fileID: 4820610542314921790}
   m_Layer: 0
   m_Name: Playable Character Base
   m_TagString: Untagged
@@ -192,3 +193,27 @@ MonoBehaviour:
     sprite: {fileID: 6184959299203262911, guid: 8da2ef9a40b0a426dbd648a3c57aee6c, type: 3}
   - playerId: 4
     sprite: {fileID: 2495864320845663737, guid: 8da2ef9a40b0a426dbd648a3c57aee6c, type: 3}
+  damagedColor: {r: 0.8784314, g: 0.5294118, b: 0.5294118, a: 1}
+  damagedBlinkDuration: 0.08
+  damagedBlinkCount: 2
+--- !u!114 &4820610542314921790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616523028319103339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82dc6adf10ae460fbc6adb52c19a7dcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterMoveDust
+  dustSprite: {fileID: 2591927131392702423, guid: cf5c97d8354c847118be50099393413f, type: 3}
+  spawnOffset: {x: 0, y: -0.5, z: 0}
+  moveThreshold: 0.05
+  spawnInterval: 0.04
+  lifetime: 0.28
+  startScale: 2.4
+  endScale: 0.2
+  randomX: 0.2
+  sortingOrder: -1

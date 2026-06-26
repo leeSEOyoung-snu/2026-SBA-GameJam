@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class MiniGameManager : MonoBehaviour
 {
-    public static MiniGameManager Instance { get; private set; }
-    
     [SerializeField] private MiniGameResultContainer miniGameResultContainer;
+    
+    public static MiniGameManager Instance { get; private set; }
+    public EffectManager Effects { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        Effects = GetComponent<EffectManager>();
     }
 
     public void QuitMiniGame()
