@@ -8,6 +8,7 @@ public class Board : MonoBehaviour
     private readonly List<CellInfo> _cells = new();
 
     public CellInfo CurrentCell { get; private set; }
+    public CellInfo StartCell { get; private set; }
     public int CellCount => _cells.Count;
 
     private void Awake()
@@ -32,7 +33,8 @@ public class Board : MonoBehaviour
         BoardPathBuilder.Build(_cells);
 
         // 시작점: 가장 우하단 셀
-        CurrentCell = _cells[FindBottomRightIndex()];
+        StartCell = _cells[FindBottomRightIndex()];
+        CurrentCell = StartCell;
 
         Debug.Log($"[Board] 총 {_cells.Count}개 칸 초기화 / 시작: {CurrentCell.name}({CurrentCell.Index})");
     }

@@ -7,9 +7,12 @@ public class MainGameLoop : MonoBehaviour
 {
     private const int PlayerCount = 4;
 
+    public event Action OnGameEnd;
+
     private IPlayerInputReader[] _players;
     private Board _board;
     private GamePiece _piece;
+    private bool _gameEnded;
 
     public void Init(Board board, GamePiece piece)
     {
@@ -27,7 +30,7 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator GameLoop()
     {
-        while (true)
+        while (!_gameEnded)
         {
             // 1단계: 윷 던지기
             YutType yutResult = default;
@@ -92,6 +95,15 @@ public class MainGameLoop : MonoBehaviour
             CellInfo next = current.nextCells[0];
             _board.SetCurrentCell(next);
             yield return StartCoroutine(_piece.MoveTo(next.transform.position));
+
+            // 시작 칸 복귀 시 게임 종료
+            if (next == _board.StartCell)
+            {
+                Debug.Log("[MovePhase] 시작 칸 도달 → 게임 종료");
+                _gameEnded = true;
+                OnGameEnd?.Invoke();
+                yield break;
+            }
         }
     }
 

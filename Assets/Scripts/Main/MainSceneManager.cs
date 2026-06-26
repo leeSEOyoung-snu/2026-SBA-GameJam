@@ -24,7 +24,14 @@ public class MainSceneManager : MonoBehaviour
     private void Start()
     {
         gameLoop.Init(board, piece);
+        gameLoop.OnGameEnd += HandleGameEnd;
         _stateContainer = new StateContainer();
+    }
+
+    private void HandleGameEnd()
+    {
+        Debug.Log("[MainSceneManager] 게임 종료!");
+        // TODO: 엔딩 로직 연결
     }
 
     private void OnStateChanged(Dictionary<StateTypes, int> deltaStates)
