@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DontWorryAIHachi
   moveSpeed: 3
-  directionChangeDuration: 1.5
+  moveDurationRange: {x: 0.8, y: 2}
+  idleDurationRange: {x: 0.3, y: 1.2}
   mapMin: {x: -8, y: -4.5}
   mapMax: {x: 8, y: 4.5}
