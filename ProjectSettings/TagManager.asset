@@ -41,11 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Bg
+  - name: Main Bg
     uniqueID: 1880502705
     locked: 0
-  - name: Hechi
+  - name: Main Hechi
     uniqueID: 3216842407
+    locked: 0
+  - name: ==========
+    uniqueID: 4157365489
+    locked: 0
+  - name: MiniGame Bg
+    uniqueID: 3798785417
     locked: 0
   m_RenderingLayers:
   - Default

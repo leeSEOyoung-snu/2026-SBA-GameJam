@@ -1233,6 +1233,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2140774205}
     m_Modifications:
+    - target: {fileID: 5031756165209562514, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031756165209562514, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031756165209562514, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
+      propertyPath: m_Color.r
+      value: 0.14135647
+      objectReference: {fileID: 0}
     - target: {fileID: 6075723080815986599, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1276,6 +1288,10 @@ PrefabInstance:
     - target: {fileID: 6787280449964483160, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
       propertyPath: m_Name
       value: Cell (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778186659418935840, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
+      propertyPath: type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
