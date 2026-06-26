@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HechiChaseGame : MonoBehaviour
+public class HechiChaseGame : OneVsThreeBase
 {
     [SerializeField] private GameObject hechiPrefab;
     [SerializeField] private GameObject playerPrefab;
@@ -17,6 +17,10 @@ public class HechiChaseGame : MonoBehaviour
     private readonly List<ChaseCharacterController> _normalPlayers = new();
     private bool _gameOver;
     private int _hechiPlayerId;
+    
+    public override int NightmareDelta { get; protected set; }
+    public override bool IsOneWin { get; protected set; }
+    public override int OnePlayerId { get; protected set; }
 
     private void Start()
     {
@@ -73,21 +77,10 @@ public class HechiChaseGame : MonoBehaviour
         if (_gameOver) return;
         _gameOver = true;
 
-        var quitHandler = MiniGameManager.Instance.GetResultHandler<IOneVsThreeResult>();
-
-        if (hechiWins)
-        {
-            Debug.Log("[HechiChase] 해치 승리!");
-            quitHandler.QuitMiniGameOneWin(_hechiPlayerId, 0);
-        }
-        else
-        {
-            Debug.Log("[HechiChase] 플레이어 승리!");
-            quitHandler.QuitMiniGameThreeWin(
-                _normalPlayers[0].GetComponent<MiniGameCharacterController>().PlayerId,
-                _normalPlayers[1].GetComponent<MiniGameCharacterController>().PlayerId,
-                _normalPlayers[2].GetComponent<MiniGameCharacterController>().PlayerId,
-                hechiWinNightmare);
-        }
+        IsOneWin = hechiWins;
+        OnePlayerId = _hechiPlayerId;
+        NightmareDelta = hechiWins ? 0 : hechiWinNightmare;
+        
+        MiniGameManager.Instance.QuitMiniGame();
     }
 }

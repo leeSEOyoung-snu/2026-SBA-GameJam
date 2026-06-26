@@ -18,6 +18,11 @@ public class MiniGameResultContainer : ScriptableObject
     }
     [SerializeField] private SoloBattleResultByRanking soloDelta;
     public SoloBattleResultByRanking SoloDelta => soloDelta;
+
+    public int GetDeltaByRankSoloBattle(int rank)
+    {
+        return rank == 1 ? soloDelta.first : rank == 2 ? soloDelta.second : rank == 3 ? soloDelta.third : soloDelta.fourth;
+    }
     
     // 1 vs 3
     [Serializable]

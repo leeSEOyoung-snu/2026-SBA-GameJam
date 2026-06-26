@@ -2,120 +2,155 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniGameManager : MonoBehaviour,
-    ISoloBattleResult,
-    IOneVsThreeResult,
-    ITwoVsTwoResult,
-    IAffectionBattleResult,
-    ICooperativeResult
+public class MiniGameManager : MonoBehaviour
 {
-    [SerializeField] private MiniGameResultContainer miniGameResultContainer;
-    
     public static MiniGameManager Instance { get; private set; }
+    
+    [SerializeField] private MiniGameResultContainer miniGameResultContainer;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    /// <summary>
-    /// 미니게임 종료 시 호출. container의 타입에 맞는 인터페이스만 반환됨.
-    /// 예) GetResultHandler&lt;ISoloBattleResult&gt;()
-    /// </summary>
-    public T GetResultHandler<T>() where T : class
+    public void QuitMiniGame()
     {
-        if (this is T handler)
-            return handler;
+        Dictionary<StateTypes, int> delta = new();
 
-        Debug.LogError($"[MiniGameManager] {miniGameResultContainer.Type}에서 {typeof(T).Name} 호출 불가");
-        return null;
-    }
-
-    void ISoloBattleResult.QuitMiniGame(int firstId, int secondId, int thirdId, int fourthId, int nightmareDelta)
-    {
-        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
+        switch (miniGameResultContainer.Type)
         {
-            { (StateTypes)firstId, miniGameResultContainer.SoloDelta.first },
-            { (StateTypes)secondId, miniGameResultContainer.SoloDelta.second },
-            { (StateTypes)thirdId, miniGameResultContainer.SoloDelta.third },
-            { (StateTypes)fourthId, miniGameResultContainer.SoloDelta.fourth },
-            { StateTypes.Nightmare, nightmareDelta }
-        };
-        
-        CommonQuitMiniGame(delta);
-    }
-
-    void IOneVsThreeResult.QuitMiniGameOneWin(int onePlayerId, int nightmareDelta)
-    {
-        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
-        {
-            { (StateTypes)onePlayerId, miniGameResultContainer.OneVsThreeDelta.oneWin },
-            { StateTypes.Nightmare, nightmareDelta }
-        };
-        
-        CommonQuitMiniGame(delta);
-    }
-
-    void IOneVsThreeResult.QuitMiniGameThreeWin(int threePlayerId1, int threePlayerId2, int threePlayerId3, int nightmareDelta)
-    {
-        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
-        {
-            { (StateTypes)threePlayerId1, miniGameResultContainer.OneVsThreeDelta.threeWin },
-            { (StateTypes)threePlayerId2, miniGameResultContainer.OneVsThreeDelta.threeWin },
-            { (StateTypes)threePlayerId3, miniGameResultContainer.OneVsThreeDelta.threeWin },
-            { StateTypes.Nightmare, nightmareDelta }
-        };
-        
-        CommonQuitMiniGame(delta);
-    }
-
-    void ITwoVsTwoResult.QuitMiniGame(int winPlayerId1, int winPlayerId2, int nightmareDelta)
-    {
-        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
-        {
-            { (StateTypes)winPlayerId1, miniGameResultContainer.TwoVsTwoDelta },
-            { (StateTypes)winPlayerId2, miniGameResultContainer.TwoVsTwoDelta },
-            { StateTypes.Nightmare, nightmareDelta }, 
-        };
-        
-        CommonQuitMiniGame(delta);
-    }
-
-    void IAffectionBattleResult.QuitMiniGame(int player1Affection, int player2Affection, int player3Affection, int player4Affection, int nightmareDelta)
-    {
-        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
-        {
-            { (StateTypes)1, player1Affection },
-            { (StateTypes)2,  player2Affection },
-            { (StateTypes)3,  player3Affection },
-            { (StateTypes)4, player4Affection },
-            { StateTypes.Nightmare, nightmareDelta }
-        };
-        
-        CommonQuitMiniGame(delta);
-    }
-
-    void ICooperativeResult.QuitMiniGame(bool isSuccess, int nightmareDelta)
-    {
-        Dictionary<StateTypes, int> delta;
-        
-        delta = isSuccess ? new Dictionary<StateTypes, int>()
-        {
-            { (StateTypes)1, miniGameResultContainer.CooperativeDelta},
-            { (StateTypes)2, miniGameResultContainer.CooperativeDelta },
-            { (StateTypes)3, miniGameResultContainer.CooperativeDelta },
-            { (StateTypes)4, miniGameResultContainer.CooperativeDelta },
-            { StateTypes.Nightmare, nightmareDelta },
-        } : new Dictionary<StateTypes, int>()
-        {
-            { StateTypes.Nightmare, nightmareDelta },
-        };
-        
-        CommonQuitMiniGame(delta);
-    }
-
-    private void CommonQuitMiniGame(Dictionary<StateTypes, int> delta)
-    {
+            case MiniGameTypes.SoloBattle:
+                SoloBattleBase soloBattle = FindAnyObjectByType<SoloBattleBase>();
+                if (soloBattle == null)
+                    Debug.LogError($"SoloBattleBase not found: {miniGameResultContainer.Type}");
+                else
+                    delta = SoloBattleQuitMiniGame(soloBattle);
+                break;
+            
+            case MiniGameTypes.OneVsThree:
+                OneVsThreeBase oneVsThree = FindAnyObjectByType<OneVsThreeBase>();
+                if (oneVsThree == null)
+                    Debug.LogError($"OneVsThreeBase not found: {miniGameResultContainer.Type}");
+                else
+                    delta = OneVsThreeQuitMiniGame(oneVsThree);
+                break;
+            
+            case MiniGameTypes.TwoVsTwo:
+                TwoVsTwoBase twoVsTwo = FindAnyObjectByType<TwoVsTwoBase>();
+                if (twoVsTwo == null)
+                    Debug.LogError($"TwoVsTwoBase not found: {miniGameResultContainer.Type}");
+                else
+                    delta = TwoVsTwoQuitMiniGame(twoVsTwo);
+                break;
+            
+            case MiniGameTypes.AffectionBattle:
+                AffectionBattleBase affectionBattle = FindAnyObjectByType<AffectionBattleBase>();
+                if (affectionBattle == null)
+                    Debug.LogError($"AffectionBattleBase not found: {miniGameResultContainer.Type}");
+                else
+                    delta = AffectionBattleQuitMiniGame(affectionBattle);
+                break;
+            
+            case MiniGameTypes.Cooperative:
+                CooperativeBase cooperative = FindAnyObjectByType<CooperativeBase>();
+                if (cooperative == null)
+                    Debug.LogError($"CooperativeBase not found: {miniGameResultContainer.Type}");
+                else
+                    delta = CooperativeQuitMiniGame(cooperative);
+                break;
+        }
+            
         GameManager.Instance.QuitMiniGame(delta);
+    }
+    
+    private Dictionary<StateTypes, int> SoloBattleQuitMiniGame(SoloBattleBase soloBattleBase)
+    {
+        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
+        {
+            { (StateTypes)1, miniGameResultContainer.GetDeltaByRankSoloBattle(soloBattleBase.RankPlayer1) },
+            { (StateTypes)2, miniGameResultContainer.GetDeltaByRankSoloBattle(soloBattleBase.RankPlayer2) },
+            { (StateTypes)3, miniGameResultContainer.GetDeltaByRankSoloBattle(soloBattleBase.RankPlayer3) },
+            { (StateTypes)4, miniGameResultContainer.GetDeltaByRankSoloBattle(soloBattleBase.RankPlayer4) },
+            { StateTypes.Nightmare, soloBattleBase.NightmareDelta }
+        };
+
+        return delta;
+    }
+
+    private Dictionary<StateTypes, int> OneVsThreeQuitMiniGame(OneVsThreeBase oneVsThreeBase)
+    {
+        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
+        {
+            { StateTypes.Nightmare, oneVsThreeBase.NightmareDelta }
+        };
+        
+        if (oneVsThreeBase.IsOneWin)
+            delta.Add((StateTypes)oneVsThreeBase.OnePlayerId, miniGameResultContainer.OneVsThreeDelta.oneWin);
+        else
+        {
+            List<int> threePlayers = new List<int>() { 1, 2, 3, 4 };
+            threePlayers.Remove(oneVsThreeBase.OnePlayerId);
+            threePlayers.ForEach(playerId => delta.Add((StateTypes)playerId, miniGameResultContainer.OneVsThreeDelta.threeWin));
+        }
+
+        return delta;
+    }
+
+    private Dictionary<StateTypes, int> TwoVsTwoQuitMiniGame(TwoVsTwoBase twoVsTwoBase)
+    {
+        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
+        {
+            { StateTypes.Nightmare, twoVsTwoBase.NightmareDelta }
+        };
+
+        switch (twoVsTwoBase.Winner)
+        {
+            case TwoVsTwoBase.TwoVsTwoWinner.Draw:
+                twoVsTwoBase.PlayerIdsTeam1.ForEach(playerId => delta.Add((StateTypes)playerId, miniGameResultContainer.TwoVsTwoDelta));
+                twoVsTwoBase.PlayerIdsTeam2.ForEach(playerId => delta.Add((StateTypes)playerId, miniGameResultContainer.TwoVsTwoDelta));
+                break;
+            
+            case TwoVsTwoBase.TwoVsTwoWinner.Team1:
+                twoVsTwoBase.PlayerIdsTeam1.ForEach(playerId => delta.Add((StateTypes)playerId, miniGameResultContainer.TwoVsTwoDelta));
+                break;
+            
+            case TwoVsTwoBase.TwoVsTwoWinner.Team2:
+                twoVsTwoBase.PlayerIdsTeam2.ForEach(playerId => delta.Add((StateTypes)playerId, miniGameResultContainer.TwoVsTwoDelta));
+                break;
+        }
+
+        return delta;
+    }
+
+    private Dictionary<StateTypes, int> AffectionBattleQuitMiniGame(AffectionBattleBase affectionBattleBase)
+    {
+        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
+        {
+            { (StateTypes)1, affectionBattleBase.AffectionDeltaPlayer1 },
+            { (StateTypes)2,  affectionBattleBase.AffectionDeltaPlayer2 },
+            { (StateTypes)3,  affectionBattleBase.AffectionDeltaPlayer3 },
+            { (StateTypes)4, affectionBattleBase.AffectionDeltaPlayer4 },
+            { StateTypes.Nightmare, affectionBattleBase.NightmareDelta }
+        };
+
+        return delta;
+    }
+
+    private Dictionary<StateTypes, int> CooperativeQuitMiniGame(CooperativeBase cooperativeBase)
+    {
+        Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
+        {
+            { StateTypes.Nightmare, cooperativeBase.NightmareDelta },
+        };
+
+        if (cooperativeBase.IsSuccess)
+        {
+            delta.Add((StateTypes)1, miniGameResultContainer.CooperativeDelta);
+            delta.Add((StateTypes)2, miniGameResultContainer.CooperativeDelta);
+            delta.Add((StateTypes)3, miniGameResultContainer.CooperativeDelta);
+            delta.Add((StateTypes)4, miniGameResultContainer.CooperativeDelta);
+        }
+
+        return delta;
     }
 }
