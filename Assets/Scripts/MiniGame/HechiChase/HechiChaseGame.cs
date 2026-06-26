@@ -13,10 +13,6 @@ public class HechiChaseGame : MonoBehaviour
 
     [Header("결과 델타 (해치 승리)")]
     [SerializeField] private int hechiWinNightmare = 5;
-    [SerializeField] private int hechiWinAffection = 3;
-
-    [Header("결과 델타 (플레이어 승리)")]
-    [SerializeField] private int playerWinAffection = 2;
 
     private readonly List<ChaseCharacterController> _normalPlayers = new();
     private bool _gameOver;
@@ -77,30 +73,21 @@ public class HechiChaseGame : MonoBehaviour
         if (_gameOver) return;
         _gameOver = true;
 
-        Dictionary<StateTypes, int> delta;
+        var quitHandler = MiniGameManager.Instance.GetResultHandler<IOneVsThreeResult>();
 
         if (hechiWins)
         {
             Debug.Log("[HechiChase] 해치 승리!");
-            delta = new Dictionary<StateTypes, int>
-            {
-                { StateTypes.Nightmare, hechiWinNightmare },
-                { (StateTypes)_hechiPlayerId, hechiWinAffection },
-            };
+            quitHandler.QuitMiniGameOneWin(_hechiPlayerId, hechiWinNightmare);
         }
         else
         {
             Debug.Log("[HechiChase] 플레이어 승리!");
-            delta = new Dictionary<StateTypes, int>();
-            for (int i = 1; i <= 4; i++ )
-            {
-                if (i == _hechiPlayerId)
-                    continue;
-                
-                delta.Add((StateTypes)i, playerWinAffection);
-            }
+            quitHandler.QuitMiniGameThreeWin(
+                _normalPlayers[0].GetComponent<MiniGameCharacterController>().PlayerId,
+                _normalPlayers[1].GetComponent<MiniGameCharacterController>().PlayerId,
+                _normalPlayers[2].GetComponent<MiniGameCharacterController>().PlayerId,
+                hechiWinNightmare);
         }
-
-        GameManager.Instance.QuitMiniGame(delta);
     }
 }

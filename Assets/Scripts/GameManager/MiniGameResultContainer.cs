@@ -9,7 +9,7 @@ public class MiniGameResultContainer : ScriptableObject
     
     // Solo
     [Serializable]
-    private struct SoloBattleResultByRanking
+    public struct SoloBattleResultByRanking
     {
         public int first;
         public int second;
@@ -17,21 +17,25 @@ public class MiniGameResultContainer : ScriptableObject
         public int fourth;
     }
     [SerializeField] private SoloBattleResultByRanking soloDelta;
+    public SoloBattleResultByRanking SoloDelta => soloDelta;
     
     // 1 vs 3
     [Serializable]
-    private struct OneVsThreeResultByWinner
+    public struct OneVsThreeResultByWinner
     {
         public int oneWin;
         public int threeWin;
     }
     [SerializeField] private OneVsThreeResultByWinner oneVsThreeDelta;
+    public  OneVsThreeResultByWinner OneVsThreeDelta => oneVsThreeDelta;
     
     // 2 vs 2
     [SerializeField] private int twoVsTwoDelta;
+    public int TwoVsTwoDelta => twoVsTwoDelta;
 
     // Affection Battle
 
     // Cooperative
     [SerializeField] private int cooperativeDelta;
+    public int CooperativeDelta => cooperativeDelta;
 }
