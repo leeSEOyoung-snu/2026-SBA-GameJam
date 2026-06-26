@@ -78,7 +78,7 @@ public class HechiChaseGame : MonoBehaviour
         if (hechiWins)
         {
             Debug.Log("[HechiChase] 해치 승리!");
-            quitHandler.QuitMiniGameOneWin(_hechiPlayerId, hechiWinNightmare);
+            quitHandler.QuitMiniGameOneWin(_hechiPlayerId, 0);
         }
         else
         {

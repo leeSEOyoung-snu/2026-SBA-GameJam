@@ -56,7 +56,7 @@ public class MiniGameManager : MonoBehaviour,
         CommonQuitMiniGame(delta);
     }
 
-    public void QuitMiniGameThreeWin(int threePlayerId1, int threePlayerId2, int threePlayerId3, int nightmareDelta)
+    void IOneVsThreeResult.QuitMiniGameThreeWin(int threePlayerId1, int threePlayerId2, int threePlayerId3, int nightmareDelta)
     {
         Dictionary<StateTypes, int> delta = new Dictionary<StateTypes, int>()
         {

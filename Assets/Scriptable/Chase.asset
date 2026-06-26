@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37fc19b7565804143866670029ac76c6, type: 3}
-  m_Name: test
+  m_Name: Chase
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
-  type: 3
+  type: 1
   soloDelta:
     first: 0
     second: 0
     third: 0
     fourth: 0
   oneVsThreeDelta:
-    oneWin: 0
-    threeWin: 0
+    oneWin: 3
+    threeWin: 2
   twoVsTwoDelta: 0
   cooperativeDelta: 0
