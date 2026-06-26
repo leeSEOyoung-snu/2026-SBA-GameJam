@@ -116,7 +116,10 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
         
         if (printDebug)
             PrintInputDebug();
+    }
 
+    private void LateUpdate()
+    {
         Reset();
     }
 
