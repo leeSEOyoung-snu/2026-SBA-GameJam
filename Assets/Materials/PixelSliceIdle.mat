@@ -33,7 +33,7 @@ Material:
     - _Frequency: 0.1
     - _SliceHeight: 30
     - _SliceOffsetPixels: 1
-    - _Speed: 0.2
+    - _Speed: 1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0

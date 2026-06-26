@@ -38,7 +38,7 @@ Material:
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _UseUIAlphaClip: 0
-    - _WobbleAmount: 0.7
+    - _WobbleAmount: 0.6
     m_Colors:
     - _Color: {r: 0.9622642, g: 0.6036846, b: 0.7216981, a: 1}
   m_BuildTextureStacks: []
