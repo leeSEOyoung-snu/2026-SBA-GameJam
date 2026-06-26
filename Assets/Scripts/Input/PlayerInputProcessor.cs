@@ -157,8 +157,8 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
         Right = false;
         SR = false;
         SL = false;
-        Stick = Vector2.zero;
         Swing = false;
+        // Stick은 매 Update에서 직접 갱신되므로 Reset 대상에서 제외
     }
 
     public void SwingDetected()
