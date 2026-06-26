@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class StateContainer
+{
+    // 공통 스탯 (모든 플레이어 공유)
+    public Dictionary<StateTypes, int> CommonStats { get; private set; }
+
+    // 플레이어별 호감도 (index 0 = Player 1)
+    public int[] PlayerAffections { get; private set; }
+    private const int PlayerCount = 4;
+    
+    public StateContainer()
+    {
+        CommonStats = new Dictionary<StateTypes, int>();
+        foreach (StateTypes state in Enum.GetValues(typeof(StateTypes)))
+            CommonStats[state] = 0;
+
+        PlayerAffections = new int[PlayerCount]; // 전부 0으로 초기화
+    }
+    
+    // 공통 스탯 업데이트 + 플레이어 Id와 대응하는 스탯 delta를 affection에 반영
+    // 플레이어 Id 1~4 ↔ StateTypes 값 1~4 (Courage/Wisdom/Recovery/Love)
+    // Nightmare(0)은 공통 스탯에만 반영
+    public void ApplyDeltaStats(Dictionary<StateTypes, int> deltaStates)
+    {
+        foreach (var (state, delta) in deltaStates)
+        {
+            // 1. 공통 스탯 합산
+            CommonStats[state] += delta;
+
+            // 2. StateTypes 값이 플레이어 Id(1~4)에 해당하면 해당 플레이어 affection에도 반영
+            int stateValue = (int)state;
+            if (stateValue >= 1 && stateValue <= PlayerCount)
+                PlayerAffections[stateValue - 1] += delta;
+        }
+
+        LogStats();
+    }
+
+    private void LogStats()
+    {
+        foreach (var (state, value) in CommonStats)
+            Debug.Log($"[Stats] {state}: {value}");
+
+        for (int i = 0; i < PlayerCount; i++)
+            Debug.Log($"[Affection] Player {i + 1}: {PlayerAffections[i]}");
+    }
+
+    public override string ToString()
+    {
+        string stats = "Common Stats:\n";
+        foreach (var (state, value) in CommonStats)
+            stats += $"{state}: {value}\n";
+
+        stats += "Player Affections:\n";
+        for (int i = 0; i < PlayerCount; i++)
+            stats += $"Player {i + 1}: {PlayerAffections[i]}\n";
+
+        return stats;
+    }
+}

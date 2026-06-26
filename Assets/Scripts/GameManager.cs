@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +13,8 @@ public class GameManager : MonoBehaviour
     public bool IsMiniGameRunning { get; private set; }
 
     private JoyConInputManager _inputManager;
+    
+    public Action<Dictionary<StateTypes, int>> OnStateChanged;
 
     private void Awake()
     {
@@ -41,10 +45,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadMiniGameRoutine());
     }
 
-    public void QuitMiniGame()
+    public void QuitMiniGame(Dictionary<StateTypes, int> deltaStates)
     {
         if (!IsMiniGameRunning) return;
-        StartCoroutine(QuitMiniGameRoutine());
+        StartCoroutine(QuitMiniGameRoutine(deltaStates));
     }
 
     private IEnumerator LoadMiniGameRoutine()
@@ -52,7 +56,6 @@ public class GameManager : MonoBehaviour
         IsMiniGameRunning = true;
         yield return SceneManager.LoadSceneAsync(MiniGameSceneName, LoadSceneMode.Additive);
 
-        // MiniGameBase 씬의 카메라를 최상단 depth로 설정
         var miniGameScene = SceneManager.GetSceneByName(MiniGameSceneName);
         foreach (var root in miniGameScene.GetRootGameObjects())
         foreach (var cam in root.GetComponentsInChildren<Camera>(true))
@@ -60,7 +63,6 @@ public class GameManager : MonoBehaviour
             cam.depth = 100f;
             cam.clearFlags = CameraClearFlags.Depth;
 
-            // Main 씬의 AudioListener와 충돌 방지
             if (cam.TryGetComponent<AudioListener>(out var listener))
                 listener.enabled = false;
         }
@@ -68,10 +70,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] MiniGameBase 씬 로드 완료");
     }
 
-    private IEnumerator QuitMiniGameRoutine()
+    private IEnumerator QuitMiniGameRoutine(Dictionary<StateTypes, int> deltaStates)
     {
         yield return SceneManager.UnloadSceneAsync(MiniGameSceneName);
         IsMiniGameRunning = false;
+        
         Debug.Log("[GameManager] MiniGameBase 씬 종료, Main으로 복귀");
+        OnStateChanged?.Invoke(deltaStates);
     }
 }
