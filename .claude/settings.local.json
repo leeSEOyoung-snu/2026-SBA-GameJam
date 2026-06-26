@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Github\\\\2026-SBA-GameJam\\\\Assets\\\\Scripts\\\\MiniGame\" -Directory)",
+      "Bash(xargs grep -l \"SoloBattleBase\\\\|OneVsThreeBase\\\\|TwoVsTwoBase\")",
+      "Bash(xargs grep -l \"class.*SoloBattleBase\\\\|class.*OneVsThreeBase\\\\|class.*TwoVsTwoBase\")",
+      "Bash(xargs grep -l \"MiniGameResultContainer\")",
+      "Bash(xargs grep -l \"enum MiniGameTypes\\\\|enum StateTypes\")"
+    ]
+  }
+}
