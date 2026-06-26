@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1b46e85cf36b9489988e8b806eefebbb
+guid: a02b7183cfa594354bf4e9d82ea773a0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4667771345173163493
-    second: GaegeBG_0
+      213: -6260408576555741894
+    second: ChRBG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GaegeBG_0
+      name: ChRBG_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 140
-        height: 94
+        width: 334
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ed2bc9be4147c040800000000000000
-      internalID: 4667771345173163493
+      spriteID: a3d0695919f8e19a0800000000000000
+      internalID: -6260408576555741894
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GaegeBG_0: 4667771345173163493
+      ChRBG_0: -6260408576555741894
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
