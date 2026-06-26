@@ -75,6 +75,7 @@ Shader "GameJam/UI/Pixel Wobble Cutout"
 
             sampler2D _MainTex;
             fixed4 _Color;
+            fixed4 _TextureSampleAdd;
             float _Speed;
             float _WobbleAmount;
             float _PixelSize;
@@ -113,14 +114,14 @@ Shader "GameJam/UI/Pixel Wobble Cutout"
                 float bottomShelf = pixelUv.y - 0.02;
                 float mask = min(body, bottomShelf);
 
-                fixed4 color = tex2D(_MainTex, IN.texcoord) * IN.color;
+                fixed4 textureColor = tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd;
+                fixed4 color = textureColor * IN.color;
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
                 #endif
 
-                clip(min(mask, color.a - 0.5));
-                color.a = 1.0;
+                clip(min(mask, textureColor.a - 0.5));
                 return color;
             }
             ENDCG
