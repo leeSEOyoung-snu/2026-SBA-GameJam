@@ -445,11 +445,10 @@ MonoBehaviour:
   - {x: -8, y: -3, z: 0}
   - {x: 8, y: -3, z: 0}
   hechiInitPos: {x: 0, y: 0, z: 0}
-  timeLimit: 60
-  moveSpeed: 5
-  hechiWinNightmare: 10
-  playerWinCourage: 5
-  playerWinLove: 3
+  timeLimit: 30
+  hechiWinNightmare: 5
+  hechiWinAffection: 3
+  playerWinAffection: 2
 --- !u!1 &1471604183
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,17 +10,17 @@ public class HechiChaseGame : MonoBehaviour
     [SerializeField] private Vector3[] playerInitPos; // 4개 필요
     [SerializeField] private Vector3 hechiInitPos; 
     [SerializeField] private float timeLimit = 60f;
-    [SerializeField] private float moveSpeed = 5f;
 
     [Header("결과 델타 (해치 승리)")]
-    [SerializeField] private int hechiWinNightmare = 10;
+    [SerializeField] private int hechiWinNightmare = 5;
+    [SerializeField] private int hechiWinAffection = 3;
 
     [Header("결과 델타 (플레이어 승리)")]
-    [SerializeField] private int playerWinCourage = 5;
-    [SerializeField] private int playerWinLove    = 3;
+    [SerializeField] private int playerWinAffection = 2;
 
     private readonly List<MiniGameCharacter> _normalPlayers = new();
     private bool _gameOver;
+    private int _hechiPlayerId;
 
     private void Start()
     {
@@ -30,18 +30,18 @@ public class HechiChaseGame : MonoBehaviour
 
     private void SpawnCharacters()
     {
-        int hechiPlayerId = Random.Range(1, 5); // 1~4 중 랜덤
-        Debug.Log($"[HechiChase] 해치: Player {hechiPlayerId}");
+        _hechiPlayerId = Random.Range(1, 5); // 1~4 중 랜덤
+        Debug.Log($"[HechiChase] 해치: Player {_hechiPlayerId}");
 
         int playerCnt = 0;
         for (int i = 1; i <= 4; i++)
         {
-            bool isHechi = i == hechiPlayerId;
+            bool isHechi = i == _hechiPlayerId;
             var prefab = isHechi ? hechiPrefab : playerPrefab;
             var pos = isHechi ? hechiInitPos : playerInitPos[playerCnt++];
             var character = Instantiate(prefab, pos, Quaternion.identity);
             SceneManager.MoveGameObjectToScene(character.gameObject, gameObject.scene);
-            character.Init(i, isHechi, moveSpeed, OnPlayerEliminated);
+            character.Init(i, isHechi, OnPlayerEliminated);
 
             if (!isHechi)
                 _normalPlayers.Add(character);
@@ -83,17 +83,21 @@ public class HechiChaseGame : MonoBehaviour
             Debug.Log("[HechiChase] 해치 승리!");
             delta = new Dictionary<StateTypes, int>
             {
-                { StateTypes.Nightmare, hechiWinNightmare }
+                { StateTypes.Nightmare, hechiWinNightmare },
+                { (StateTypes)_hechiPlayerId, hechiWinAffection },
             };
         }
         else
         {
             Debug.Log("[HechiChase] 플레이어 승리!");
-            delta = new Dictionary<StateTypes, int>
+            delta = new Dictionary<StateTypes, int>();
+            for (int i = 1; i <= 4; i++ )
             {
-                { StateTypes.Courage, playerWinCourage },
-                { StateTypes.Love,    playerWinLove    }
-            };
+                if (i == _hechiPlayerId)
+                    continue;
+                
+                delta.Add((StateTypes)i, playerWinAffection);
+            }
         }
 
         GameManager.Instance.QuitMiniGame(delta);

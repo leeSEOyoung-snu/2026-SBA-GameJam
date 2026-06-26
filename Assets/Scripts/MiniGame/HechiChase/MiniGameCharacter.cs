@@ -4,14 +4,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MiniGameCharacter : MonoBehaviour
 {
-    [SerializeField] private bool printDebug;
+    [SerializeField] private float moveSpeed;
     
     public int PlayerId { get; private set; }
     public bool IsHechi { get; private set; }
 
     private IPlayerInputReader _input;
     private Rigidbody2D _rb;
-    private float _moveSpeed;
     private Action<MiniGameCharacter> _onEliminated;
 
     private void Awake()
@@ -20,11 +19,10 @@ public class MiniGameCharacter : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(int playerId, bool isHechi, float moveSpeed, Action<MiniGameCharacter> onEliminated)
+    public void Init(int playerId, bool isHechi, Action<MiniGameCharacter> onEliminated)
     {
         PlayerId      = playerId;
         IsHechi       = isHechi;
-        _moveSpeed    = moveSpeed;
         _onEliminated = onEliminated;
         _input  = GameManager.Instance.GetPlayerInputReader(playerId);
         enabled = true;
@@ -32,15 +30,12 @@ public class MiniGameCharacter : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var move = new Vector2(_input.Stick.x, _input.Stick.y) * _moveSpeed;
+        var move = new Vector2(_input.Stick.x, _input.Stick.y) * moveSpeed;
 
         if (_rb.bodyType == RigidbodyType2D.Kinematic)
             _rb.MovePosition(_rb.position + move * Time.fixedDeltaTime);
         else
             _rb.linearVelocity = move;
-        
-        if(printDebug)
-            Debug.Log($"[MiniGameCharacter] Player {PlayerId} Move: {move}");
     }
 
     private void OnCollisionEnter2D(Collision2D col)

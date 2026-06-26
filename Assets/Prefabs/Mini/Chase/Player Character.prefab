@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb12a1d0964b5cd4c8ed51cc3733cd63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameCharacter
+  moveSpeed: 7
 --- !u!212 &8032481396786665072
 SpriteRenderer:
   serializedVersion: 2
