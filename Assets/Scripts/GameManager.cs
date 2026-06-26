@@ -1,20 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private const string MiniGameSceneName = "MiniGameBase";
+    private const int TitleSceneIdx = 0;
+    private const int MainSceneIdx  = 1;
 
     public static GameManager Instance { get; private set; }
 
     public bool IsMiniGameRunning { get; private set; }
 
-    private JoyConInputManager _inputManager;
-    
     public Action<Dictionary<StateTypes, int>> OnStateChanged;
+
+    private JoyConInputManager _inputManager;
+
+    private static readonly HashSet<string> MainSceneKeepActive = new()
+    {
+        "MainSceneManager",
+        "Brain Camera",
+        "Target Camera"
+    };
+
+    private readonly HashSet<int> _playedMiniGameIndices = new();
+    private int _currentMiniGameSceneIdx = -1;
+    private readonly List<GameObject> _hiddenMainObjects = new();
+    private readonly HashSet<GameObject> _keepActiveObjects = new();
+
+    public void RegisterKeepActive(GameObject obj) => _keepActiveObjects.Add(obj);
+    public void UnregisterKeepActive(GameObject obj) => _keepActiveObjects.Remove(obj);
 
     private void Awake()
     {
@@ -42,7 +59,15 @@ public class GameManager : MonoBehaviour
     public void LoadMiniGame()
     {
         if (IsMiniGameRunning) return;
-        StartCoroutine(LoadMiniGameRoutine());
+
+        int idx = PickMiniGameSceneIdx();
+        if (idx < 0)
+        {
+            Debug.LogWarning("[GameManager] 플레이 가능한 미니게임 씬이 없습니다.");
+            return;
+        }
+
+        StartCoroutine(LoadMiniGameRoutine(idx));
     }
 
     public void QuitMiniGame(Dictionary<StateTypes, int> deltaStates)
@@ -51,12 +76,59 @@ public class GameManager : MonoBehaviour
         StartCoroutine(QuitMiniGameRoutine(deltaStates));
     }
 
-    private IEnumerator LoadMiniGameRoutine()
+    private void HideMainScene()
+    {
+        _hiddenMainObjects.Clear();
+        var mainScene = SceneManager.GetSceneByBuildIndex(MainSceneIdx);
+        foreach (var root in mainScene.GetRootGameObjects())
+        {
+            if (MainSceneKeepActive.Contains(root.name) || _keepActiveObjects.Contains(root) || !root.activeSelf) continue;
+            root.SetActive(false);
+            _hiddenMainObjects.Add(root);
+        }
+    }
+
+    private void RestoreMainScene()
+    {
+        foreach (var obj in _hiddenMainObjects)
+            if (obj != null) obj.SetActive(true);
+        _hiddenMainObjects.Clear();
+    }
+
+    // Build 설정에서 Title(0), Main(1)을 제외한 씬 중 미플레이 씬을 랜덤 선정
+    // 모두 플레이했으면 기록을 초기화하고 다시 전체 풀에서 선정
+    private int PickMiniGameSceneIdx()
+    {
+        int totalScenes = SceneManager.sceneCountInBuildSettings;
+
+        var available = Enumerable.Range(0, totalScenes)
+            .Where(i => i != TitleSceneIdx && i != MainSceneIdx && !_playedMiniGameIndices.Contains(i))
+            .ToList();
+
+        if (available.Count == 0)
+        {
+            Debug.Log("[GameManager] 모든 미니게임 완료 — 기록 초기화 후 재선정");
+            _playedMiniGameIndices.Clear();
+
+            available = Enumerable.Range(0, totalScenes)
+                .Where(i => i != TitleSceneIdx && i != MainSceneIdx)
+                .ToList();
+        }
+
+        if (available.Count == 0) return -1;
+
+        return available[UnityEngine.Random.Range(0, available.Count)];
+    }
+
+    private IEnumerator LoadMiniGameRoutine(int miniGameSceneIdx)
     {
         IsMiniGameRunning = true;
-        yield return SceneManager.LoadSceneAsync(MiniGameSceneName, LoadSceneMode.Additive);
+        _currentMiniGameSceneIdx = miniGameSceneIdx;
+        _playedMiniGameIndices.Add(miniGameSceneIdx);
 
-        var miniGameScene = SceneManager.GetSceneByName(MiniGameSceneName);
+        yield return SceneManager.LoadSceneAsync(miniGameSceneIdx, LoadSceneMode.Additive);
+
+        var miniGameScene = SceneManager.GetSceneByBuildIndex(miniGameSceneIdx);
         foreach (var root in miniGameScene.GetRootGameObjects())
         foreach (var cam in root.GetComponentsInChildren<Camera>(true))
         {
@@ -67,15 +139,20 @@ public class GameManager : MonoBehaviour
                 listener.enabled = false;
         }
 
-        Debug.Log("[GameManager] MiniGameBase 씬 로드 완료");
+        HideMainScene();
+
+        Debug.Log($"[GameManager] 미니게임 씬 로드 완료 (Build idx: {miniGameSceneIdx})");
     }
 
     private IEnumerator QuitMiniGameRoutine(Dictionary<StateTypes, int> deltaStates)
     {
-        yield return SceneManager.UnloadSceneAsync(MiniGameSceneName);
+        yield return SceneManager.UnloadSceneAsync(_currentMiniGameSceneIdx);
+        _currentMiniGameSceneIdx = -1;
         IsMiniGameRunning = false;
-        
-        Debug.Log("[GameManager] MiniGameBase 씬 종료, Main으로 복귀");
+
+        RestoreMainScene();
+
+        Debug.Log("[GameManager] 미니게임 씬 종료, Main으로 복귀");
         OnStateChanged?.Invoke(deltaStates);
     }
 }

@@ -6,10 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: 306eef47c65f70d4a9fc7f32c52b6ef7
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 933f9b6fb2ddd0d47922ef2c48978512
   - enabled: 1
-    path: Assets/Scenes/MiniGame/MiniGameBase.unity
-    guid: 189e8fa33773c364a8d6d69b7bddb7b4
+    path: Assets/Scenes/MiniGame/Chase.unity
+    guid: 1155c23c6077f5c46bab8d8ddf764c43
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

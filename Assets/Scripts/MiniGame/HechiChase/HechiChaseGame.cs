@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HechiChaseGame : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class HechiChaseGame : MonoBehaviour
             var prefab = isHechi ? hechiPrefab : playerPrefab;
             var pos = isHechi ? hechiInitPos : playerInitPos[playerCnt++];
             var character = Instantiate(prefab, pos, Quaternion.identity);
+            SceneManager.MoveGameObjectToScene(character.gameObject, gameObject.scene);
             character.Init(i, isHechi, moveSpeed, OnPlayerEliminated);
 
             if (!isHechi)

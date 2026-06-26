@@ -23,6 +23,9 @@ public class MainGameLoop : MonoBehaviour
         for (int i = 0; i < PlayerCount; i++)
             _players[i] = GameManager.Instance.GetPlayerInputReader(i + 1);
 
+        // 미니게임 중에도 이 GameObject는 활성 유지 (코루틴 보호)
+        GameManager.Instance.RegisterKeepActive(gameObject);
+
         _piece.PlaceAt(_board.CurrentCell.transform.position);
 
         StartCoroutine(GameLoop());
