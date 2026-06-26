@@ -4,14 +4,24 @@ using UnityEngine.InputSystem;
 
 public interface IPlayerInputReader
 {
+    // 이번 프레임에 눌림
     public bool Up { get; }
     public bool Down { get; }
     public bool Left { get; }
     public bool Right { get; }
     public bool SR { get; }
     public bool SL { get; }
-    public Vector2 Stick { get; }
     public bool Swing { get; }
+
+    // 현재 누르고 있는 상태
+    public bool UpHeld { get; }
+    public bool DownHeld { get; }
+    public bool LeftHeld { get; }
+    public bool RightHeld { get; }
+    public bool SRHeld { get; }
+    public bool SLHeld { get; }
+
+    public Vector2 Stick { get; }
 
     public void Reset();
 }
@@ -31,58 +41,33 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
         public bool SL;
         public Vector2 Stick;
         public bool Swing;
+
+        public bool UpHeld;
+        public bool DownHeld;
+        public bool LeftHeld;
+        public bool RightHeld;
+        public bool SRHeld;
+        public bool SLHeld;
     }
-    
+
     [SerializeField, ReadOnly] private InputInfo info;
 
-    public bool Up
-    {
-        get => info.Up;
-        set => info.Up = value;
-    }
+    public bool Up        { get => info.Up;        set => info.Up = value; }
+    public bool Down      { get => info.Down;      set => info.Down = value; }
+    public bool Left      { get => info.Left;      set => info.Left = value; }
+    public bool Right     { get => info.Right;     set => info.Right = value; }
+    public bool SR        { get => info.SR;        set => info.SR = value; }
+    public bool SL        { get => info.SL;        set => info.SL = value; }
+    public bool Swing     { get => info.Swing;     set => info.Swing = value; }
+    public Vector2 Stick  { get => info.Stick;     set => info.Stick = value; }
 
-    public bool Down
-    {
-        get => info.Down;
-        set => info.Down = value;
-    }
+    public bool UpHeld    { get => info.UpHeld;    set => info.UpHeld = value; }
+    public bool DownHeld  { get => info.DownHeld;  set => info.DownHeld = value; }
+    public bool LeftHeld  { get => info.LeftHeld;  set => info.LeftHeld = value; }
+    public bool RightHeld { get => info.RightHeld; set => info.RightHeld = value; }
+    public bool SRHeld    { get => info.SRHeld;    set => info.SRHeld = value; }
+    public bool SLHeld    { get => info.SLHeld;    set => info.SLHeld = value; }
 
-    public bool Left
-    {
-        get => info.Left;
-        set => info.Left = value;
-    }
-
-    public bool Right
-    {
-        get => info.Right;
-        set => info.Right = value;
-    }
-
-    public bool SR
-    {
-        get => info.SR;
-        set => info.SR = value;
-    }
-
-    public bool SL
-    {
-        get => info.SL;
-        set => info.SL = value;
-    }
-
-    public Vector2 Stick
-    {
-        get => info.Stick;
-        set => info.Stick = value;
-    }
-
-    public bool Swing
-    {
-        get => info.Swing;
-        set => info.Swing = value;
-    }
-    
     #endregion
 
     [SerializeField] private bool printDebug;
@@ -101,12 +86,19 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
         _buttonDetector = GetComponent<JoyConButtonDetector>();
         _buttonDetector.Init();
         
-        _buttonDetector.OnUp += () => Up = true;
-        _buttonDetector.OnDown += () => Down = true;
-        _buttonDetector.OnLeft += () => Left = true;
-        _buttonDetector.OnRight += () => Right = true;
-        _buttonDetector.OnSL += () => SL = true;
-        _buttonDetector.OnSR += () => SR = true;
+        _buttonDetector.OnUp    += () => { Up    = true; UpHeld    = true; };
+        _buttonDetector.OnDown  += () => { Down  = true; DownHeld  = true; };
+        _buttonDetector.OnLeft  += () => { Left  = true; LeftHeld  = true; };
+        _buttonDetector.OnRight += () => { Right = true; RightHeld = true; };
+        _buttonDetector.OnSL    += () => { SL    = true; SLHeld    = true; };
+        _buttonDetector.OnSR    += () => { SR    = true; SRHeld    = true; };
+
+        _buttonDetector.OnUpReleased    += () => UpHeld    = false;
+        _buttonDetector.OnDownReleased  += () => DownHeld  = false;
+        _buttonDetector.OnLeftReleased  += () => LeftHeld  = false;
+        _buttonDetector.OnRightReleased += () => RightHeld = false;
+        _buttonDetector.OnSLReleased    += () => SLHeld    = false;
+        _buttonDetector.OnSRReleased    += () => SRHeld    = false;
     }
 
     private void Update()
@@ -127,12 +119,20 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
     {
         var kb = Keyboard.current;
         if (kb == null) return;
-        if (kb[upKey].wasPressedThisFrame)    Up    = true;
-        if (kb[downKey].wasPressedThisFrame)  Down  = true;
-        if (kb[leftKey].wasPressedThisFrame)  Left  = true;
-        if (kb[rightKey].wasPressedThisFrame) Right = true;
-        if (kb[slKey].wasPressedThisFrame)    SL    = true;
-        if (kb[srKey].wasPressedThisFrame)    SR    = true;
+
+        if (kb[upKey].wasPressedThisFrame)    { Up    = true; UpHeld    = true; }
+        if (kb[downKey].wasPressedThisFrame)  { Down  = true; DownHeld  = true; }
+        if (kb[leftKey].wasPressedThisFrame)  { Left  = true; LeftHeld  = true; }
+        if (kb[rightKey].wasPressedThisFrame) { Right = true; RightHeld = true; }
+        if (kb[slKey].wasPressedThisFrame)    { SL    = true; SLHeld    = true; }
+        if (kb[srKey].wasPressedThisFrame)    { SR    = true; SRHeld    = true; }
+
+        if (kb[upKey].wasReleasedThisFrame)    UpHeld    = false;
+        if (kb[downKey].wasReleasedThisFrame)  DownHeld  = false;
+        if (kb[leftKey].wasReleasedThisFrame)  LeftHeld  = false;
+        if (kb[rightKey].wasReleasedThisFrame) RightHeld = false;
+        if (kb[slKey].wasReleasedThisFrame)    SLHeld    = false;
+        if (kb[srKey].wasReleasedThisFrame)    SRHeld    = false;
     }
 
     private void PrintInputDebug()

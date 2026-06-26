@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class HechiChaseGame : MonoBehaviour
 {
-    [SerializeField] private MiniGameCharacter hechiPrefab;
-    [SerializeField] private MiniGameCharacter playerPrefab;
+    [SerializeField] private GameObject hechiPrefab;
+    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Vector3[] playerInitPos; // 4개 필요
     [SerializeField] private Vector3 hechiInitPos; 
     [SerializeField] private float timeLimit = 60f;
@@ -18,7 +18,7 @@ public class HechiChaseGame : MonoBehaviour
     [Header("결과 델타 (플레이어 승리)")]
     [SerializeField] private int playerWinAffection = 2;
 
-    private readonly List<MiniGameCharacter> _normalPlayers = new();
+    private readonly List<ChaseCharacterController> _normalPlayers = new();
     private bool _gameOver;
     private int _hechiPlayerId;
 
@@ -41,17 +41,18 @@ public class HechiChaseGame : MonoBehaviour
             var pos = isHechi ? hechiInitPos : playerInitPos[playerCnt++];
             var character = Instantiate(prefab, pos, Quaternion.identity);
             SceneManager.MoveGameObjectToScene(character.gameObject, gameObject.scene);
-            character.Init(i, isHechi, OnPlayerEliminated);
+            character.GetComponent<ChaseCharacterController>().Init(isHechi, OnPlayerEliminated);
+            character.GetComponent<MiniGameCharacterController>().Init(i);
 
             if (!isHechi)
-                _normalPlayers.Add(character);
+                _normalPlayers.Add(character.GetComponent<ChaseCharacterController>());
         }
     }
 
-    private void OnPlayerEliminated(MiniGameCharacter character)
+    private void OnPlayerEliminated(ChaseCharacterController characterController)
     {
-        _normalPlayers.Remove(character);
-        Debug.Log($"[HechiChase] Player {character.PlayerId} 제거 / 남은 플레이어: {_normalPlayers.Count}");
+        _normalPlayers.Remove(characterController);
+        Debug.Log($"[HechiChase] Player {characterController.GetComponent<MiniGameCharacterController>().PlayerId} 제거 / 남은 플레이어: {_normalPlayers.Count}");
 
         if (_normalPlayers.Count == 0)
             EndGame(hechiWins: true);

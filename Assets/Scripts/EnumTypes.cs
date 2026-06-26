@@ -6,3 +6,12 @@ public enum StateTypes
     Recovery = 3,
     Love = 4,
 }
+
+public enum MiniGameTypes
+{
+    SoloBattle,
+    OneVsThree,
+    TwoVsTwo,
+    AffectionBattle,
+    Cooperative,
+}

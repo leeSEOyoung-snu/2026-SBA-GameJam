@@ -438,14 +438,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7624627a515adbb4cb03cff5a813a58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HechiChaseGame
-  hechiPrefab: {fileID: 180822755166620111, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
-  playerPrefab: {fileID: 441901359862317916, guid: d158ecafd2eac44469f03fa5bdcd7a63, type: 3}
+  hechiPrefab: {fileID: 3630593397788455716, guid: 4336f3e850bda5441ab33532b8505973, type: 3}
+  playerPrefab: {fileID: 6942023769537340052, guid: c4c13aa7c3fdb5449a4a997351f1e67d, type: 3}
   playerInitPos:
   - {x: -8, y: 3, z: 0}
   - {x: -8, y: -3, z: 0}
   - {x: 8, y: -3, z: 0}
   hechiInitPos: {x: 0, y: 0, z: 0}
-  timeLimit: 30
+  timeLimit: 60
   hechiWinNightmare: 5
   hechiWinAffection: 3
   playerWinAffection: 2

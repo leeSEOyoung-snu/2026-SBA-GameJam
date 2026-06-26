@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
     private const int TitleSceneIdx = 0;
     private const int MainSceneIdx  = 1;
