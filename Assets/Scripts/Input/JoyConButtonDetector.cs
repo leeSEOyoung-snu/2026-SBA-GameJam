@@ -41,17 +41,19 @@ public class JoyConButtonDetector : MonoBehaviour
 
     private bool _prevUp, _prevDown, _prevLeft, _prevRight, _prevSL, _prevSR;
 
-    void Start()
+    public void Init()
     {
         if (side == Side.Right)
         {
-            _btnUp = 8; _btnDown = 5; _btnLeft = 7; _btnRight = 6;
+            _btnUp = 8; _btnDown = 5; _btnLeft = 6; _btnRight = 7;
             _btnSL = 16; _btnSR = 15;
         }
         else
         {
-            _btnUp = 10; _btnDown = 11; _btnLeft = 9; _btnRight = 12;
+            _btnUp = 9; _btnDown = 12; _btnLeft = 11; _btnRight = 10;
             _btnSL = 17; _btnSR = 18;
+            // _btnUp = 10; _btnDown = 11; _btnLeft = 9; _btnRight = 12;
+            // _btnSL = 17; _btnSR = 18;
         }
     }
 

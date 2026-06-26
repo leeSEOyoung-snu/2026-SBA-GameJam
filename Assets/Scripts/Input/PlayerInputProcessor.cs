@@ -96,9 +96,10 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
     
     private JoyConButtonDetector _buttonDetector;
     
-    void OnEnable()
+    public void Init()
     {
         _buttonDetector = GetComponent<JoyConButtonDetector>();
+        _buttonDetector.Init();
         
         _buttonDetector.OnUp += () => Up = true;
         _buttonDetector.OnDown += () => Down = true;

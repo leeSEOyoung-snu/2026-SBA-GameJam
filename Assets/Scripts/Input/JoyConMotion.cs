@@ -39,11 +39,11 @@ public class JoyConMotion : MonoBehaviour
     private readonly ConcurrentQueue<string> _incoming = new ConcurrentQueue<string>();
     private readonly Dictionary<string, Motion> _latest = new Dictionary<string, Motion>();
 
-    void Awake()
+    public void Init()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         StartListening();
     }
 
