@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayableCharacterVisual : MonoBehaviour
@@ -12,16 +13,17 @@ public class PlayableCharacterVisual : MonoBehaviour
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private PlayerSpriteEntry[] playerSprites;
-
+    [SerializeField] private Color damagedColor = new Color32(0xE0, 0x87, 0x87, 0xFF);
+    [SerializeField] private float damagedBlinkDuration = 0.08f;
+    [SerializeField] private int damagedBlinkCount = 2;
     public int PlayerId { get; private set; }
+    public EffectManager Effects { get; private set; }
 
-    private void Awake()
-    {
-        CacheComponents();
-    }
+    private Coroutine _damagedVfxRoutine;
 
-    public void Init(int playerId)
+    public void Init(int playerId, EffectManager effects)
     {
+        Effects = effects;
         PlayerId = playerId;
         ApplyPlayerSprite(playerId);
     }
@@ -30,15 +32,6 @@ public class PlayableCharacterVisual : MonoBehaviour
     {
         PlayerId = playerId;
 
-        if (spriteRenderer == null)
-            CacheComponents();
-
-        if (spriteRenderer == null)
-        {
-            Debug.LogWarning($"[{nameof(PlayableCharacterVisual)}] SpriteRenderer가 없습니다.", this);
-            return;
-        }
-
         if (!TryGetSprite(playerId, out var sprite))
         {
             Debug.LogWarning($"[{nameof(PlayableCharacterVisual)}] Player {playerId}에 할당된 스프라이트가 없습니다.", this);
@@ -46,6 +39,14 @@ public class PlayableCharacterVisual : MonoBehaviour
         }
 
         spriteRenderer.sprite = sprite;
+    }
+
+    public void DamagedVFX()
+    {
+        if (_damagedVfxRoutine != null)
+            StopCoroutine(_damagedVfxRoutine);
+
+        _damagedVfxRoutine = StartCoroutine(DamagedVFXRoutine());
     }
 
     private bool TryGetSprite(int playerId, out Sprite sprite)
@@ -66,14 +67,18 @@ public class PlayableCharacterVisual : MonoBehaviour
         return false;
     }
 
-    private void CacheComponents()
+    private IEnumerator DamagedVFXRoutine()
     {
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
-    }
+        var originColor = spriteRenderer.color;
 
-    private void OnValidate()
-    {
-        CacheComponents();
+        for (var i = 0; i < damagedBlinkCount; i++)
+        {
+            spriteRenderer.color = damagedColor;
+            yield return new WaitForSeconds(damagedBlinkDuration);
+            spriteRenderer.color = originColor;
+            yield return new WaitForSeconds(damagedBlinkDuration);
+        }
+
+        _damagedVfxRoutine = null;
     }
 }

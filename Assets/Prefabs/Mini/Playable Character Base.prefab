@@ -192,3 +192,6 @@ MonoBehaviour:
     sprite: {fileID: 6184959299203262911, guid: 8da2ef9a40b0a426dbd648a3c57aee6c, type: 3}
   - playerId: 4
     sprite: {fileID: 2495864320845663737, guid: 8da2ef9a40b0a426dbd648a3c57aee6c, type: 3}
+  damagedColor: {r: 0.8784314, g: 0.5294118, b: 0.5294118, a: 1}
+  damagedBlinkDuration: 0.08
+  damagedBlinkCount: 2

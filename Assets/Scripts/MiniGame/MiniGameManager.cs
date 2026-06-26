@@ -12,10 +12,12 @@ public class MiniGameManager : MonoBehaviour,
     [SerializeField] private MiniGameResultContainer miniGameResultContainer;
     
     public static MiniGameManager Instance { get; private set; }
+    public EffectManager Effects { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        Effects = GetComponent<EffectManager>();
     }
 
     /// <summary>

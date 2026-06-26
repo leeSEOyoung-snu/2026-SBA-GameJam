@@ -5,7 +5,13 @@ public class ChaseCharacterController : MonoBehaviour
 {
     public bool IsHechi { get; private set; }
 
+    private PlayableCharacterVisual _visual;
     private Action<ChaseCharacterController> _onEliminated;
+
+    private void Awake()
+    {
+        _visual = GetComponentInChildren<PlayableCharacterVisual>(true);
+    }
 
     public void Init(bool isHechi, Action<ChaseCharacterController> onEliminated)
     {
@@ -24,6 +30,7 @@ public class ChaseCharacterController : MonoBehaviour
 
     public void Eliminate()
     {
+        _visual.Effects.Spawn("Boom", transform.position);
         _onEliminated?.Invoke(this);
         Destroy(gameObject);
     }

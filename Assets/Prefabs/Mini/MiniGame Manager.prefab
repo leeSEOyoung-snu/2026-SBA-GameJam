@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1814150221039027977}
   - component: {fileID: 3020742197796345205}
+  - component: {fileID: 6980558397719674376}
   m_Layer: 0
   m_Name: MiniGame Manager
   m_TagString: Untagged
@@ -45,3 +46,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameManager
   miniGameResultContainer: {fileID: 0}
+--- !u!114 &6980558397719674376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9051769130077284831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9952b6da76e4d29bda48f34b0312d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectManager
+  effects:
+  - id: Boom
+    particlePrefab: {fileID: 7382374352441890335, guid: 237d50d0201fe4bc5a4cb50abfb80be9, type: 3}
