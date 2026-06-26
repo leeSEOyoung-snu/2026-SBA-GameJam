@@ -4,6 +4,7 @@ using UnityEngine;
 public class Board : MonoBehaviour
 {
     [SerializeField] private Transform cellParent;
+    [SerializeField] private List<Sprite> cellSprites = new();
 
     private readonly List<CellInfo> _cells = new();
 
@@ -23,7 +24,10 @@ public class Board : MonoBehaviour
         foreach (Transform child in cellParent)
         {
             if (child.TryGetComponent<CellInfo>(out var cell))
+            {
+                ApplyRandomCellSprite(cell);
                 _cells.Add(cell);
+            }
         }
 
         for (int i = 0; i < _cells.Count; i++)
@@ -53,4 +57,13 @@ public class Board : MonoBehaviour
     }
 
     public void SetCurrentCell(CellInfo cell) => CurrentCell = cell;
+
+    private void ApplyRandomCellSprite(CellInfo cell)
+    {
+        if (cellSprites.Count == 0)
+            return;
+
+        if (cell.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+            spriteRenderer.sprite = cellSprites[Random.Range(0, cellSprites.Count)];
+    }
 }
