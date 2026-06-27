@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 1
   gameTitle: "\uB3C8 \uC6CC\uB9AC, \uBE44 \uD574\uCE58"
-  desc: "<Joy>\uB85C \uC774\uB3D9\uD574\uB77C! \uC2DC\uBC1C \uD06C\uB85C\uC2A4\uD5E4\uC5B4
-    \uD0A4 \uBB50\uB0D0 \uC724\uC6B0\uC528"
+  desc: "<Joy>\uB85C \uC774\uB3D9\uD558\uBA74 \uD574\uCE58\uC778\uCC99 \uC5F0\uAE30\uD574\uB77C!.\\n\uC220\uB798\uB294
+    <Joy>\uB85C \uAC00\uC9DC \uD574\uCE58\uB97C \uC870\uC900\uD558\uC5EC <R>\uB85C
+    \uC3D8\uC544\uB77C!!!"
   isTimeAttack: 1
   timeAttackSeconds: 60
   soloDelta:
@@ -34,7 +35,7 @@ MonoBehaviour:
       \uD574\uCE58\uB97C \uBAA8\uB450 \uC7A1\uC544\uB77C! \uB9CC\uC57D \uC9C4\uC9DC
       \uD574\uCE58\uB97C \uC7A1\uC73C\uBA74 \uBC14\uB85C \uD328\uBC30!"
     threeWinCondition: "\uD574\uCE58\uAC00 \uB418\uC5B4, \uC9C4\uC9DC \uD574\uCE58\uC778\uCC99
-      \uC704\uC7A5\uD558\uB77C! \uC2B9\uB9AC\uD558\uBA74 \uC545\uBB49\uC774 5 \uC99D\uAC00."
+      \uC704\uC7A5\uD558\uB77C!\\n\uC2B9\uB9AC\uD558\uBA74 \uC545\uBB49\uC774 5 \uC99D\uAC00."
   twoVsTwoDelta: 0
   twoVsTwoTutorialText:
     twoWinCondition: 

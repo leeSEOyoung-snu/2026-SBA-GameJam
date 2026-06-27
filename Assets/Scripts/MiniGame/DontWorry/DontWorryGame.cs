@@ -8,11 +8,13 @@ public class DontWorryGame : OneVsThreeBase
     [SerializeField] private DontWorryCrosshair crosshair;
     [SerializeField] private BoxCollider2D moveArea;
     [SerializeField] private List<DontWorryFakeHachiController> fakeHachis;
+    [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
 
     [Header("결과 델타")]
     [SerializeField] private int realHachiShotNightmare = 5;
 
     private readonly List<DontWorryFakeHachiController> _fakePlayers = new();
+    private int _totalFakes;
     private bool _gameOver;
 
     public override int NightmareDelta { get; protected set; }
@@ -76,6 +78,18 @@ public class DontWorryGame : OneVsThreeBase
             _fakePlayers.Add(fake);
             fakeIndex++;
         }
+
+        _totalFakes = _fakePlayers.Count;
+        // 이 씬 전용: 슈터 말풍선을 캐릭터와 안 겹치게 위로 올리고 크게, 글자는 작게
+        basicPlayerCanvasManager?.StyleStackBubble(OnePlayerId, 175f, new Vector2(230f, 150f), 28f);
+        UpdateShooterCatchText();
+    }
+
+    // 슈터(1인팀, 1P 자리) 슬롯에 잡은 가짜 해치 수 표기
+    private void UpdateShooterCatchText()
+    {
+        int caught = _totalFakes - _fakePlayers.Count;
+        basicPlayerCanvasManager?.SetStackAsString(OnePlayerId, $"잡은 가짜 해치\n{caught} / {_totalFakes}");
     }
 
     private bool TryGetMoveBounds(out Bounds moveBounds)
@@ -122,7 +136,9 @@ public class DontWorryGame : OneVsThreeBase
     {
         if (_gameOver) return;
 
+        basicPlayerCanvasManager?.GreyOutCharacter(fake.PlayerId);
         _fakePlayers.Remove(fake);
+        UpdateShooterCatchText();
         Debug.Log($"[DontWorry] 가짜 해치 제거 / 남은: {_fakePlayers.Count}");
 
         if (_fakePlayers.Count == 0)

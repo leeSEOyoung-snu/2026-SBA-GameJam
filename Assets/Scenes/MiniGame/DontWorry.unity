@@ -284,6 +284,7 @@ MonoBehaviour:
   - {fileID: 96215034}
   - {fileID: 647118176}
   - {fileID: 1854273442}
+  basicPlayerCanvasManager: {fileID: 1360801756}
   realHachiShotNightmare: 5
 --- !u!4 &188681496
 Transform:
@@ -1042,6 +1043,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5456293271160573196, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+      propertyPath: characterPortraits.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5456293271160573196, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+      propertyPath: 'characterPortraits.Array.data[0]'
+      value: 
+      objectReference: {fileID: 454664152}
+    - target: {fileID: 5456293271160573196, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+      propertyPath: 'characterPortraits.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1457131554}
+    - target: {fileID: 5456293271160573196, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+      propertyPath: 'characterPortraits.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1450645882}
+    - target: {fileID: 5456293271160573196, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+      propertyPath: 'characterPortraits.Array.data[3]'
+      value: 
+      objectReference: {fileID: 212775697}
     - target: {fileID: 5627611470994468183, guid: b7792cac5ee844025b677816f2e05706, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1117,10 +1138,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DontWorryPlayerCanvasManager
   playersContainer: {fileID: 794936806}
   playerPortraits:
-  - {fileID: 454664152}
-  - {fileID: 1457131554}
-  - {fileID: 1450645882}
-  - {fileID: 212775697}
+  - {fileID: 794936811}
+  - {fileID: 1552633872}
+  - {fileID: 1148535441}
+  - {fileID: 1838808196}
 --- !u!1 &794936808 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2798984984554039334, guid: b7792cac5ee844025b677816f2e05706, type: 3}
@@ -1146,6 +1167,39 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &794936811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2752299963106919150, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+  m_PrefabInstance: {fileID: 794936804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794936808}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1148535441 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2654447367547698076, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+  m_PrefabInstance: {fileID: 794936804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1360801756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5456293271160573196, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+  m_PrefabInstance: {fileID: 794936804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794936805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6ecb4eb4d2d6f439747f06c90abc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicPlayerCanvasManager
 --- !u!1 &1405671137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,6 +1388,17 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1552633872 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1904219339838121807, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+  m_PrefabInstance: {fileID: 794936804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1565,6 +1630,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 19.39394, y: 10.909091}
   m_EdgeRadius: 0
+--- !u!114 &1838808196 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5524718462394531877, guid: b7792cac5ee844025b677816f2e05706, type: 3}
+  m_PrefabInstance: {fileID: 794936804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1854273440
 PrefabInstance:
   m_ObjectHideFlags: 0
