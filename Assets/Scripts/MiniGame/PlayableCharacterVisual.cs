@@ -23,6 +23,7 @@ public class PlayableCharacterVisual : MonoBehaviour
 
     public void Init(int playerId, EffectManager effects)
     {
+        EnsureSpriteRenderer();
         Effects = effects;
         PlayerId = playerId;
         ApplyPlayerSprite(playerId);
@@ -39,6 +40,15 @@ public class PlayableCharacterVisual : MonoBehaviour
         }
 
         spriteRenderer.sprite = sprite;
+    }
+
+    public void SetFacingByMoveX(float moveX)
+    {
+        EnsureSpriteRenderer();
+        if (spriteRenderer == null || Mathf.Abs(moveX) <= 0.01f)
+            return;
+
+        spriteRenderer.flipX = moveX < 0f;
     }
 
     public void DamagedVFX()
@@ -71,6 +81,10 @@ public class PlayableCharacterVisual : MonoBehaviour
 
     private IEnumerator DamagedVFXRoutine()
     {
+        EnsureSpriteRenderer();
+        if (spriteRenderer == null)
+            yield break;
+
         var originColor = spriteRenderer.color;
 
         for (var i = 0; i < damagedBlinkCount; i++)
@@ -82,5 +96,13 @@ public class PlayableCharacterVisual : MonoBehaviour
         }
 
         _damagedVfxRoutine = null;
+    }
+
+    private void EnsureSpriteRenderer()
+    {
+        if (spriteRenderer != null && spriteRenderer.transform.IsChildOf(transform))
+            return;
+
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
     }
 }

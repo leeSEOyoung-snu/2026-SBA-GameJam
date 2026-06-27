@@ -30,6 +30,10 @@ public class MiniGameCharacterController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        _physics?.UpdatePhysics(Time.fixedDeltaTime);
+        if (_physics == null)
+            return;
+
+        Vector2 move = _physics.UpdatePhysics(Time.fixedDeltaTime);
+        _visual?.SetFacingByMoveX(move.x);
     }
 }
