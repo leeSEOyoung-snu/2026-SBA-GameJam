@@ -25,14 +25,13 @@ public class MiniGameManager : MonoBehaviour
 
     private IEnumerator MiniGameStartFlow()
     {
-        TutorialCanvas tutorialCanvas = FindAnyObjectByType<TutorialCanvas>();
         BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
 
-        if (tutorialCanvas != null)
+        if (basicCanvas != null)
         {
-            yield return tutorialCanvas.Open().WaitForCompletion();
+            yield return basicCanvas.OpenTutorial().WaitForCompletion();
             yield return new WaitForSeconds(tutorialShowSeconds);
-            yield return tutorialCanvas.Close().WaitForCompletion();
+            yield return basicCanvas.CloseTutorial().WaitForCompletion();
         }
 
         if (basicCanvas != null)

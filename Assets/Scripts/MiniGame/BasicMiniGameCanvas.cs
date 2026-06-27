@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BasicMiniGameCanvas : MonoBehaviour
 {
+    [SerializeField] private TutorialCanvas tutorialCanvas;
     [SerializeField] private TMP_Text gameStartTxt;
     [SerializeField] private CanvasGroup curtain;
     [SerializeField] private float punchDuration = 0.25f;
@@ -14,6 +15,22 @@ public class BasicMiniGameCanvas : MonoBehaviour
     private void Awake()
     {
         SetHidden();
+    }
+
+    public Sequence OpenTutorial()
+    {
+        if (tutorialCanvas == null)
+            return DOTween.Sequence();
+
+        return tutorialCanvas.Open();
+    }
+
+    public Sequence CloseTutorial()
+    {
+        if (tutorialCanvas == null)
+            return DOTween.Sequence();
+
+        return tutorialCanvas.Close();
     }
 
     public Sequence PlayGameStart()
