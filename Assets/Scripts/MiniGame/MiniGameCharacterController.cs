@@ -5,6 +5,8 @@ public class MiniGameCharacterController : MonoBehaviour
     public int PlayerId { get; private set; }
     public EffectManager Effects { get; private set; }
 
+    [SerializeField] private bool flipXDefault;
+
     private MiniGamePhysicsBase _physics;
     private PlayableCharacterVisual _visual;
     
@@ -34,6 +36,6 @@ public class MiniGameCharacterController : MonoBehaviour
             return;
 
         Vector2 move = _physics.UpdatePhysics(Time.fixedDeltaTime);
-        _visual?.SetFacingByMoveX(move.x);
+        _visual?.SetFacingByMoveX((flipXDefault ? -1 : 1)* move.x);
     }
 }

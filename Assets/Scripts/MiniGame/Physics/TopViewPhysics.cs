@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TopViewPhysics : MiniGamePhysicsBase
@@ -8,6 +9,13 @@ public class TopViewPhysics : MiniGamePhysicsBase
     private Bounds _moveBounds;
     private bool _hasMoveBounds;
     private Collider2D _collider;
+    
+    private PlayableCharacterVisual _visual;
+
+    private void Awake()
+    {
+        _visual = GetComponent<PlayableCharacterVisual>();
+    }
 
     public void SetMoveBounds(Bounds moveBounds)
     {

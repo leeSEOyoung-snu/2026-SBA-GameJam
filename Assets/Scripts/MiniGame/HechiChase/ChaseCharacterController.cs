@@ -15,7 +15,14 @@ public class ChaseCharacterController : MonoBehaviour
 
     public void Init(bool isHechi, Action<ChaseCharacterController> onEliminated)
     {
-        IsHechi       = isHechi;
+        IsHechi = isHechi;
+        if (isHechi)
+        {
+            SpriteRenderer sr = GetComponent<SpriteRenderer>(); 
+            sr.sprite = GameManager.Instance.GetHechiSpriteOnMiniGame();
+            sr.color = Color.white;
+            transform.localScale = Vector3.one * 2f;
+        }
         _onEliminated = onEliminated;
         enabled = true;
     }
@@ -27,7 +34,6 @@ public class ChaseCharacterController : MonoBehaviour
         if (col.gameObject.TryGetComponent<ChaseCharacterController>(out var other) && !other.IsHechi)
             other.Eliminate();
     }
-
     public void Eliminate()
     {
         _visual.Effects.Spawn("Boom", transform.position);

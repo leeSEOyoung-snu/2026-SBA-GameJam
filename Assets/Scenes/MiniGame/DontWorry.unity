@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4408725261362536543, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: flipXDefault
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5626910807134660604, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_Constraints
       value: 4
@@ -735,6 +739,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4408725261362536543, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: flipXDefault
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5626910807134660604, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
@@ -1579,6 +1587,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4408725261362536543, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: flipXDefault
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5626910807134660604, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
