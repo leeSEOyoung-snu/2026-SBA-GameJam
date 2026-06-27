@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: HechiFly
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 4
-  gameTitle: 
-  isTimeAttack: 0
-  timeAttackSeconds: 0
+  gameTitle: "\uB0A0\uC544\uB77C \uD574\uCE58V"
+  isTimeAttack: 1
+  timeAttackSeconds: 60
   soloDelta:
     first: 0
     second: 0
@@ -36,5 +36,9 @@ MonoBehaviour:
     nightmareCondition: 
   cooperativeDelta: 3
   cooperativeTutorialText:
-    coopWinCondition: 
-    nightmareCondition: 
+    coopWinCondition: "\uBAA8\uB450 \uD798\uC744 \uD569\uCCD0 \uB85C\uBD07\uC744
+      \uC870\uC885\uD574\uB77C. \uAC01\uAC01 \uD314\uACFC \uBC1C\uC744 \uD558\uB098\uC529
+      \uB2F4\uB2F4\uD55C\uB2E4. 60\uCD08 \uB3D9\uC548 \uC801\uC744 \uD53C\uD574 \uC0B4\uC544\uB0A8\uC544\uB77C."
+    nightmareCondition: "\uB9CC\uC57D \uC7A5\uC560\uBB3C\uC5D0 \uB2E4\uC12F \uBC88
+      \uCDA9\uB3CC\uD558\uBA74 \uD30C\uAD34\uB41C\uB2E4. \uD328\uBC30\uD558\uBA74
+      \uC545\uBABD 5 \uC99D\uAC00."

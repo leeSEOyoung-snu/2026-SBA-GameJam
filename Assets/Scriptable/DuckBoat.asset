@@ -13,13 +13,31 @@ MonoBehaviour:
   m_Name: DuckBoat
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 2
+  gameTitle: "\uC624\uB9AC\uBC30, \uD55C\uAC15\uC744 \uB2EC\uB824\uB77C! "
+  isTimeAttack: 0
+  timeAttackSeconds: 0
   soloDelta:
     first: 0
     second: 0
     third: 0
     fourth: 0
+  soloBattleTutorialText:
+    soloWinCondition: 
+    nightmareCondition: 
   oneVsThreeDelta:
     oneWin: 0
     threeWin: 0
+  oneVsThreeTutorialText:
+    oneWinCondition: 
+    threeWinCondition: 
   twoVsTwoDelta: 3
+  twoVsTwoTutorialText:
+    twoWinCondition: "\uC0C1\uB300\uBCF4\uB2E4 \uBA3C\uC800, \uAC15\uC744 \uAC74\uB108\uB77C.\uC624\uB978\uCABD
+      \uBC84\uD2BC\uC744 \uC5F0\uD0C0\uD574 \uC55E\uC73C\uB85C \uB098\uAC00\uC790."
+    nightmareCondition: "\uC7A5\uC560\uBB3C\uC5D0 \uB2E4\uC12F \uBC88 \uBD80\uB52A\uD788\uBA74
+      \uBC30\uB294 \uD30C\uAD34\uB41C\uB2E4! \uB450 \uD300 \uBAA8\uB450 \uD30C\uAD34\uB418\uBA74
+      \uC545\uBABD\uC774 5 \uC99D\uAC00."
   cooperativeDelta: 0
+  cooperativeTutorialText:
+    coopWinCondition: 
+    nightmareCondition: 

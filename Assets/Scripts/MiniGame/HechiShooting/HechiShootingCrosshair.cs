@@ -22,7 +22,7 @@ public class HechiShootingCrosshair : CrosshairBase
     protected override void OnUpdate()
     {
         _cooldownTimer -= Time.deltaTime;
-        if (!Input.SR || _cooldownTimer > 0f) return;
+        if (!Input.Right || _cooldownTimer > 0f) return;
 
         _cooldownTimer = shootCooldown;
 
