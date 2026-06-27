@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PixelWobbleCutout_BlueFast
-  m_Shader: {fileID: 4800000, guid: 38efc1ed5fb04944db8ba9e3c72f3921, type: 3}
-  m_Parent: {fileID: 2100000, guid: a58234cc6be634390999fd8db302219f, type: 2}
+  m_Name: PixelWobbleCutout_Blocky 1
+  m_Shader: {fileID: 4800000, guid: dd25b52b285e4fa09a9f723fdfd92334, type: 3}
+  m_Parent: {fileID: 2100000, guid: 888941b008ef4b32b25aeeba110adeef, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -25,10 +25,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _PixelSize: 5
-    - _Speed: 1.6
+    - _Speed: 0.3
     - _WobbleAmount: 0.1
     m_Colors:
-    - _Color: {r: 0.8392157, g: 0.3019608, b: 0.22745098, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

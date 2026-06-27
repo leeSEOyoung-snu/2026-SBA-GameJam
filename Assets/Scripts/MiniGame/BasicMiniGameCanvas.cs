@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -6,15 +7,23 @@ public class BasicMiniGameCanvas : MonoBehaviour
 {
     [SerializeField] private TutorialCanvas tutorialCanvas;
     [SerializeField] private TMP_Text gameStartTxt;
+    [SerializeField] private TMP_Text timeTxt;
     [SerializeField] private CanvasGroup curtain;
     [SerializeField] private float punchDuration = 0.25f;
     [SerializeField] private float fadeDuration = 0.45f;
     [SerializeField] private float curtainFadeDuration = 0.1f;
     [SerializeField] private Ease ease = Ease.OutBack;
 
+    private Coroutine _timeAttackCoroutine;
+
     private void Awake()
     {
         SetHidden();
+    }
+
+    public void SetTutorial(MiniGameResultContainer data, MiniGameProcessorBase processor)
+    {
+        tutorialCanvas.SetTutorial(data, processor);
     }
 
     public Sequence OpenTutorial()
@@ -60,6 +69,45 @@ public class BasicMiniGameCanvas : MonoBehaviour
 
         curtain.DOKill();
         return curtain.DOFade(0f, curtainFadeDuration);
+    }
+
+    public void StartTimeAttack(int seconds)
+    {
+        StopTimeAttack();
+
+        if (timeTxt == null)
+            return;
+
+        _timeAttackCoroutine = StartCoroutine(TimeAttackCoroutine(Mathf.Max(0, seconds)));
+    }
+
+    public void StopTimeAttack()
+    {
+        if (_timeAttackCoroutine == null)
+            return;
+
+        StopCoroutine(_timeAttackCoroutine);
+        _timeAttackCoroutine = null;
+    }
+
+    private IEnumerator TimeAttackCoroutine(int seconds)
+    {
+        int remainingSeconds = seconds;
+        SetTimeText(remainingSeconds);
+
+        while (remainingSeconds > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            remainingSeconds--;
+            SetTimeText(remainingSeconds);
+        }
+
+        _timeAttackCoroutine = null;
+    }
+
+    private void SetTimeText(int seconds)
+    {
+        timeTxt.text = seconds.ToString();
     }
 
     private void SetGameStartAlpha(float alpha)

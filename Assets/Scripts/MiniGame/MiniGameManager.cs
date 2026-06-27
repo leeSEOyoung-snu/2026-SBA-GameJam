@@ -21,6 +21,7 @@ public class MiniGameManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        yield return null;
         yield return MiniGameStartFlow();
         
         yield return null;
@@ -30,9 +31,11 @@ public class MiniGameManager : MonoBehaviour
     private IEnumerator MiniGameStartFlow()
     {
         BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
+        MiniGameProcessorBase processor = FindAnyObjectByType<MiniGameProcessorBase>();
 
         if (basicCanvas != null)
         {
+            basicCanvas.SetTutorial(miniGameResultContainer, processor);
             yield return basicCanvas.OpenTutorial().WaitForCompletion();
             yield return new WaitForSeconds(tutorialShowSeconds);
             yield return basicCanvas.CloseTutorial().WaitForCompletion();
@@ -43,6 +46,9 @@ public class MiniGameManager : MonoBehaviour
 
         if (basicCanvas != null)
             yield return basicCanvas.PlayGameStart().WaitForCompletion();
+
+        if (basicCanvas != null && miniGameResultContainer != null && miniGameResultContainer.IsTimeAttack)
+            basicCanvas.StartTimeAttack(miniGameResultContainer.TimeAttackSeconds);
     }
 
     public void QuitMiniGame()

@@ -31,6 +31,7 @@ public class HechiChaseGame : OneVsThreeBase
     private void SpawnCharacters()
     {
         _hechiPlayerId = Random.Range(1, 5); // 1~4 중 랜덤
+        OnePlayerId = _hechiPlayerId;
         Debug.Log($"[HechiChase] 해치: Player {_hechiPlayerId}");
 
         int playerCnt = 0;

@@ -35,6 +35,7 @@ public class DontWorryGame : OneVsThreeBase
     private void SpawnCharacters()
     {
         _shooterPlayerId = Random.Range(1, 5);
+        OnePlayerId = _shooterPlayerId;
         Debug.Log($"[DontWorry] 슈터: Player {_shooterPlayerId}");
 
         var usedPositions = new List<Vector2>();

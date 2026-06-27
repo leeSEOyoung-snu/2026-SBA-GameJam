@@ -47,6 +47,7 @@ public class HechiBollyBallGame : OneVsThreeBase
     private void SpawnCharacters()
     {
         _hachiPlayerId = Random.Range(1, 5);
+        OnePlayerId = _hachiPlayerId;
         Debug.Log($"[BollyBall] 해치: Player {_hachiPlayerId}");
 
         // 해치
