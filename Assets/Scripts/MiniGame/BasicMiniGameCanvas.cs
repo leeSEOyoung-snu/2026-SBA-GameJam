@@ -70,35 +70,6 @@ public class BasicMiniGameCanvas : MonoBehaviour
         return sequence;
     }
 
-    public Sequence PlayGameEnd()
-    {
-        var text = gameStartGroup != null ? gameStartGroup.GetComponentInChildren<TMP_Text>() : null;
-        if (text != null) text.text = "게임 끝";
-
-        Sequence sequence = DOTween.Sequence().SetUpdate(true);
-        if (gameStartGroup == null)
-        {
-            if (text != null) text.text = "게임 시작";
-            return sequence;
-        }
-
-        Transform gameStartTransform = gameStartGroup.transform;
-        gameStartTransform.DOKill();
-        gameStartGroup.DOKill();
-        gameStartGroup.gameObject.SetActive(true);
-        gameStartTransform.localScale = Vector3.one * 2f;
-        gameStartGroup.alpha = 1f;
-
-        sequence.Append(gameStartTransform.DOScale(Vector3.one, punchDuration).SetEase(ease));
-        sequence.Append(gameStartGroup.DOFade(0f, fadeDuration).SetEase(Ease.InQuad).SetUpdate(true));
-        sequence.OnComplete(() =>
-        {
-            SetHidden();
-            if (text != null) text.text = "게임 시작";
-        });
-        return sequence;
-    }
-
     public Tween HideCurtain()
     {
         if (curtain == null)

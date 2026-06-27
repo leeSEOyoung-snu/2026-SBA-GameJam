@@ -52,7 +52,6 @@ public class RecyclingGame : CooperativeBase
 
         InitSeesaws();
         InitBins();
-        SpawnTrash();
         UpdateGoalView();
         SpawnTrash(); // 첫 쓰레기 바로 스폰
     }
@@ -151,14 +150,6 @@ public class RecyclingGame : CooperativeBase
         IsSuccess      = success;
         NightmareDelta = success ? 0 : failNightmareDelta;
         Debug.Log($"[RecyclingSort] 종료 — 성공:{success} 실수:{_mistakes}");
-        StartCoroutine(EndRoutine());
-    }
-
-    private IEnumerator EndRoutine()
-    {
-        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
-        if (canvas != null)
-            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 

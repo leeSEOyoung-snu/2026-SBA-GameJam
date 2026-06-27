@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class MiniGameManager : MonoBehaviour
@@ -90,6 +91,93 @@ public class MiniGameManager : MonoBehaviour
         BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
         if (basicCanvas != null)
             basicCanvas.StartTimeAttack(miniGameResultContainer.TimeAttackSeconds);
+    }
+
+    public void ArrangeOneVsThreePlayerLayout(int onePlayerId)
+    {
+        if (onePlayerId < 1 || onePlayerId > 4)
+        {
+            Debug.LogWarning($"Invalid OneVsThree player id: {onePlayerId}");
+            return;
+        }
+
+        BasicPlayerCanvasManager playerCanvas = FindAnyObjectByType<BasicPlayerCanvasManager>(FindObjectsInactive.Include);
+        if (playerCanvas == null)
+        {
+            Debug.LogWarning("BasicPlayerCanvasManager not found.");
+            return;
+        }
+
+        RectTransform playersContainer = playerCanvas.transform.Find("Players") as RectTransform;
+        if (playersContainer == null)
+        {
+            Debug.LogWarning("Players container not found in BasicPlayerCanvas.");
+            return;
+        }
+
+        HorizontalLayoutGroup layoutGroup = playersContainer.GetComponent<HorizontalLayoutGroup>();
+        if (layoutGroup != null && layoutGroup.enabled)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(playersContainer);
+            layoutGroup.enabled = false;
+        }
+
+        RectTransform[] playerSlots = GetPlayerSlotsById(playersContainer);
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            if (playerSlots[i] != null) continue;
+            Debug.LogWarning($"Player slot {i + 1}P not found in BasicPlayerCanvas.");
+            return;
+        }
+
+        Vector2[] positions = new Vector2[playerSlots.Length];
+        for (int i = 0; i < playerSlots.Length; i++)
+            positions[i] = playerSlots[i].anchoredPosition;
+
+        int onePlayerIndex = onePlayerId - 1;
+        playerSlots[onePlayerIndex].anchoredPosition = positions[0];
+
+        int threeTeamPositionIndex = 1;
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            if (i == onePlayerIndex) continue;
+
+            playerSlots[i].anchoredPosition = positions[threeTeamPositionIndex];
+            threeTeamPositionIndex++;
+        }
+    }
+
+    private RectTransform[] GetPlayerSlotsById(RectTransform playersContainer)
+    {
+        RectTransform[] slotsById = new RectTransform[4];
+        List<RectTransform> fallbackSlots = new();
+
+        for (int i = 0; i < playersContainer.childCount; i++)
+        {
+            RectTransform slot = playersContainer.GetChild(i) as RectTransform;
+            if (slot == null) continue;
+
+            fallbackSlots.Add(slot);
+            if (TryParsePlayerId(slot.name, out int playerId) && playerId >= 1 && playerId <= slotsById.Length)
+                slotsById[playerId - 1] = slot;
+        }
+
+        for (int i = 0; i < slotsById.Length && i < fallbackSlots.Count; i++)
+        {
+            if (slotsById[i] == null)
+                slotsById[i] = fallbackSlots[i];
+        }
+
+        return slotsById;
+    }
+
+    private bool TryParsePlayerId(string playerName, out int playerId)
+    {
+        playerName = playerName.Trim();
+        if (playerName.EndsWith("P") || playerName.EndsWith("p"))
+            playerName = playerName.Substring(0, playerName.Length - 1);
+
+        return int.TryParse(playerName, out playerId);
     }
 
     public void QuitMiniGame()
