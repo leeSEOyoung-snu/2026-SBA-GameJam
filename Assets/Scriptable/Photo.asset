@@ -16,7 +16,7 @@ MonoBehaviour:
   gameTitle: "\uD574\uCE58\uC640 \uD3EC\uD1A0\uD0C0\uC784"
   desc: "<R>\uC744 \uB20C\uB7EC \uC0AC\uC9C4\uC744 \uCC0D\uC744 \uC218 \uC788\uB2E4."
   isTimeAttack: 0
-  timeAttackSeconds: 0
+  timeAttackSeconds: 60
   soloDelta:
     first: 3
     second: 2

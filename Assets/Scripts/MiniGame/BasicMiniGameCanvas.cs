@@ -8,6 +8,7 @@ public class BasicMiniGameCanvas : MonoBehaviour
     [SerializeField] private TutorialCanvas tutorialCanvas;
     [SerializeField] private CanvasGroup gameStartGroup;
     [SerializeField] private TMP_Text timeTxt;
+    [SerializeField] private TMP_Text countNumTxt;
     [SerializeField] private CanvasGroup curtain;
     [SerializeField] private float punchDuration = 0.25f;
     [SerializeField] private float fadeDuration = 0.45f;
@@ -87,6 +88,14 @@ public class BasicMiniGameCanvas : MonoBehaviour
 
         StopCoroutine(_timeAttackCoroutine);
         _timeAttackCoroutine = null;
+    }
+
+    public void SetCount(int currentCount, int totalCount)
+    {
+        if (countNumTxt == null)
+            return;
+
+        countNumTxt.text = $"{Mathf.Max(0, currentCount)}/{Mathf.Max(0, totalCount)}";
     }
 
     private IEnumerator TimeAttackCoroutine(int seconds)

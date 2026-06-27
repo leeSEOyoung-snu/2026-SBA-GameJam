@@ -14,6 +14,7 @@ public class PhotoManager : SoloBattleBase
 
     [Header("References")]
     [SerializeField] private PhotoHechi hechi;
+    [SerializeField] private BasicMiniGameCanvas basicMiniGameCanvas;
     // 플레이어 1~4 대표 이미지 (인스펙터에서 순서대로 연결)
     [SerializeField] private Transform[] playerIcons = new Transform[4];
 
@@ -45,6 +46,9 @@ public class PhotoManager : SoloBattleBase
 
         hechi.OnExited += OnHechiExited;
         hechi.gameObject.SetActive(false);
+        if (basicMiniGameCanvas == null)
+            basicMiniGameCanvas = FindAnyObjectByType<BasicMiniGameCanvas>(FindObjectsInactive.Include);
+        UpdateHechiPassCount(0);
 
         StartCoroutine(InputRoutine());
         StartCoroutine(GameRoutine());
@@ -114,6 +118,15 @@ public class PhotoManager : SoloBattleBase
     private void OnHechiExited()
     {
         _hechiVisible = false;
+        UpdateHechiPassCount(_currentRound);
+    }
+
+    private void UpdateHechiPassCount(int passedCount)
+    {
+        if (basicMiniGameCanvas == null)
+            return;
+
+        basicMiniGameCanvas.SetCount(passedCount, totalRounds);
     }
 
     private void EndGame()
