@@ -34,10 +34,17 @@ public class BokBokHandVisual : MonoBehaviour
     public void PlayStroke()
     {
         _seq?.Kill(complete: false);
-        transform.localPosition = _originLocalPos;
+
+        float downTarget = _originLocalPos.y - strokeDistance;
+        float currentY   = transform.localPosition.y;
+
+        // 현재 위치 기준 남은 거리 비율로 duration 조정 → 속도 일정하게 유지
+        float downDist   = Mathf.Abs(currentY - downTarget);
+        float totalDist  = strokeDistance;
+        float downT      = strokeDownDuration * Mathf.Clamp01(downDist / totalDist);
 
         _seq = DOTween.Sequence();
-        _seq.Append(transform.DOLocalMoveY(_originLocalPos.y - strokeDistance, strokeDownDuration).SetEase(strokeDownEase));
-        _seq.Append(transform.DOLocalMoveY(_originLocalPos.y,                  strokeUpDuration).SetEase(strokeUpEase));
+        _seq.Append(transform.DOLocalMoveY(downTarget,          Mathf.Max(downT, 0.04f)).SetEase(strokeDownEase));
+        _seq.Append(transform.DOLocalMoveY(_originLocalPos.y,   strokeUpDuration).SetEase(strokeUpEase));
     }
 }
