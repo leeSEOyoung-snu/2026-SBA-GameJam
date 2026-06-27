@@ -8,17 +8,18 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private Board board;
     [SerializeField] private MainGameLoop gameLoop;
     [SerializeField] private GamePiece piece;
+    [SerializeField] private HatchUiCanvasManager hatchCanvasManager;
     
     private StateContainer _stateContainer;
 
     private void OnEnable()
     {
-        GameManager.Instance.OnStateChanged += OnStateChanged;
+        GameManager.Instance.OnMiniGameQuited += OnMiniGameQuited;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnStateChanged -= OnStateChanged;
+        GameManager.Instance.OnMiniGameQuited -= OnMiniGameQuited;
     }
 
     private void Start()
@@ -34,9 +35,20 @@ public class MainSceneManager : MonoBehaviour
         // TODO: 엔딩 로직 연결
     }
 
-    private void OnStateChanged(Dictionary<StateTypes, int> deltaStates)
+    private void OnMiniGameQuited(Dictionary<StateTypes, int> deltaStates)
     {
         _stateContainer.ApplyDeltaStats(deltaStates);
-        Debug.Log(_stateContainer);
+        //Debug.Log(_stateContainer);
+        
+        StartCoroutine(OnMiniGameQuitedCoroutine());
+    }
+
+    private IEnumerator OnMiniGameQuitedCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        yield return hatchCanvasManager.UpdateStates(_stateContainer.CommonStats);
+        
+        GameManager.Instance.SetActiveAllInput(true);
+        GameManager.Instance.IsMiniGameRunning = false;
     }
 }

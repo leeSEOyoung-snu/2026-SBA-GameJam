@@ -994,9 +994,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1880502705
+  m_SortingLayer: 1
+  m_SortingOrder: -10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5178387676769076979, guid: 47a3b06218e3146579df8d21c175e631, type: 3}
   m_Color: {r: 0.9575472, g: 0.96370417, b: 1, a: 1}
@@ -1730,6 +1730,7 @@ MonoBehaviour:
   board: {fileID: 1184155061}
   gameLoop: {fileID: 1385401478}
   piece: {fileID: 1746608229}
+  hatchCanvasManager: {fileID: 1483713370}
 --- !u!114 &1385401478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,6 +1805,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6075723080815986599, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
   m_PrefabInstance: {fileID: 1424076483}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1483713370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2429731616657445827, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
+  m_PrefabInstance: {fileID: 702160501}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4b3b1fa9a0127409d71cc872625893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HatchUiCanvasManager
 --- !u!1001 &1725108007
 PrefabInstance:
   m_ObjectHideFlags: 0

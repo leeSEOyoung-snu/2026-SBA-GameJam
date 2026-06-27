@@ -12,9 +12,9 @@ public partial class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    public bool IsMiniGameRunning { get; private set; }
+    public bool IsMiniGameRunning { get; set; }
 
-    public Action<Dictionary<StateTypes, int>> OnStateChanged;
+    public Action<Dictionary<StateTypes, int>> OnMiniGameQuited;
 
     private JoyConInputManager _inputManager;
 
@@ -149,13 +149,15 @@ public partial class GameManager : MonoBehaviour
 
     private IEnumerator QuitMiniGameRoutine(Dictionary<StateTypes, int> deltaStates)
     {
+        // TODO: 로딩 화면 들어오면 순서 다시 정리
+        
         yield return SceneManager.UnloadSceneAsync(_currentMiniGameSceneIdx);
         _currentMiniGameSceneIdx = -1;
-        IsMiniGameRunning = false;
+        //IsMiniGameRunning = false;
 
         RestoreMainScene();
 
         Debug.Log("[GameManager] 미니게임 씬 종료, Main으로 복귀");
-        OnStateChanged?.Invoke(deltaStates);
+        OnMiniGameQuited?.Invoke(deltaStates);
     }
 }

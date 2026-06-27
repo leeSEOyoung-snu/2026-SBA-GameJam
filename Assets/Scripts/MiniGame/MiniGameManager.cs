@@ -47,6 +47,8 @@ public class MiniGameManager : MonoBehaviour
 
     public void QuitMiniGame()
     {
+        GameManager.Instance.SetActiveAllInput(false);
+        
         Dictionary<StateTypes, int> delta = CalculateStatesDelta();
         StartCoroutine(QuitMiniGameCoroutine(delta));
     }
