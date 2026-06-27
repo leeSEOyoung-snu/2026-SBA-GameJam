@@ -6,17 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class HechiChaseGame : OneVsThreeBase
 {
-    [SerializeField] private GameObject hechiPrefab;
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private Vector3[] playerInitPos; // 4개 필요
-    [SerializeField] private Vector3 hechiInitPos;
+    [SerializeField] private ChaseCharacterController[] players;
+    [SerializeField] private ChaseCharacterController hechi;
 
     [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
 
     [Header("결과 델타 (해치 승리)")]
     [SerializeField] private int hechiWinNightmare = 5;
+    private List<ChaseCharacterController> _normalPlayers = new List<ChaseCharacterController>();
 
-    private readonly List<ChaseCharacterController> _normalPlayers = new();
     private int _totalPlayers;
     private bool _gameOver;
 
@@ -25,6 +23,7 @@ public class HechiChaseGame : OneVsThreeBase
 
     private void Start()
     {
+        InitCharacters();
         MiniGameManager.Instance?.ArrangeOneVsThreePlayerLayout(OnePlayerId);
         StartCoroutine(WaitForGameStart());
     }
@@ -36,28 +35,31 @@ public class HechiChaseGame : OneVsThreeBase
         BasicMiniGameCanvas.OnGameStarted += Handler;
         yield return new WaitUntil(() => started);
         BasicMiniGameCanvas.OnGameStarted -= Handler;
-
-        SpawnCharacters();
+        
         if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
             StartCoroutine(TimerRoutine());
     }
 
-    private void SpawnCharacters()
+    private void InitCharacters()
     {
         Debug.Log($"[HechiChase] 해치: Player {OnePlayerId}");
-        int playerCnt = 0;
         for (int i = 1; i <= 4; i++)
         {
             bool isHechi = i == OnePlayerId;
-            var prefab = isHechi ? hechiPrefab : playerPrefab;
-            var pos = isHechi ? hechiInitPos : playerInitPos[playerCnt++];
-            var character = Instantiate(prefab, pos, Quaternion.identity);
-            SceneManager.MoveGameObjectToScene(character.gameObject, gameObject.scene);
-            character.GetComponent<ChaseCharacterController>().Init(isHechi, OnPlayerEliminated);
-            character.GetComponent<MiniGameCharacterController>().Init(i);
 
-            if (!isHechi)
-                _normalPlayers.Add(character.GetComponent<ChaseCharacterController>());
+            if (isHechi)
+            {
+                players[i - 1].gameObject.SetActive(false);
+                hechi.transform.position = players[i - 1].transform.position;
+                hechi.GetComponent<MiniGameCharacterController>().Init(i);
+                hechi.Init(isHechi, OnPlayerEliminated);
+            }
+            else
+            {
+                players[i-1].GetComponent<MiniGameCharacterController>().Init(i);
+                players[i-1].Init(isHechi, OnPlayerEliminated);
+                _normalPlayers.Add(players[i-1]);
+            }
         }
 
         _totalPlayers = _normalPlayers.Count;

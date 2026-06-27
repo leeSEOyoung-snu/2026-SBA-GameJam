@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chase Character Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8032481396786665072, guid: d158ecafd2eac44469f03fa5bdcd7a63, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -81,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopViewPhysics
   moveSpeed: 8
+  stickOnly: 0
 --- !u!114 &2200959224544202630
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -48,7 +48,7 @@ public class PlayableCharacterVisual : MonoBehaviour
         if (spriteRenderer == null || Mathf.Abs(moveX) <= 0.01f)
             return;
 
-        spriteRenderer.flipX = moveX < 0f;
+        spriteRenderer.flipX = moveX > 0f;
     }
 
     public void DamagedVFX()
