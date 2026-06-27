@@ -461,32 +461,38 @@ MonoBehaviour:
     condition1: 0
     condition2: 0
     mainSprite: {fileID: 3946799784144726957, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
-    miniGameSprite: {fileID: 3946799784144726957, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -985104839247392912, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uD0A4\uCE58"
   - conditionCnt: 1
     condition1: 1
     condition2: 0
     mainSprite: {fileID: -7869426889365227963, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
-    miniGameSprite: {fileID: -7869426889365227963, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -5553395156517545934, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: 
   - conditionCnt: 1
     condition1: 2
     condition2: 0
     mainSprite: {fileID: -1556239395278294545, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
-    miniGameSprite: {fileID: -1556239395278294545, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -6590652200032028289, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: 
   - conditionCnt: 1
     condition1: 4
     condition2: 0
     mainSprite: {fileID: 7272622380396766534, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
-    miniGameSprite: {fileID: 7272622380396766534, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -5442387875173955805, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: 
   - conditionCnt: 1
     condition1: 3
     condition2: 0
     mainSprite: {fileID: -1826788655063610993, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
-    miniGameSprite: {fileID: -1826788655063610993, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 2586945028505827405, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: 
   - conditionCnt: 1
     condition1: 0
     condition2: 0
     mainSprite: {fileID: -8586438118734609808, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
-    miniGameSprite: {fileID: -8586438118734609808, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 7130850037475945122, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: 
 --- !u!1 &8374999925384097186
 GameObject:
   m_ObjectHideFlags: 0

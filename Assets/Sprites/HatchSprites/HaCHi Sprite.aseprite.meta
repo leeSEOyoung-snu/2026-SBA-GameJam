@@ -1,0 +1,1589 @@
+fileFormatVersion: 2
+guid: e110b8752db5e664ea24033017031d56
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 32
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 0
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 0
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 639182169416117717
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: SkaCHi
+    originalName: 
+    pivot: {x: 0.627451, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 239
+      y: 69
+      width: 51
+      height: 59
+    spriteID: ad483f31513e6d943b8df5fd66c6cd4c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 239, y: 69}
+  - name: Broken
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 224
+      y: 140
+      width: 48
+      height: 58
+    spriteID: 02fae63846fa09344985dd33f67612eb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 224, y: 140}
+  - name: Boom
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 337
+      y: 140
+      width: 48
+      height: 54
+    spriteID: f98a5305744dbe74bb2887d1574cad42
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 337, y: 140}
+  - name: Diaper
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 456
+      y: 4
+      width: 48
+      height: 41
+    spriteID: b6a28aedcb3d022459db9cb3acfce0c7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 456, y: 4}
+  - name: Monokuma
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 298
+      y: 69
+      width: 48
+      height: 61
+    spriteID: 31ab0fa5c798e214a883c435ec625b11
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 298, y: 69}
+  - name: Ddong
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 352
+      y: 4
+      width: 48
+      height: 46
+    spriteID: d8b04ffac31ef124583d66124f0aafdf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 352, y: 4}
+  - name: Menhera
+    originalName: 
+    pivot: {x: 0.6530612, y: -0.019607844}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 128
+      y: 4
+      width: 49
+      height: 51
+    spriteID: 9cef5e6600e0ea145a209d8cd5201d53
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 128, y: 4}
+  - name: Faker
+    originalName: 
+    pivot: {x: 0.82051283, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 212
+      width: 39
+      height: 62
+    spriteID: fdc690cd7f51bf14eae4529207588801
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 212}
+  - name: Miku
+    originalName: 
+    pivot: {x: 0.53333336, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 60
+      height: 57
+    spriteID: a84bfa0690a8f0d4695dc92c918da514
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: PePe
+    originalName: 
+    pivot: {x: 0.68085104, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 354
+      y: 69
+      width: 47
+      height: 62
+    spriteID: b49818bbdf5f52943b09b73ddc93723a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 354, y: 69}
+  - name: GiGaChad
+    originalName: 
+    pivot: {x: 0.7111111, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 463
+      y: 69
+      width: 45
+      height: 59
+    spriteID: dc5df091e4f344549ae47530f5f3b7ce
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 463, y: 69}
+  - name: Child
+    originalName: 
+    pivot: {x: 0.6956522, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 409
+      y: 69
+      width: 46
+      height: 62
+    spriteID: e42906348cfe67445b549a93ea461e98
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 409, y: 69}
+  - name: Flower Die
+    originalName: 
+    pivot: {x: 0.64, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 125
+      y: 69
+      width: 50
+      height: 61
+    spriteID: 58a23b012a9763840a6e4ff6ba962980
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 125, y: 69}
+  - name: Pear
+    originalName: 
+    pivot: {x: 0.6530612, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 449
+      y: 140
+      width: 49
+      height: 52
+    spriteID: 6dd51c4755fbf2342b43a000b28adddc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 449, y: 140}
+  - name: Cocktail
+    originalName: 
+    pivot: {x: 0.72727275, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 172
+      y: 140
+      width: 44
+      height: 64
+    spriteID: 1fa0428dcab84ec4da3579383d450582
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 172, y: 140}
+  - name: Fairy
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 183
+      y: 69
+      width: 48
+      height: 63
+    spriteID: 99f3d9e1ba7651b4f9e7ef47fd7be5d0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 183, y: 69}
+  - name: Sans
+    originalName: 
+    pivot: {x: 0.65957445, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 117
+      y: 140
+      width: 47
+      height: 64
+    spriteID: c3d205b7c441a0f42890404a9dbef76b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 117, y: 140}
+  - name: Flower
+    originalName: 
+    pivot: {x: 0.6666667, y: -0.021276595}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 296
+      y: 4
+      width: 48
+      height: 47
+    spriteID: 8bedf4ce7fb5ec941b65970ae16a0f04
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 296, y: 4}
+  - name: Trash
+    originalName: 
+    pivot: {x: 0.63265306, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 280
+      y: 140
+      width: 49
+      height: 55
+    spriteID: df9626be95085894e9a9e74adb1a5dd0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 280, y: 140}
+  - name: Chicken
+    originalName: 
+    pivot: {x: 0.84210527, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 51
+      y: 212
+      width: 38
+      height: 58
+    spriteID: 40336fbf04eebbb4ab59ea2f9055a453
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 51, y: 212}
+  - name: Kimchi
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 393
+      y: 140
+      width: 48
+      height: 54
+    spriteID: 8eee233d3bdc42c4b82ce3ceb542f82b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 393, y: 140}
+  - name: Bingsu
+    originalName: 
+    pivot: {x: 0.68085104, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 241
+      y: 4
+      width: 47
+      height: 51
+    spriteID: d2a4011069eb79e458c88f4b65c92909
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 241, y: 4}
+  - name: Cart
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 72
+      y: 4
+      width: 48
+      height: 53
+    spriteID: 9c0b54127f84ed04a90cdc45a1d9bda4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 4}
+  - name: Yogurt
+    originalName: 
+    pivot: {x: 0.8648649, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 153
+      y: 212
+      width: 37
+      height: 52
+    spriteID: 7b12b0049667446429fd575dc9463797
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 153, y: 212}
+  - name: Fry
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 212
+      width: 48
+      height: 41
+    spriteID: 8f6cc59b9bbe5694bb18ebe768902123
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 97, y: 212}
+  - name: Dino
+    originalName: 
+    pivot: {x: 0.61538464, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 65
+      y: 69
+      width: 52
+      height: 62
+    spriteID: 491b0cc53510c394391990f4bde8650b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 65, y: 69}
+  - name: Dragon
+    originalName: 
+    pivot: {x: 0.6530612, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 140
+      width: 49
+      height: 64
+    spriteID: 54b5023ce6c052943baeadb3eb131c45
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 140}
+  - name: Unicorn
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 61
+      y: 140
+      width: 48
+      height: 64
+    spriteID: 043bcbfc7dd95254496a418008f1ecdc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 61, y: 140}
+  - name: Gundam
+    originalName: 
+    pivot: {x: 0.8, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 408
+      y: 4
+      width: 40
+      height: 55
+    spriteID: 6ea59058323f4534fb21fc5b2530655b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 408, y: 4}
+  - name: Egg
+    originalName: 
+    pivot: {x: 0.6666667, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 185
+      y: 4
+      width: 48
+      height: 50
+    spriteID: ff19ca7dd8cdce649805bb14b31e8cbd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 185, y: 4}
+  - name: KiCHi
+    originalName: 
+    pivot: {x: 0.5849057, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 69
+      width: 53
+      height: 63
+    spriteID: d1c96f59d93c9594cb01cd4aa35fd652
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 69}
+  spriteSheetImportData: []
+  tileSetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    uuid:
+      value0: 2874780307
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: SkaCHi
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: SkaCHi
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 51
+        height: 59
+      spriteId: ad483f31513e6d943b8df5fd66c6cd4c
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 1
+    uuid:
+      value0: 2354134407
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Broken
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Broken
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 58
+      spriteId: 02fae63846fa09344985dd33f67612eb
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 2
+    uuid:
+      value0: 1770476363
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Boom
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Boom
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 54
+      spriteId: f98a5305744dbe74bb2887d1574cad42
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 3
+    uuid:
+      value0: 3235829579
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Diaper
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Diaper
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 41
+      spriteId: b6a28aedcb3d022459db9cb3acfce0c7
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 4
+    uuid:
+      value0: 2646981717
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Monokuma
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Monokuma
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 61
+      spriteId: 31ab0fa5c798e214a883c435ec625b11
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 5
+    uuid:
+      value0: 1500815028
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Ddong
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Ddong
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 46
+      spriteId: d8b04ffac31ef124583d66124f0aafdf
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 6
+    uuid:
+      value0: 2511160804
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Menhera
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Menhera
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 1
+        width: 49
+        height: 51
+      spriteId: 9cef5e6600e0ea145a209d8cd5201d53
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 7
+    uuid:
+      value0: 2515801439
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Faker
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Faker
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 39
+        height: 62
+      spriteId: fdc690cd7f51bf14eae4529207588801
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 8
+    uuid:
+      value0: 2745059072
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Miku
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Miku
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 60
+        height: 57
+      spriteId: a84bfa0690a8f0d4695dc92c918da514
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 9
+    uuid:
+      value0: 1407339998
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: PePe
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: PePe
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 47
+        height: 62
+      spriteId: b49818bbdf5f52943b09b73ddc93723a
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 10
+    uuid:
+      value0: 2405272940
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: GiGaChad
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: GiGaChad
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 45
+        height: 59
+      spriteId: dc5df091e4f344549ae47530f5f3b7ce
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 11
+    uuid:
+      value0: 1131291440
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Child
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Child
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 46
+        height: 62
+      spriteId: e42906348cfe67445b549a93ea461e98
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 12
+    uuid:
+      value0: 1440326689
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Flower Die
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Flower Die
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 50
+        height: 61
+      spriteId: 58a23b012a9763840a6e4ff6ba962980
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 13
+    uuid:
+      value0: 291594798
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Pear
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Pear
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 49
+        height: 52
+      spriteId: 6dd51c4755fbf2342b43a000b28adddc
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 14
+    uuid:
+      value0: 3841538964
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Cocktail
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Cocktail
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 44
+        height: 64
+      spriteId: 1fa0428dcab84ec4da3579383d450582
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 15
+    uuid:
+      value0: 1043825761
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Fairy
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Fairy
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 63
+      spriteId: 99f3d9e1ba7651b4f9e7ef47fd7be5d0
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 16
+    uuid:
+      value0: 2422328715
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Sans
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Sans
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 1
+        y: 0
+        width: 47
+        height: 64
+      spriteId: c3d205b7c441a0f42890404a9dbef76b
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 17
+    uuid:
+      value0: 3287463717
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Flower
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Flower
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 1
+        width: 48
+        height: 47
+      spriteId: 8bedf4ce7fb5ec941b65970ae16a0f04
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 18
+    uuid:
+      value0: 3060525932
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Trash
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Trash
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 1
+        y: 0
+        width: 49
+        height: 55
+      spriteId: df9626be95085894e9a9e74adb1a5dd0
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 19
+    uuid:
+      value0: 1534661025
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Chicken
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Chicken
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 38
+        height: 58
+      spriteId: 40336fbf04eebbb4ab59ea2f9055a453
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 20
+    uuid:
+      value0: 2086338441
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Kimchi
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Kimchi
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 54
+      spriteId: 8eee233d3bdc42c4b82ce3ceb542f82b
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 21
+    uuid:
+      value0: 2422356464
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Bingsu
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Bingsu
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 47
+        height: 51
+      spriteId: d2a4011069eb79e458c88f4b65c92909
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 22
+    uuid:
+      value0: 49675204
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Cart
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Cart
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 53
+      spriteId: 9c0b54127f84ed04a90cdc45a1d9bda4
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 23
+    uuid:
+      value0: 1852112128
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Yogurt
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Yogurt
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 37
+        height: 52
+      spriteId: 7b12b0049667446429fd575dc9463797
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 24
+    uuid:
+      value0: 386854157
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Fry
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Fry
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 41
+      spriteId: 8f6cc59b9bbe5694bb18ebe768902123
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 25
+    uuid:
+      value0: 2650950718
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Dino
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Dino
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 52
+        height: 62
+      spriteId: 491b0cc53510c394391990f4bde8650b
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 26
+    uuid:
+      value0: 3886458117
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Dragon
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Dragon
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 49
+        height: 64
+      spriteId: 54b5023ce6c052943baeadb3eb131c45
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 27
+    uuid:
+      value0: 3955363546
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Unicorn
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Unicorn
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 64
+      spriteId: 043bcbfc7dd95254496a418008f1ecdc
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 28
+    uuid:
+      value0: 2686283722
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Gundam
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Gundam
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 40
+        height: 55
+      spriteId: 6ea59058323f4534fb21fc5b2530655b
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 29
+    uuid:
+      value0: 1858829585
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: Egg
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Egg
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 48
+        height: 50
+      spriteId: ff19ca7dd8cdce649805bb14b31e8cbd
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  - layerIndex: 30
+    uuid:
+      value0: 1534585464
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 0
+    name: KiCHi
+    layerFlags: 3
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: KiCHi
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 1
+        y: 0
+        width: 53
+        height: 63
+      spriteId: d1c96f59d93c9594cb01cd4aa35fd652
+    linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
+    parentIndex: -1
+  tileSets: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  generatePhysicsShape: 0
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 64, y: 64}
+  previousTextureSize: {x: 512, y: 512}
