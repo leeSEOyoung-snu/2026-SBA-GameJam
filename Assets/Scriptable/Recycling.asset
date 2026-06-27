@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Recycling
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 4
-  gameTitle: 
-  isTimeAttack: 0
-  timeAttackSeconds: 0
+  gameTitle: "\uC11C\uC6B8\uC758 \uC7AC\uD65C\uC6A9"
+  desc: "<SR>\uACFC<SL>\uB85C \uAE30\uC6B8\uC5EC \uC0C9\uC5D0 \uB9DE\uB294 \uBD84\uB9AC\uC218\uAC70\uB97C
+    \uD574\uB77C!"
+  isTimeAttack: 1
+  timeAttackSeconds: 60
   soloDelta:
     first: 0
     second: 0
@@ -36,5 +38,5 @@ MonoBehaviour:
     nightmareCondition: 
   cooperativeDelta: 3
   cooperativeTutorialText:
-    coopWinCondition: 
-    nightmareCondition: 
+    coopWinCondition: "\uC81C\uD55C\uC2DC\uAC04 \uC548\uC5D0 10\uAC1C\uB97C \uBD84\uB9AC\uC218\uAC70\uD558\uB77C"
+    nightmareCondition: "\uC2E4\uD328\uD558\uBA74 \uC2E4\uD328"

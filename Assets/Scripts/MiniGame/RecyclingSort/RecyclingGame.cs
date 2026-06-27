@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -15,6 +16,8 @@ public class RecyclingGame : CooperativeBase
     [SerializeField] private RecyclingSeesaw[] seesaws;
     [SerializeField] private RecyclingBin[]    bins;
     [SerializeField] private Transform[]       spawnPoints;
+    [SerializeField] private TMP_Text          goalDescText;
+    [SerializeField] private TMP_Text          goalCountText;
 
     [Header("쓰레기 프리팹 (TrashType 순서 0~3)")]
     [SerializeField] private GameObject[] trashPrefabs;
@@ -27,6 +30,7 @@ public class RecyclingGame : CooperativeBase
 
     private int  _spawned;
     private int  _processed;
+    private int  _sortedCorrectly;
     private int  _mistakes;
     private bool _gameOver;
 
@@ -49,6 +53,8 @@ public class RecyclingGame : CooperativeBase
         InitSeesaws();
         InitBins();
         SpawnTrash();
+        UpdateGoalView();
+        SpawnTrash(); // 첫 쓰레기 바로 스폰
     }
 
     private void InitSeesaws()
@@ -108,10 +114,12 @@ public class RecyclingGame : CooperativeBase
         }
         else
         {
+            _sortedCorrectly++;
             Debug.Log("[RecyclingSort] 정확한 분류!");
         }
 
         _processed++;
+        UpdateGoalView();
         CheckAllProcessed();
         ScheduleNextSpawn();
     }
@@ -125,6 +133,7 @@ public class RecyclingGame : CooperativeBase
         if (_mistakes >= mistakeLimit) { EndGame(false); return; }
 
         _processed++;
+        UpdateGoalView();
         CheckAllProcessed();
         ScheduleNextSpawn();
     }
@@ -151,5 +160,14 @@ public class RecyclingGame : CooperativeBase
         if (canvas != null)
             yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
+    }
+
+    private void UpdateGoalView()
+    {
+        if (goalDescText != null)
+            goalDescText.text = "목표 분리수거";
+
+        if (goalCountText != null)
+            goalCountText.text = $"{_sortedCorrectly}/{totalTrash}";
     }
 }
