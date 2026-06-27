@@ -15,6 +15,7 @@ public class MainGameLoop : MonoBehaviour
     private bool _gameEnded;
     private EvolutionCellBehaviour[] _evolutionCells;
     private MainSceneManager _mainSceneManager;
+    private YutThrowCanvasController _yutThrowCanvas;
 
     public void Init(Board board, GamePiece piece)
     {
@@ -22,6 +23,9 @@ public class MainGameLoop : MonoBehaviour
         _piece = piece;
         
         _mainSceneManager = GetComponent<MainSceneManager>();
+        YutThrowCanvasController[] yutThrowCanvases =
+            FindObjectsByType<YutThrowCanvasController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        _yutThrowCanvas = yutThrowCanvases.Length > 0 ? yutThrowCanvases[0] : null;
 
         _players = new IPlayerInputReader[PlayerCount];
         for (int i = 0; i < PlayerCount; i++)
@@ -56,6 +60,12 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator ThrowYutPhase(Action<YutType> onComplete)
     {
+        if (_yutThrowCanvas != null && _yutThrowCanvas.isActiveAndEnabled)
+        {
+            yield return StartCoroutine(_yutThrowCanvas.PlayThrowRoutine(_players, onComplete));
+            yield break;
+        }
+
         bool[] results   = new bool[PlayerCount];
         bool[] hasThrown = new bool[PlayerCount];
         int thrownCount  = 0;
