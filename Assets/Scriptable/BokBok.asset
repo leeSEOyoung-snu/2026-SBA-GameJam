@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37fc19b7565804143866670029ac76c6, type: 3}
-  m_Name: Photo
+  m_Name: BokBok
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 0
-  gameTitle: "\uD574\uCE58\uC640 \uD3EC\uD1A0\uD0C0\uC784"
-  isTimeAttack: 0
-  timeAttackSeconds: 0
+  gameTitle: "\uD574\uCE58\uB97C \uC4F0\uB2E4\uB4EC\uC5B4\uB77C!"
+  isTimeAttack: 1
+  timeAttackSeconds: 30
   soloDelta:
     first: 3
     second: 2
     third: 1
     fourth: 0
   soloBattleTutorialText:
-    soloWinCondition: "\uAC00\uC7A5 \uB9CE\uC774 \uCC0D\uC740 \uC0AC\uB78C\uC774
-      \uC6B0\uC2B9!"
-    nightmareCondition: "\uC798\uBABB \uCC0D\uC73C\uBA74 \uC545\uBABD \uC218\uCE58
-      \uB204\uC801"
+    soloWinCondition: "30\uCD08 \uC548\uC5D0 \uD574\uCE58\uB97C \uC4F0\uB2E4\uB4EC\uACE0\n\uD574\uCE58\uB97C
+      \uB9CC\uC871\uC2DC\uD0A4\uC790!"
+    nightmareCondition: "\uD574\uCE58\uB97C \uB9CC\uC871\uC2DC\uD0A4\uC9C0 \uBABB\uD558\uBA74\n\uD328\uBC30"
   oneVsThreeDelta:
     oneWin: 0
     threeWin: 0

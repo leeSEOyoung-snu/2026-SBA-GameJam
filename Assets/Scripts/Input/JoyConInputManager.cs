@@ -17,7 +17,7 @@ public class JoyConInputManager : MonoBehaviour
             swingDetectors.ForEach(s => s.OnSwing += HandleSwing);
         
         _joyConMotion = GetComponent<JoyConMotion>();
-        _joyConMotion.GetPrefabDefinition();
+        _joyConMotion.Init();
         
         players.ForEach(s => s.Init());
     }

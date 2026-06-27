@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwingDetector
   playerIndex: 2
   side: 76
-  threshold: 3
+  threshold: 4
   cooldown: 0.4
 --- !u!1 &1480898716679346342
 GameObject:
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwingDetector
   playerIndex: 1
   side: 82
-  threshold: 3
+  threshold: 4
   cooldown: 0.4
 --- !u!1 &3115334269352653300
 GameObject:
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwingDetector
   playerIndex: 2
   side: 82
-  threshold: 3
+  threshold: 4
   cooldown: 0.4
 --- !u!1 &7531861020305292450
 GameObject:
@@ -583,5 +583,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwingDetector
   playerIndex: 1
   side: 76
-  threshold: 3
+  threshold: 4
   cooldown: 0.4
