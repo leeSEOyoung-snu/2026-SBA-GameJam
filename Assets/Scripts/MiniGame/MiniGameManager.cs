@@ -36,6 +36,9 @@ public class MiniGameManager : MonoBehaviour
         }
 
         if (basicCanvas != null)
+            yield return basicCanvas.HideCurtain().WaitForCompletion();
+
+        if (basicCanvas != null)
             yield return basicCanvas.PlayGameStart().WaitForCompletion();
     }
 

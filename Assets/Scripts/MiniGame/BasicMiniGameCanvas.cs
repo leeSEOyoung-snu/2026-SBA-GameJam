@@ -5,8 +5,10 @@ using UnityEngine;
 public class BasicMiniGameCanvas : MonoBehaviour
 {
     [SerializeField] private TMP_Text gameStartTxt;
+    [SerializeField] private CanvasGroup curtain;
     [SerializeField] private float punchDuration = 0.25f;
     [SerializeField] private float fadeDuration = 0.45f;
+    [SerializeField] private float curtainFadeDuration = 0.1f;
     [SerializeField] private Ease ease = Ease.OutBack;
 
     private void Awake()
@@ -32,6 +34,15 @@ public class BasicMiniGameCanvas : MonoBehaviour
         sequence.Append(DOTween.To(() => gameStartTxt.color.a, SetGameStartAlpha, 0f, fadeDuration).SetTarget(gameStartTxt).SetEase(Ease.InQuad).SetUpdate(true));
         sequence.OnComplete(SetHidden);
         return sequence;
+    }
+
+    public Tween HideCurtain()
+    {
+        if (curtain == null)
+            return DOTween.Sequence();
+
+        curtain.DOKill();
+        return curtain.DOFade(0f, curtainFadeDuration);
     }
 
     private void SetGameStartAlpha(float alpha)
