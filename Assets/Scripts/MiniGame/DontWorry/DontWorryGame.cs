@@ -1,18 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DontWorryGame : OneVsThreeBase
 {
-    [SerializeField] private GameObject fakeHachiPrefab;
-    [SerializeField] private GameObject aiHachiPrefab;
-    [SerializeField] private GameObject crosshairPrefab;
-
-    [Header("랜덤 스폰 범위")]
-    [SerializeField] private Vector2 spawnMin = new(-7f, -3.5f);
-    [SerializeField] private Vector2 spawnMax = new(7f, 3.5f);
-    [SerializeField] private float minSpawnDistance = 1.5f; // 캐릭터 간 최소 거리
+    [SerializeField] private DontWorryAIHachi aiHachi;
+    [SerializeField] private DontWorryCrosshair crosshair;
+    [SerializeField] private List<DontWorryFakeHachiController> fakeHachis;
 
     [Header("결과 델타")]
     [SerializeField] private int realHachiShotNightmare = 5;
@@ -26,72 +20,58 @@ public class DontWorryGame : OneVsThreeBase
     private void Start()
     {
         FindObjectOfType<DontWorryPlayerCanvasManager>()?.Init(OnePlayerId);
-        SpawnCharacters();
+        InitSceneCharacters();
         if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
             StartCoroutine(TimerRoutine());
     }
 
-    private void SpawnCharacters()
+    private void InitSceneCharacters()
     {
         Debug.Log($"[DontWorry] 슈터: Player {OnePlayerId}");
 
-        var usedPositions = new List<Vector2>();
+        if (fakeHachis == null)
+            fakeHachis = new List<DontWorryFakeHachiController>();
 
-        // AI 해치 생성
-        var aiPos = GetRandomSpawnPosition(usedPositions);
-        usedPositions.Add(aiPos);
-        var aiObj = Instantiate(aiHachiPrefab, (Vector3)aiPos, Quaternion.identity);
-        SceneManager.MoveGameObjectToScene(aiObj, gameObject.scene);
+        if (aiHachi == null)
+            Debug.LogWarning("[DontWorry] AI 해치가 씬에 할당되지 않았습니다.", this);
 
-        // 크로스헤어 생성
-        var crosshairObj = Instantiate(crosshairPrefab, Vector3.zero, Quaternion.identity);
-        SceneManager.MoveGameObjectToScene(crosshairObj, gameObject.scene);
-        crosshairObj.GetComponent<DontWorryCrosshair>().Init(OnePlayerId, OnShotFired);
+        if (crosshair == null)
+            Debug.LogWarning("[DontWorry] 크로스헤어가 씬에 할당되지 않았습니다.", this);
+        else
+            crosshair.Init(OnePlayerId, OnShotFired);
 
-        // 가짜 해치 3명 생성
+        int fakeIndex = 0;
         for (int i = 1; i <= 4; i++)
         {
             if (i == OnePlayerId) continue;
 
-            var pos = GetRandomSpawnPosition(usedPositions);
-            usedPositions.Add(pos);
+            if (fakeIndex >= fakeHachis.Count || fakeHachis[fakeIndex] == null)
+            {
+                Debug.LogWarning($"[DontWorry] Player {i}용 가짜 해치가 씬에 할당되지 않았습니다.", this);
+                fakeIndex++;
+                continue;
+            }
 
-            var fakeObj = Instantiate(fakeHachiPrefab, (Vector3)pos, Quaternion.identity);
-            SceneManager.MoveGameObjectToScene(fakeObj, gameObject.scene);
-
-            var fake = fakeObj.GetComponent<DontWorryFakeHachiController>();
+            DontWorryFakeHachiController fake = fakeHachis[fakeIndex];
             fake.Init(i, OnFakeEliminated);
 
-            fakeObj.GetComponent<MiniGameCharacterController>().Init(i);
+            MiniGameCharacterController character = fake.GetComponent<MiniGameCharacterController>();
+            if (character != null)
+                character.Init(i);
+
+            SetupSceneFakeHachi(fake.gameObject);
             _fakePlayers.Add(fake);
+            fakeIndex++;
         }
     }
 
-    private Vector2 GetRandomSpawnPosition(List<Vector2> usedPositions)
+    private void SetupSceneFakeHachi(GameObject fakeObj)
     {
-        const int maxAttempts = 30;
-        for (int i = 0; i < maxAttempts; i++)
-        {
-            var candidate = new Vector2(
-                Random.Range(spawnMin.x, spawnMax.x),
-                Random.Range(spawnMin.y, spawnMax.y)
-            );
+        CharacterMoveDust moveDust = fakeObj.GetComponent<CharacterMoveDust>();
+        if (moveDust != null)
+            moveDust.enabled = false;
 
-            bool tooClose = false;
-            foreach (var used in usedPositions)
-            {
-                if (Vector2.Distance(candidate, used) < minSpawnDistance)
-                {
-                    tooClose = true;
-                    break;
-                }
-            }
-
-            if (!tooClose) return candidate;
-        }
-
-        // 30번 시도 후 실패하면 그냥 랜덤 위치 반환
-        return new Vector2(Random.Range(spawnMin.x, spawnMax.x), Random.Range(spawnMin.y, spawnMax.y));
+        MiniGameManager.Instance.ApplyCurrentMiniGameHechiSprite(fakeObj);
     }
 
     // 크로스헤어가 발사됐을 때 호출

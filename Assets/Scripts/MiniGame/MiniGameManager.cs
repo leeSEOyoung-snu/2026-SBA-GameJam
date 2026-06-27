@@ -147,6 +147,31 @@ public class MiniGameManager : MonoBehaviour
         }
     }
 
+    public void ApplyCurrentMiniGameHechiSprite(GameObject target)
+    {
+        if (target == null)
+            return;
+
+        Sprite hechiSprite = GameManager.Instance.GetHechiSpriteOnMiniGame();
+        if (hechiSprite == null)
+        {
+            Debug.LogWarning("Current mini game Hechi sprite not found.");
+            return;
+        }
+
+        SpriteRenderer spriteRenderer = target.GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+            spriteRenderer = target.GetComponentInChildren<SpriteRenderer>(true);
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogWarning($"SpriteRenderer not found: {target.name}");
+            return;
+        }
+
+        spriteRenderer.sprite = hechiSprite;
+    }
+
     private RectTransform[] GetPlayerSlotsById(RectTransform playersContainer)
     {
         RectTransform[] slotsById = new RectTransform[4];
