@@ -14,5 +14,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGame/Chase.unity
     guid: 1155c23c6077f5c46bab8d8ddf764c43
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/DuckBoat.unity
+    guid: b978c1eb9b81e5a4fb2e9b9c9cca4b94
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/DontWorry.unity
+    guid: 9f122a3b1f8b725489c701b104abe3a5
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/HechiBollyBall.unity
+    guid: dff3104343ffe42429efb8fc7f6a95f7
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/Ramen.unity
+    guid: 9a94e5df29a4d7141a1c3c14bc8ba92d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
