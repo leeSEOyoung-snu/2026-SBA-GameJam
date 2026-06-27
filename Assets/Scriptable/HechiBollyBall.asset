@@ -13,13 +13,31 @@ MonoBehaviour:
   m_Name: HechiBollyBall
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 1
+  gameTitle: "\uD574\uCE58 \uBC1C\uB9AC \uBCFC"
+  isTimeAttack: 0
+  timeAttackSeconds: 0
   soloDelta:
     first: 0
     second: 0
     third: 0
     fourth: 0
+  soloBattleTutorialText:
+    soloWinCondition: 
+    nightmareCondition: 
   oneVsThreeDelta:
     oneWin: 3
     threeWin: 2
+  oneVsThreeTutorialText:
+    oneWinCondition: "\uD574\uCE58\uB97C \uC870\uC885\uD574 \uC0C1\uB300\uC758 \uB4A4\uB85C
+      \uACF5\uC744 \uB123\uC5B4\uB77C."
+    threeWinCondition: "\uC138 \uBA85\uC774\uC11C \uD798\uC744 \uD569\uCCD0 \uD574\uCE58\uC758
+      \uB4A4\uB85C \uACF5\uC744 \uB123\uC5B4\uB77C. \uC2B9\uB9AC\uD558\uBA74 \uC545\uBB49\uC774
+      5 \uC99D\uAC00."
   twoVsTwoDelta: 0
+  twoVsTwoTutorialText:
+    twoWinCondition: 
+    nightmareCondition: 
   cooperativeDelta: 0
+  cooperativeTutorialText:
+    coopWinCondition: 
+    nightmareCondition: 

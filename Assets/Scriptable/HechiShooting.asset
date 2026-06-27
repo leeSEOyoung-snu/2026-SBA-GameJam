@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HechiShooting
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 0
-  gameTitle: 
+  gameTitle: "\uD574\uCE58\uC6CC\uB77C! \uC545\uBABD\uB4E4."
   isTimeAttack: 0
   timeAttackSeconds: 0
   soloDelta:
@@ -22,8 +22,11 @@ MonoBehaviour:
     third: 1
     fourth: 0
   soloBattleTutorialText:
-    soloWinCondition: 
-    nightmareCondition: 
+    soloWinCondition: "\uC545\uBABD\uB4E4\uC744 \uC5C6\uC568 \uB54C\uB9C8\uB2E4 1\uC810\uC529
+      \uC99D\uAC00\uD55C\uB2E4! \uAC00\uC7A5 \uB9CE\uC740 \uC810\uC218\uB97C \uC313\uC740
+      \uC0AC\uB78C\uC774 \uC2B9\uB9AC!"
+    nightmareCondition: "\uD574\uCE58\uB97C \uC138 \uBC88 \uC3D8\uBA74 \uD328\uBC30!
+      \uC545\uBABD\uC774 5 \uC99D\uAC00\uD55C\uB2E4."
   oneVsThreeDelta:
     oneWin: 0
     threeWin: 0

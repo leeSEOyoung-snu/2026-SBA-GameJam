@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class HechiShootingGame : AffectionBattleBase
+public class HechiShootingGame : SoloBattleBase
 {
     [SerializeField] private GameObject crosshairPrefab;
     [SerializeField] private GameObject nightmarePrefab;
@@ -24,10 +24,10 @@ public class HechiShootingGame : AffectionBattleBase
     private bool _gameOver;
     private bool _hachiKilledGame;
 
-    public override int AffectionDeltaPlayer1 { get; protected set; }
-    public override int AffectionDeltaPlayer2 { get; protected set; }
-    public override int AffectionDeltaPlayer3 { get; protected set; }
-    public override int AffectionDeltaPlayer4 { get; protected set; }
+    public override int RankPlayer1 { get; protected set; }
+    public override int RankPlayer2 { get; protected set; }
+    public override int RankPlayer3 { get; protected set; }
+    public override int RankPlayer4 { get; protected set; }
     public override int NightmareDelta { get; protected set; }
 
     private void Start()
@@ -53,11 +53,7 @@ public class HechiShootingGame : AffectionBattleBase
             var crosshairObj = Instantiate(crosshairPrefab, Vector3.zero, Quaternion.identity);
             SceneManager.MoveGameObjectToScene(crosshairObj, gameObject.scene);
             int playerId = i;
-            crosshairObj.GetComponent<HechiShootingCrosshair>().Init(
-                playerId,
-                OnNightmareHit,
-                () => { } // 해치를 맞춰도 크로스헤어 쪽엔 별도 처리 없음
-            );
+            crosshairObj.GetComponent<HechiShootingCrosshair>().Init(playerId, OnNightmareHit, () => { });
         }
     }
 
@@ -68,7 +64,6 @@ public class HechiShootingGame : AffectionBattleBase
             yield return new WaitForSeconds(nightmareSpawnInterval);
             if (_gameOver) yield break;
 
-            // 현재 살아있는 악몽 수 확인
             var existing = FindObjectsByType<HechiShootingNightmare>(FindObjectsSortMode.None);
             if (existing.Length < maxNightmares)
                 SpawnNightmare();
@@ -90,7 +85,6 @@ public class HechiShootingGame : AffectionBattleBase
 
     private void OnNightmareHit(int playerId)
     {
-        // 점수는 nightmare가 destroyed될 때 주지 않고, 크로스헤어 히트 시 바로 부여
         _scores[playerId]++;
         Debug.Log($"[HechiShooting] Player {playerId} 점수: {_scores[playerId]}");
     }
@@ -131,23 +125,22 @@ public class HechiShootingGame : AffectionBattleBase
 
         NightmareDelta = _hachiKilledGame ? hachiShotNightmareDelta : 0;
 
-        // 랭킹 계산 (점수 내림차순, 동점이면 낮은 playerId 우선)
+        // 점수 내림차순 정렬 → 순위 부여
         var ranking = new List<int> { 1, 2, 3, 4 };
         ranking.Sort((a, b) =>
         {
-            int scoreDiff = _scores[b] - _scores[a];
-            return scoreDiff != 0 ? scoreDiff : a - b;
+            int diff = _scores[b] - _scores[a];
+            return diff != 0 ? diff : a - b;
         });
 
-        int[] affectionByRank = { 3, 2, 1, 0 };
-        int[] affection = new int[5];
+        int[] rankResult = new int[5];
         for (int i = 0; i < ranking.Count; i++)
-            affection[ranking[i]] = affectionByRank[i];
+            rankResult[ranking[i]] = i + 1; // 1등=1, 2등=2, ...
 
-        AffectionDeltaPlayer1 = affection[1];
-        AffectionDeltaPlayer2 = affection[2];
-        AffectionDeltaPlayer3 = affection[3];
-        AffectionDeltaPlayer4 = affection[4];
+        RankPlayer1 = rankResult[1];
+        RankPlayer2 = rankResult[2];
+        RankPlayer3 = rankResult[3];
+        RankPlayer4 = rankResult[4];
 
         Debug.Log($"[HechiShooting] 결과 - 1등:{ranking[0]} 2등:{ranking[1]} 3등:{ranking[2]} 4등:{ranking[3]}");
 
