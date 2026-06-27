@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: 5327a0c7d28af4161acd706286b679c2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3571015683998384748
+    second: PhotoArea_0
+  - first:
+      213: 9184254828795670874
+    second: PhotoArea_1
+  - first:
+      213: -2397023758182301745
+    second: PhotoArea_2
+  - first:
+      213: -7448990856229504626
+    second: PhotoArea_3
+  - first:
+      213: -7563840464259587624
+    second: PhotoArea_4
+  - first:
+      213: -7172863529757407494
+    second: PhotoArea_5
+  - first:
+      213: 5400857736188844358
+    second: PhotoArea_6
+  - first:
+      213: 2787884450899620471
+    second: PhotoArea_7
+  - first:
+      213: 3548493420008464657
+    second: PhotoArea_8
+  - first:
+      213: 7463488168108537103
+    second: PhotoArea_9
+  - first:
+      213: 2248161074824227626
+    second: PhotoArea_10
+  - first:
+      213: 5988656544849773164
+    second: PhotoArea_11
+  - first:
+      213: 9071238388338731224
+    second: PhotoArea_12
+  - first:
+      213: 1147047927344628987
+    second: PhotoArea_13
+  - first:
+      213: -6675234205806044978
+    second: PhotoArea_14
+  - first:
+      213: -1975020363047887662
+    second: PhotoArea_15
+  - first:
+      213: -2458765663122943849
+    second: PhotoArea_16
+  - first:
+      213: 3503268783414207691
+    second: PhotoArea_17
+  - first:
+      213: 995797774202976589
+    second: PhotoArea_18
+  - first:
+      213: 934604021375318220
+    second: PhotoArea_19
+  - first:
+      213: 7791150382827062007
+    second: PhotoArea_20
+  - first:
+      213: 3141122745177892281
+    second: PhotoArea_21
+  - first:
+      213: -461343518130876433
+    second: PhotoArea_22
+  - first:
+      213: 6548880891476058208
+    second: PhotoArea_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 33
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PhotoArea_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 155
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49d7debc724317ec0800000000000000
+      internalID: -3571015683998384748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_1
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 168
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5138054b17057f70800000000000000
+      internalID: 9184254828795670874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_2
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 168
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcf3f57879f0cbed0800000000000000
+      internalID: -2397023758182301745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_3
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 168
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e89be4f584edf9890800000000000000
+      internalID: -7448990856229504626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_4
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 168
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d1e4163c27d70790800000000000000
+      internalID: -7563840464259587624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_5
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 168
+        width: 26
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af684768f9ed47c90800000000000000
+      internalID: -7172863529757407494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_6
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 168
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 649d4fffe73b3fa40800000000000000
+      internalID: 5400857736188844358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_7
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 155
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 772f4b2232e80b620800000000000000
+      internalID: 2787884450899620471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 124
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1116a6bf6f7ce3130800000000000000
+      internalID: 3548493420008464657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_9
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 124
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f05b07512f2a39760800000000000000
+      internalID: 7463488168108537103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 92
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2b22c61692133f10800000000000000
+      internalID: 2248161074824227626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_11
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 92
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c62c695f56bfb1350800000000000000
+      internalID: 5988656544849773164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 58
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d821d1b04383ed70800000000000000
+      internalID: 9071238388338731224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_13
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 58
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf489b933022bef00800000000000000
+      internalID: 1147047927344628987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 25
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec8d4625bddcc53a0800000000000000
+      internalID: -6675234205806044978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_15
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 25
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dc1e54a1715794e0800000000000000
+      internalID: -1975020363047887662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79011af08a5b0edd0800000000000000
+      internalID: -2458765663122943849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_17
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 0
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc46e1cb56c1e9030800000000000000
+      internalID: 3503268783414207691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_18
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 0
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d493e77bcc8c1dd00800000000000000
+      internalID: 995797774202976589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_19
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 0
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc83abbd76168fc00800000000000000
+      internalID: 934604021375318220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_20
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f24e007ef9bf1c60800000000000000
+      internalID: 7791150382827062007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_21
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 0
+        width: 26
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b56a3e8e72879b20800000000000000
+      internalID: 3141122745177892281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_22
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 0
+        width: 27
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fef416ab38af899f0800000000000000
+      internalID: -461343518130876433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PhotoArea_23
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06026cc297c42ea50800000000000000
+      internalID: 6548880891476058208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PhotoArea_0: -3571015683998384748
+      PhotoArea_1: 9184254828795670874
+      PhotoArea_10: 2248161074824227626
+      PhotoArea_11: 5988656544849773164
+      PhotoArea_12: 9071238388338731224
+      PhotoArea_13: 1147047927344628987
+      PhotoArea_14: -6675234205806044978
+      PhotoArea_15: -1975020363047887662
+      PhotoArea_16: -2458765663122943849
+      PhotoArea_17: 3503268783414207691
+      PhotoArea_18: 995797774202976589
+      PhotoArea_19: 934604021375318220
+      PhotoArea_2: -2397023758182301745
+      PhotoArea_20: 7791150382827062007
+      PhotoArea_21: 3141122745177892281
+      PhotoArea_22: -461343518130876433
+      PhotoArea_23: 6548880891476058208
+      PhotoArea_3: -7448990856229504626
+      PhotoArea_4: -7563840464259587624
+      PhotoArea_5: -7172863529757407494
+      PhotoArea_6: 5400857736188844358
+      PhotoArea_7: 2787884450899620471
+      PhotoArea_8: 3548493420008464657
+      PhotoArea_9: 7463488168108537103
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
