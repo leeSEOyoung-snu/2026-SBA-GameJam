@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -19,6 +20,8 @@ public class YutThrowCanvasController : MonoBehaviour
     private const float ActiveBgWobbleAmount = 0.5f;
     private const float ActiveBgWidth = 1500f;
     private const float BgWidthTweenDuration = 0.1f;
+    private const float OpenCloseDuration = 0.25f;
+    private const float ResultScaleDuration = 0.25f;
     private const float CharacterPunchDuration = 0.18f;
     private const int CharacterPunchVibrato = 8;
     private const float CharacterPunchElasticity = 0.8f;
@@ -51,7 +54,10 @@ public class YutThrowCanvasController : MonoBehaviour
 
     [SerializeField] private PlayerThrowView[] players = new PlayerThrowView[PlayerCount];
     [SerializeField] private Image bgImage;
+    [SerializeField] private CanvasGroup innerGroup;
     [SerializeField] private CanvasGroup descGroup;
+    [SerializeField] private CanvasGroup resultGroup;
+    [SerializeField] private TMP_Text resultText;
     [SerializeField] private Sprite[] yutFrontSprites;
     [SerializeField] private Sprite[] yutBackSprites;
     [SerializeField] private float yutTargetY = 1000f;
@@ -67,8 +73,11 @@ public class YutThrowCanvasController : MonoBehaviour
     private RectTransform _bgRect;
     private Material _bgMaterialInstance;
     private float _bgOriginalWidth;
+    private float _bgOriginalHeight;
     private float _bgOriginalSpeed;
     private float _bgOriginalWobbleAmount;
+    private RectTransform _resultRect;
+    private Vector3 _resultOriginalScale = Vector3.one;
 
     private void Awake()
     {
@@ -88,10 +97,55 @@ public class YutThrowCanvasController : MonoBehaviour
         RestoreBgWobble();
     }
 
-    public void Open()
+    public Sequence Open()
     {
         gameObject.SetActive(true);
         ResetView();
+
+        PrepareBgMaterial();
+
+        Sequence sequence = DOTween.Sequence();
+        if (_bgRect != null)
+        {
+            _bgRect.DOKill();
+            _bgRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0f);
+            sequence.Join(_bgRect.DOSizeDelta(new Vector2(_bgOriginalWidth, _bgOriginalHeight), OpenCloseDuration)
+                .SetEase(Ease.OutCubic));
+        }
+
+        if (innerGroup != null)
+        {
+            innerGroup.DOKill();
+            innerGroup.alpha = 0f;
+            innerGroup.interactable = true;
+            innerGroup.blocksRaycasts = true;
+            sequence.Join(innerGroup.DOFade(1f, OpenCloseDuration).SetEase(Ease.OutCubic));
+        }
+
+        return sequence;
+    }
+
+    public Sequence Close()
+    {
+        Sequence sequence = DOTween.Sequence();
+
+        if (_bgRect != null)
+        {
+            _bgRect.DOKill();
+            sequence.Join(_bgRect.DOSizeDelta(new Vector2(0f, _bgRect.sizeDelta.y), OpenCloseDuration)
+                .SetEase(Ease.InCubic));
+        }
+
+        if (innerGroup != null)
+        {
+            innerGroup.DOKill();
+            innerGroup.interactable = false;
+            innerGroup.blocksRaycasts = false;
+            sequence.Join(innerGroup.DOFade(0f, OpenCloseDuration).SetEase(Ease.InCubic));
+        }
+
+        sequence.OnComplete(() => gameObject.SetActive(false));
+        return sequence;
     }
 
     public IEnumerator PlayThrowRoutine(IPlayerInputReader[] inputReaders, Action<YutType> onComplete)
@@ -123,10 +177,12 @@ public class YutThrowCanvasController : MonoBehaviour
         if (yutFlyDuration > 0f)
             yield return new WaitForSeconds(yutFlyDuration);
 
+        YutType yut = YutCalculator.Calculate(results);
+        SetResultText(yut);
+
         yield return FadeOutDesc();
         yield return PlayResultReveal(results);
 
-        YutType yut = YutCalculator.Calculate(results);
         Debug.Log($"[YutCanvas] 결과: {yut} ({YutCalculator.ToMoveCount(yut)}칸 이동)");
         onComplete?.Invoke(yut);
     }
@@ -174,6 +230,8 @@ public class YutThrowCanvasController : MonoBehaviour
             descGroup.blocksRaycasts = true;
         }
 
+        ResetResultPanel();
+
         RestoreBgWobble();
     }
 
@@ -219,8 +277,8 @@ public class YutThrowCanvasController : MonoBehaviour
         Coroutine revealAnimation = StartCoroutine(AnimateRevealSprites());
 
         yield return ScaleYuts(Vector3.one * 2f, RevealGrowDuration, Ease.OutBack);
-        RestoreBgWobble();
         yield return ScaleYuts(Vector3.one, RevealShrinkDuration, Ease.InOutCubic);
+        RestoreBgWobble();
 
         _isRevealAnimating = false;
         if (revealAnimation != null)
@@ -228,6 +286,7 @@ public class YutThrowCanvasController : MonoBehaviour
 
         SetFinalYutSprites(results);
         SetNativeYutSizes();
+        yield return ShowResultPanel();
     }
 
     private IEnumerator MovePlayersOut()
@@ -398,6 +457,16 @@ public class YutThrowCanvasController : MonoBehaviour
             }
         }
 
+        if (resultGroup != null)
+        {
+            _resultRect = resultGroup.transform as RectTransform;
+            if (_resultRect != null)
+                _resultOriginalScale = _resultRect.localScale;
+        }
+
+        if (resultText == null && resultGroup != null)
+            resultText = resultGroup.GetComponentInChildren<TMP_Text>(true);
+
         _originalsCaptured = true;
     }
 
@@ -423,6 +492,7 @@ public class YutThrowCanvasController : MonoBehaviour
         bgImage.material = _bgMaterialInstance;
         _bgRect = bgImage.rectTransform;
         _bgOriginalWidth = _bgRect.sizeDelta.x;
+        _bgOriginalHeight = _bgRect.sizeDelta.y;
 
         if (_bgMaterialInstance.HasProperty(SpeedId))
             _bgOriginalSpeed = _bgMaterialInstance.GetFloat(SpeedId);
@@ -467,6 +537,70 @@ public class YutThrowCanvasController : MonoBehaviour
             _bgRect.DOKill();
             _bgRect.DOSizeDelta(new Vector2(_bgOriginalWidth, _bgRect.sizeDelta.y), BgWidthTweenDuration);
         }
+    }
+
+    private void ResetResultPanel()
+    {
+        if (resultGroup == null)
+            return;
+
+        resultGroup.DOKill();
+        resultGroup.alpha = 0f;
+        resultGroup.interactable = false;
+        resultGroup.blocksRaycasts = false;
+
+        if (_resultRect == null)
+            _resultRect = resultGroup.transform as RectTransform;
+
+        if (_resultRect != null)
+        {
+            _resultRect.DOKill();
+            _resultRect.localScale = _resultOriginalScale;
+        }
+    }
+
+    private IEnumerator ShowResultPanel()
+    {
+        if (resultGroup == null)
+            yield break;
+
+        if (_resultRect == null)
+            _resultRect = resultGroup.transform as RectTransform;
+
+        resultGroup.DOKill();
+        resultGroup.alpha = 1f;
+        resultGroup.interactable = true;
+        resultGroup.blocksRaycasts = true;
+
+        if (_resultRect == null)
+            yield break;
+
+        _resultRect.DOKill();
+        _resultRect.localScale = _resultOriginalScale * 2f;
+        yield return _resultRect.DOScale(_resultOriginalScale, ResultScaleDuration)
+            .SetEase(Ease.OutBack)
+            .WaitForCompletion();
+    }
+
+    private void SetResultText(YutType yut)
+    {
+        if (resultText == null)
+            return;
+
+        resultText.text = $"<bounce><b>{GetYutName(yut)}</b>\\n {YutCalculator.ToMoveCount(yut)}칸 이동</bounce>";
+    }
+
+    private static string GetYutName(YutType yut)
+    {
+        return yut switch
+        {
+            YutType.Do => "도",
+            YutType.Gae => "개",
+            YutType.Geol => "걸",
+            YutType.Yut => "윷",
+            YutType.Mo => "모",
+            _ => yut.ToString()
+        };
     }
 
     private Sprite GetFinalYutSprite(bool isFront)
