@@ -1,77 +1,98 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// 날아라 해치 V — 협동 (Cooperative)
-// 4명이 해치 V의 팔/다리 하나씩 조종
-// 제한 시간 안에 목표 높이에 도달하면 성공
 public class HachiFlyGame : CooperativeBase
 {
     [Header("프리팹")]
     [SerializeField] private GameObject hachiVPrefab;
 
     [Header("게임 설정")]
-    [SerializeField] private float timeLimit  = 30f;   // 제한 시간 (초)
-    [SerializeField] private float goalY      = 15f;   // 목표 높이 (이 Y 이상 도달 시 성공)
+    [SerializeField] private float timeLimit  = 60f;
+    [SerializeField] private int   maxLives   = 5;
+    [SerializeField] private float invincibleDuration = 1.5f;  // 피격 후 무적 시간
     [SerializeField] private Vector3 spawnPos = new(0f, -3f, 0f);
 
     [Header("결과 델타")]
     [SerializeField] private int failNightmare = 5;
 
-    private HachiFlyController _hachiV;
-    private bool _gameOver;
-    private float _elapsed;
+    [Space(10)] [SerializeField] private CinemachineCamera cam;
+
+    [Header("UI (없어도 동작)")]
+    [SerializeField] private TMPro.TextMeshProUGUI timerText;
+    [SerializeField] private TMPro.TextMeshProUGUI livesText;
 
     public override int  NightmareDelta { get; protected set; }
     public override bool IsSuccess      { get; protected set; }
 
-    // UI 연결용 (없어도 동작)
-    [SerializeField] private TMPro.TextMeshProUGUI timerText;
-    [SerializeField] private TMPro.TextMeshProUGUI goalText;
+    public Transform HachiTransform { get; private set; }
+
+    private HachiFlyController _hachiV;
+    private int   _lives;
+    private bool  _gameOver;
+    private bool  _invincible;
 
     private void Start()
     {
+        _lives = maxLives;
+
         var obj = Instantiate(hachiVPrefab, spawnPos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(obj, gameObject.scene);
         _hachiV = obj.GetComponent<HachiFlyController>();
         _hachiV.Init();
+        HachiTransform = obj.transform;
 
-        // 카메라 타겟 런타임 연결
-        var cam = Camera.main.GetComponent<HachiFlyCamera>();
-        if (cam != null) cam.SetTarget(obj.transform);
+        cam.Follow = obj.transform;
+
+        // 스포너에 플레이어 위치 전달
+        var spawner = GetComponent<HachiFlyObstacleSpawner>();
+        if (spawner != null) spawner.Init(HachiTransform);
 
         StartCoroutine(GameRoutine());
     }
 
-    private void Update()
+    // 장애물이 호출
+    public void TakeHit()
     {
-        if (_gameOver) return;
+        if (_gameOver || _invincible) return;
 
-        // 목표 높이 도달 체크
-        if (_hachiV != null && _hachiV.transform.position.y >= goalY)
-            EndGame(success: true);
+        _lives--;
+        Debug.Log($"[HachiFly] 피격! 남은 목숨: {_lives}");
+        if (livesText != null) livesText.text = $"♥ x{_lives}";
+
+        if (_lives <= 0)
+        {
+            EndGame(success: false);
+        }
+        else
+        {
+            StartCoroutine(InvincibleRoutine());
+        }
+    }
+
+    private IEnumerator InvincibleRoutine()
+    {
+        _invincible = true;
+        yield return new WaitForSeconds(invincibleDuration);
+        _invincible = false;
     }
 
     private IEnumerator GameRoutine()
     {
-        _elapsed = 0f;
+        float elapsed = 0f;
+        if (livesText != null) livesText.text = $"♥ x{_lives}";
 
-        while (_elapsed < timeLimit && !_gameOver)
+        while (elapsed < timeLimit && !_gameOver)
         {
-            _elapsed += Time.deltaTime;
-
-            float remaining = timeLimit - _elapsed;
+            elapsed += Time.deltaTime;
             if (timerText != null)
-                timerText.text = remaining.ToString("F1");
-
-            if (goalText != null)
-                goalText.text = $"목표까지: {Mathf.Max(0f, goalY - _hachiV.transform.position.y):F1}";
-
+                timerText.text = (timeLimit - elapsed).ToString("F1");
             yield return null;
         }
 
         if (!_gameOver)
-            EndGame(success: false);
+            EndGame(success: true);
     }
 
     private void EndGame(bool success)
@@ -82,10 +103,7 @@ public class HachiFlyGame : CooperativeBase
         IsSuccess      = success;
         NightmareDelta = success ? 0 : failNightmare;
 
-        Debug.Log(success
-            ? "[HachiFly] 목표 도달 성공! 모두 호감도 +3"
-            : "[HachiFly] 시간 초과 — 악몽 +5");
-
+        Debug.Log(success ? "[HachiFly] 60초 생존 성공!" : "[HachiFly] 격추 — 악몽 +5");
         MiniGameManager.Instance.QuitMiniGame();
     }
 }
