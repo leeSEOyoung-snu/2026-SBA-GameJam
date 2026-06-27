@@ -26,8 +26,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _PixelSize: 5
-    - _Speed: 1
-    - _WobbleAmount: 0.2
+    - _Speed: 4
+    - _WobbleAmount: 0.5
     m_Colors:
     - _Color: {r: 0.07155571, g: 0.07418047, b: 0.2264151, a: 1}
   m_BuildTextureStacks: []

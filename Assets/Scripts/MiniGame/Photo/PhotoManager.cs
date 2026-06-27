@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,6 +16,8 @@ public class PhotoManager : SoloBattleBase
     [Header("References")]
     [SerializeField] private PhotoHechi hechi;
     [SerializeField] private BasicMiniGameCanvas basicMiniGameCanvas;
+    [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
+    [SerializeField] private TMP_Text nightmareCountTxt;
     // 플레이어 1~4 대표 이미지 (인스펙터에서 순서대로 연결)
     [SerializeField] private Transform[] playerIcons = new Transform[4];
 
@@ -22,6 +25,7 @@ public class PhotoManager : SoloBattleBase
     [SerializeField] private float punchScale = 3.6f;
     [SerializeField] private float punchDuration = 0.08f;
     [SerializeField] private float shrinkDuration = 0.15f;
+    [SerializeField] private float cameraFlashDuration = 0.2f;
 
     [Space(10)] [SerializeField] private int nightmareDelta = 5;
 
@@ -34,6 +38,10 @@ public class PhotoManager : SoloBattleBase
     private IPlayerInputReader[] _inputs = new IPlayerInputReader[4];
     private int[] _successCounts = new int[4];
     private int[] _failCounts = new int[4];
+    private Transform[] _cameraFlashes = new Transform[4];
+    private Coroutine[] _cameraFlashCoroutines = new Coroutine[4];
+    private bool[] _cameraFlashParentOriginalActive = new bool[4];
+    private bool[] _hasActiveCameraFlash = new bool[4];
 
     private int _currentRound;
     private bool _hechiVisible;
@@ -48,6 +56,9 @@ public class PhotoManager : SoloBattleBase
         hechi.gameObject.SetActive(false);
         if (basicMiniGameCanvas == null)
             basicMiniGameCanvas = FindAnyObjectByType<BasicMiniGameCanvas>(FindObjectsInactive.Include);
+        if (basicPlayerCanvasManager == null)
+            basicPlayerCanvasManager = FindAnyObjectByType<BasicPlayerCanvasManager>(FindObjectsInactive.Include);
+        UpdateNightmareCount();
         UpdateHechiPassCount(0);
 
         StartCoroutine(InputRoutine());
@@ -93,11 +104,14 @@ public class PhotoManager : SoloBattleBase
         if (hechi.IsInPhotoZone)
         {
             _successCounts[playerIndex]++;
+            UpdatePlayerStackCount(playerIndex);
+            PlayCameraFlash(playerIndex);
             Debug.Log($"[Player {playerIndex}]  success count: {_successCounts[playerIndex]}");
         }
         else
         {
             _failCounts[playerIndex]++;
+            UpdateNightmareCount();
             Debug.Log($"[Player {playerIndex}]  fail count: {_failCounts[playerIndex]}");
         }
     }
@@ -113,6 +127,138 @@ public class PhotoManager : SoloBattleBase
         icon.DOScale(punchScale, punchDuration)
             .SetEase(Ease.OutQuad)
             .OnComplete(() => icon.DOScale(3f, shrinkDuration).SetEase(Ease.InQuad));
+    }
+
+    private void UpdatePlayerStackCount(int playerIndex)
+    {
+        if (basicPlayerCanvasManager == null)
+            basicPlayerCanvasManager = FindAnyObjectByType<BasicPlayerCanvasManager>(FindObjectsInactive.Include);
+        if (basicPlayerCanvasManager == null) return;
+
+        basicPlayerCanvasManager.UpdateStackCnt(playerIndex + 1, _successCounts[playerIndex]);
+    }
+
+    private void UpdateNightmareCount()
+    {
+        if (nightmareCountTxt == null)
+            nightmareCountTxt = FindNightmareCountText();
+        if (nightmareCountTxt == null) return;
+
+        int currentFailCount = Mathf.Clamp(_failCounts.Sum(), 0, failThreshold);
+        nightmareCountTxt.text = $"{currentFailCount}/{failThreshold}";
+    }
+
+    private TMP_Text FindNightmareCountText()
+    {
+        TMP_Text[] texts = FindObjectsByType<TMP_Text>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (TMP_Text text in texts)
+        {
+            if (text.name != "Count")
+                continue;
+
+            Transform current = text.transform.parent;
+            while (current != null)
+            {
+                if (current.name.Contains("Nightmare") || current.name.Contains("Nigmare"))
+                    return text;
+
+                current = current.parent;
+            }
+        }
+
+        return null;
+    }
+
+    private void PlayCameraFlash(int playerIndex)
+    {
+        if (playerIndex < 0 || playerIndex >= _cameraFlashes.Length) return;
+
+        Transform flash = GetCameraFlash(playerIndex);
+        if (flash == null) return;
+
+        if (_cameraFlashCoroutines[playerIndex] != null)
+        {
+            StopCoroutine(_cameraFlashCoroutines[playerIndex]);
+            flash.gameObject.SetActive(false);
+        }
+
+        Transform flashParent = flash.parent;
+        if (!_hasActiveCameraFlash[playerIndex])
+        {
+            _cameraFlashParentOriginalActive[playerIndex] =
+                flashParent == null || flashParent.gameObject.activeSelf;
+        }
+
+        _cameraFlashCoroutines[playerIndex] = StartCoroutine(CameraFlashRoutine(playerIndex, flash));
+    }
+
+    private IEnumerator CameraFlashRoutine(int playerIndex, Transform flash)
+    {
+        Transform flashParent = flash.parent;
+        _hasActiveCameraFlash[playerIndex] = true;
+
+        if (flashParent != null)
+            flashParent.gameObject.SetActive(true);
+
+        flash.gameObject.SetActive(true);
+        yield return new WaitForSeconds(cameraFlashDuration);
+        flash.gameObject.SetActive(false);
+
+        if (flashParent != null && !_cameraFlashParentOriginalActive[playerIndex])
+            flashParent.gameObject.SetActive(false);
+
+        _hasActiveCameraFlash[playerIndex] = false;
+        _cameraFlashCoroutines[playerIndex] = null;
+    }
+
+    private Transform GetCameraFlash(int playerIndex)
+    {
+        Transform cachedFlash = _cameraFlashes[playerIndex];
+        if (cachedFlash != null)
+            return cachedFlash;
+
+        CacheCameraFlashes();
+        return _cameraFlashes[playerIndex];
+    }
+
+    private void CacheCameraFlashes()
+    {
+        if (basicPlayerCanvasManager == null)
+            basicPlayerCanvasManager = FindAnyObjectByType<BasicPlayerCanvasManager>(FindObjectsInactive.Include);
+        if (basicPlayerCanvasManager == null)
+            return;
+
+        Transform[] children = basicPlayerCanvasManager.GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in children)
+        {
+            if (child.name != "Camera Flash")
+                continue;
+
+            int playerIndex = FindPlayerIndex(child);
+            if (playerIndex >= 0 && playerIndex < _cameraFlashes.Length)
+                _cameraFlashes[playerIndex] = child;
+        }
+    }
+
+    private int FindPlayerIndex(Transform target)
+    {
+        Transform current = target;
+        while (current != null)
+        {
+            string objectName = current.name;
+            if (objectName.Length >= 2 &&
+                objectName.EndsWith("P") &&
+                int.TryParse(objectName[0].ToString(), out int playerId) &&
+                playerId >= 1 &&
+                playerId <= 4)
+            {
+                return playerId - 1;
+            }
+
+            current = current.parent;
+        }
+
+        return -1;
     }
 
     private void OnHechiExited()
@@ -134,9 +280,9 @@ public class PhotoManager : SoloBattleBase
         if (_gameOver) return;
         _gameOver = true;
 
-        bool allFailedThreshold = _failCounts.All(f => f >= failThreshold);
+        bool reachedFailThreshold = _failCounts.Sum() >= failThreshold;
 
-        AssignRanks(allFailedThreshold);
+        AssignRanks(reachedFailThreshold);
         MiniGameManager.Instance.QuitMiniGame();
     }
 
