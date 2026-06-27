@@ -26,7 +26,7 @@ public class HatchUiCanvasManager : MonoBehaviour
     
     private Dictionary<StateTypes, Image> _gageImgDict = new();
 
-    private const int MAX_STATE = 50;
+    [SerializeField] private float gageHeadroom = 20f;
 
     private void Awake()
     {
@@ -46,18 +46,26 @@ public class HatchUiCanvasManager : MonoBehaviour
 
     public IEnumerator UpdateStates(Dictionary<StateTypes, int> currStates)
     {
+        int maxValue = 0;
+        foreach (var curr in currStates)
+        {
+            if (_gageImgDict.ContainsKey(curr.Key) && curr.Value > maxValue)
+                maxValue = curr.Value;
+        }
+
+        float denominator = maxValue + gageHeadroom;
+
         Sequence seq = DOTween.Sequence();
 
         foreach (var curr in currStates)
         {
-            // TODO: Nightmare Gage 연결
-            if (curr.Key == StateTypes.Nightmare)
+            if (!_gageImgDict.ContainsKey(curr.Key))
                 continue;
-            
-            seq.Join(_gageImgDict[curr.Key].DOFillAmount((float)curr.Value / MAX_STATE, gageUpdateDuration)
-                .SetEase(gageUpdateEase));
+
+            float fill = (float)curr.Value / denominator;
+            seq.Join(_gageImgDict[curr.Key].DOFillAmount(fill, gageUpdateDuration).SetEase(gageUpdateEase));
         }
-        
+
         yield return seq.WaitForCompletion();
     }
 

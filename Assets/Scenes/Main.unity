@@ -669,10 +669,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2429731616657445827, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
-      propertyPath: hechiProfile
-      value: 
-      objectReference: {fileID: 1482222461}
     - target: {fileID: 2913577142033288454, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -821,9 +817,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8651736894660290759, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
-      propertyPath: m_Sprite
-      value: 
+    - target: {fileID: 9133907500739264077, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9133907500739264077, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9133907500739264077, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9133907500739264077, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2181,7 +2189,7 @@ MonoBehaviour:
   piece: {fileID: 1746608229}
   hatchCanvasManager: {fileID: 1483713370}
   playerCanvasManager: {fileID: 862338857}
-  evolutionDecidingCanvasManager: {fileID: 0}
+  evolutionDecidingCanvasManager: {fileID: 1473765300}
 --- !u!114 &1385401478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2374,17 +2382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0332ae7f3d8497e4b8ce20685047b21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EvolutionDecidingCanvasManager
---- !u!114 &1482222461 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8651736894660290759, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
-  m_PrefabInstance: {fileID: 702160501}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &1483713370 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2429731616657445827, guid: 9d2cc23fe281a4f3396db3d032837fd7, type: 3}
