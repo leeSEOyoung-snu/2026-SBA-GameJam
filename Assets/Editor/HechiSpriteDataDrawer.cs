@@ -9,25 +9,36 @@ public class HechiSpriteDataDrawer : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        // 항상: 조건 줄(1) + mainSprite(1) + miniGameSprite(1)
-        return (LineH + Spacing) * 3 - Spacing;
+        // 항상: hechiName(1) + 조건 줄(1) + mainSprite(1) + miniGameSprite(1)
+        return (LineH + Spacing) * 4 - Spacing;
     }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
 
-        var conditionCntProp = property.FindPropertyRelative("conditionCnt");
-        var condition1Prop   = property.FindPropertyRelative("condition1");
-        var condition2Prop   = property.FindPropertyRelative("condition2");
-        var mainSpriteProp   = property.FindPropertyRelative("mainSprite");
+        var hechiNameProp      = property.FindPropertyRelative("hechiName");
+        var conditionCntProp   = property.FindPropertyRelative("conditionCnt");
+        var condition1Prop     = property.FindPropertyRelative("condition1");
+        var condition2Prop     = property.FindPropertyRelative("condition2");
+        var mainSpriteProp     = property.FindPropertyRelative("mainSprite");
         var miniGameSpriteProp = property.FindPropertyRelative("miniGameSprite");
+
+        // label에 hechiName 반영
+        string displayName = string.IsNullOrWhiteSpace(hechiNameProp.stringValue)
+            ? label.text
+            : $"{label.text}  [{hechiNameProp.stringValue}]";
+        label.text = displayName;
 
         int cnt = conditionCntProp.intValue;
 
         float y = position.y;
         float w = position.width;
         float x = position.x;
+
+        // ── 0행: hechiName ──
+        EditorGUI.PropertyField(new Rect(x, y, w, LineH), hechiNameProp, new GUIContent("Name"));
+        y += LineH + Spacing;
 
         // ── 1행: conditionCnt + condition1 + condition2 (조건 수에 따라 표시) ──
         Rect rowRect = new Rect(x, y, w, LineH);

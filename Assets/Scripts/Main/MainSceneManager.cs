@@ -63,9 +63,9 @@ public class MainSceneManager : MonoBehaviour
         yield return GetHighestState();
         StateTypes highestState = _resolvedHighestState;
 
-        Sprite hechiSprite = GameManager.Instance.OnEvolution(highestState);
+        var hechiInfo = GameManager.Instance.OnEvolution(highestState);
 
-        yield return hatchCanvasManager.EvolutionCoroutine(hechiSprite);
+        yield return hatchCanvasManager.EvolutionCoroutine(hechiInfo.sprite, hechiInfo.name);
     }
 
     private StateTypes _resolvedHighestState;
