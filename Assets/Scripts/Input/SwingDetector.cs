@@ -39,7 +39,7 @@ public class SwingDetector : MonoBehaviour
         {
             _cooldownTimer = cooldown;
             OnSwing?.Invoke(playerIndex, side, magnitude);
-            Debug.Log($"[SwingDetector] P{playerIndex}{side} 스윙! 가속도={magnitude:F2}g");
+            // Debug.Log($"[SwingDetector] P{playerIndex}{side} 스윙! 가속도={magnitude:F2}g");
         }
     }
 
