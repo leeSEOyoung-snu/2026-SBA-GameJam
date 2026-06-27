@@ -56,7 +56,9 @@ public class PlayableCharacterVisual : MonoBehaviour
             foreach (var entry in playerSprites)
             {
                 if (entry == null || entry.playerId != playerId)
+                {
                     continue;
+                }
 
                 sprite = entry.sprite;
                 return sprite != null;

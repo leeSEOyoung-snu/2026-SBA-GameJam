@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayableCharacterVisual
   spriteRenderer: {fileID: 8032481396786665072}
   playerSprites:
-  - playerId: 0
+  - playerId: 1
     sprite: {fileID: 3427114271967980436, guid: 8da2ef9a40b0a426dbd648a3c57aee6c, type: 3}
   - playerId: 2
     sprite: {fileID: 8158605244509288230, guid: 8da2ef9a40b0a426dbd648a3c57aee6c, type: 3}

@@ -41,15 +41,15 @@ public static class MiniGameTutorialContentConverter
             _ => throw new NotSupportedException($"Tutorial content is not supported for {data.Type}."),
         };
     }
-
+    
     private static MiniGameTutorialContent ConvertSoloBattle(MiniGameResultContainer data)
     {
         MiniGameResultContainer.SoloBattleTutorialText text = data.SoloBattleTutorial;
         return new MiniGameTutorialContent(
             "개인전",
             FormatTitle(data.GameTitle),
-            "개인전",
-            "개인전",
+            null,
+            null,
             text.soloWinCondition,
             text.nightmareCondition);
     }
@@ -76,8 +76,8 @@ public static class MiniGameTutorialContentConverter
         return new MiniGameTutorialContent(
             "2vs2",
             FormatTitle(data.GameTitle),
-            FormatPlayers(twoVsTwo.PlayerIdsTeam1),
-            FormatPlayers(twoVsTwo.PlayerIdsTeam2),
+            $"{FormatPlayers(twoVsTwo.PlayerIdsTeam1)} VS. {FormatPlayers(twoVsTwo.PlayerIdsTeam2)}",
+            "악몽 조건",
             text.twoWinCondition,
             text.nightmareCondition);
     }
