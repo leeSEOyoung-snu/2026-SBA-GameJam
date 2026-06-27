@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,8 +12,8 @@ public class DuckBoatGame : TwoVsTwoBase
     [SerializeField] private GameObject boatPrefab;
 
     [Header("레인 설정")]
-    [SerializeField] private Vector3 team1SpawnPos = new(-4f, -3f, 0f);   // 왼쪽 레인
-    [SerializeField] private Vector3 team2SpawnPos = new( 4f, -3f, 0f);   // 오른쪽 레인
+    [SerializeField] private Vector3 team1SpawnPos = new(-4f, -3f, 0f);
+    [SerializeField] private Vector3 team2SpawnPos = new( 4f, -3f, 0f);
 
     [Header("결과 델타")]
     [SerializeField] private int bothDeadNightmare = 5;
@@ -25,12 +27,25 @@ public class DuckBoatGame : TwoVsTwoBase
 
     private void Start()
     {
-        // 왼쪽 레인: X -8 ~ -0.5 / 오른쪽 레인: X 0.5 ~ 8
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
         _boat1 = SpawnBoat(team1SpawnPos, PlayerIdsTeam1, laneXMin: -8f,  laneXMax: -0.5f);
         _boat2 = SpawnBoat(team2SpawnPos, PlayerIdsTeam2, laneXMin:  0.5f, laneXMax:  8f);
 
         _boat1.OnBoatDead += () => OnTeamDead();
         _boat2.OnBoatDead += () => OnTeamDead();
+
+        if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
+            StartCoroutine(TimerRoutine());
     }
 
     private DuckBoat SpawnBoat(Vector3 pos, List<int> playerIds, float laneXMin, float laneXMax)
@@ -65,6 +80,26 @@ public class DuckBoatGame : TwoVsTwoBase
         }
 
         _gameOver = true;
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator TimerRoutine()
+    {
+        yield return new WaitForSeconds(MiniGameManager.Instance.ResultContainer.TimeAttackSeconds);
+        if (_gameOver) yield break;
+
+        Debug.Log("[DuckBoat] 시간 종료 → 거리 비교");
+        NightmareDelta = 0;
+        Winner = _boat1.Distance >= _boat2.Distance ? TwoVsTwoWinner.Team1 : TwoVsTwoWinner.Team2;
+        _gameOver = true;
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

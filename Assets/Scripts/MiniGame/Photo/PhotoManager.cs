@@ -15,7 +15,6 @@ public class PhotoManager : SoloBattleBase
     [Header("References")]
     [SerializeField] private PhotoHechi hechi;
     [SerializeField] private BasicMiniGameCanvas basicMiniGameCanvas;
-    // 플레이어 1~4 대표 이미지 (인스펙터에서 순서대로 연결)
     [SerializeField] private Transform[] playerIcons = new Transform[4];
 
     [Header("Shutter VFX")]
@@ -50,6 +49,17 @@ public class PhotoManager : SoloBattleBase
             basicMiniGameCanvas = FindAnyObjectByType<BasicMiniGameCanvas>(FindObjectsInactive.Include);
         UpdateHechiPassCount(0);
 
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
         StartCoroutine(InputRoutine());
         StartCoroutine(GameRoutine());
     }
@@ -69,8 +79,6 @@ public class PhotoManager : SoloBattleBase
 
     private IEnumerator GameRoutine()
     {
-        yield return new WaitForSecondsRealtime(6f);
-        
         while (_currentRound < totalRounds && !_gameOver)
         {
             float wait = Random.Range(minWaitTime, maxWaitTime);
@@ -79,7 +87,7 @@ public class PhotoManager : SoloBattleBase
             _currentRound++;
             _hechiVisible = true;
             hechi.Launch();
-            
+
             yield return new WaitUntil(() => !_hechiVisible || _gameOver);
         }
 
@@ -137,12 +145,11 @@ public class PhotoManager : SoloBattleBase
         bool allFailedThreshold = _failCounts.All(f => f >= failThreshold);
 
         AssignRanks(allFailedThreshold);
-        MiniGameManager.Instance.QuitMiniGame();
+        StartCoroutine(EndRoutine());
     }
 
     private void AssignRanks(bool allFailedThreshold)
     {
-        // 성공 수 기준 내림차순 정렬 → 순위 결정
         var ranked = Enumerable.Range(0, 4)
             .OrderByDescending(i => _successCounts[i])
             .ThenBy(i => _failCounts[i])
@@ -157,7 +164,14 @@ public class PhotoManager : SoloBattleBase
         RankPlayer3 = ranks[2];
         RankPlayer4 = ranks[3];
 
-        // allFailedThreshold 조건에 따른 NightmareDelta 처리 (필요 시 확장)
         NightmareDelta = allFailedThreshold ? nightmareDelta : 0;
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
+        MiniGameManager.Instance.QuitMiniGame();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 // 제한 시간 내에 컨트롤러를 최대한 많이 스윙 (위-아래 1세트 = 1회)
@@ -16,12 +17,10 @@ public class BokBokManager : SoloBattleBase
     public override int RankPlayer3 { get; protected set; }
     public override int RankPlayer4 { get; protected set; }
 
-    [SerializeField] private BokBokHandVisual[] handVisuals; // index 0~3 = player 1~4
+    [SerializeField] private BokBokHandVisual[] handVisuals;
     [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
 
-    // raw 스윙 횟수 누적 → /2 = 세트 수 (위-아래 = 1세트)
     private int[] _swingCounts = new int[4];
-
     private IPlayerInputReader[] _inputs = new IPlayerInputReader[4];
     private bool _gameOver;
 
@@ -30,7 +29,19 @@ public class BokBokManager : SoloBattleBase
         for (int i = 0; i < 4; i++)
             _inputs[i] = GameManager.Instance.GetPlayerInputReader(i + 1);
 
-        StartCoroutine(GameRoutine());
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
+        if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
+            StartCoroutine(GameRoutine());
     }
 
     private void Update()
@@ -42,7 +53,7 @@ public class BokBokManager : SoloBattleBase
             if (!_inputs[i].Swing) continue;
 
             _swingCounts[i]++;
-            Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}"); 
+            Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}");
             basicPlayerCanvasManager.UpdateStackCnt(i + 1, _swingCounts[i]);
 
             if (handVisuals != null && i < handVisuals.Length && handVisuals[i] != null)
@@ -91,6 +102,14 @@ public class BokBokManager : SoloBattleBase
         for (int i = 0; i < 4; i++)
             Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}");
 
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

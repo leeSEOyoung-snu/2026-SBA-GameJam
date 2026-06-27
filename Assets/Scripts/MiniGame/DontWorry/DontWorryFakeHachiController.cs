@@ -5,6 +5,8 @@ using UnityEngine;
 // MiniGameCharacterController + TopViewPhysics로 움직이고, 크로스헤어에 맞으면 제거됨
 public class DontWorryFakeHachiController : MonoBehaviour
 {
+    public int PlayerId { get; private set; }
+
     private PlayableCharacterVisual _visual;
     private Action<DontWorryFakeHachiController> _onEliminated;
 
@@ -13,8 +15,9 @@ public class DontWorryFakeHachiController : MonoBehaviour
         _visual = GetComponentInChildren<PlayableCharacterVisual>(true);
     }
 
-    public void Init(Action<DontWorryFakeHachiController> onEliminated)
+    public void Init(int playerId, Action<DontWorryFakeHachiController> onEliminated)
     {
+        PlayerId = playerId;
         _onEliminated = onEliminated;
     }
 

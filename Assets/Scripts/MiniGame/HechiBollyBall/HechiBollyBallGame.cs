@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,15 +39,27 @@ public class HechiBollyBallGame : OneVsThreeBase
 
     private void Start()
     {
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
         SpawnCharacters();
         SpawnBall();
+        if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
+            StartCoroutine(TimerRoutine());
     }
 
     private void SpawnCharacters()
     {
         Debug.Log($"[BollyBall] 해치: Player {OnePlayerId}");
 
-        // 해치
         _hachiObj = Instantiate(hachiPrefab, hachiSpawnPos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(_hachiObj, gameObject.scene);
         if (_hachiObj.TryGetComponent<BollyBallCharacterController>(out var hachiCtrl))
@@ -55,7 +68,6 @@ public class HechiBollyBallGame : OneVsThreeBase
             Debug.LogError("[BollyBall] hachiPrefab에 BollyBallCharacterController가 없습니다!");
         _hachiObj.GetComponent<MiniGameCharacterController>().Init(OnePlayerId);
 
-        // 플레이어 3명
         var spawnPositions = new[] { playerSpawnPos1, playerSpawnPos2, playerSpawnPos3 };
         int idx = 0;
         for (int i = 1; i <= 4; i++)
@@ -101,14 +113,12 @@ public class HechiBollyBallGame : OneVsThreeBase
     {
         yield return new WaitForSeconds(resetDelay);
 
-        // 해치 위치 리셋
         if (_hachiObj != null)
         {
             _hachiObj.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
             _hachiObj.transform.position = hachiSpawnPos;
         }
 
-        // 플레이어 위치 리셋
         foreach (var (obj, pos) in _players)
         {
             if (obj == null) continue;
@@ -116,10 +126,18 @@ public class HechiBollyBallGame : OneVsThreeBase
             obj.transform.position = pos;
         }
 
-        // 공 리셋
         _ball.ResetToPosition(ballSpawnPos);
 
         Debug.Log("[BollyBall] 전원 리셋 완료");
+    }
+
+    private IEnumerator TimerRoutine()
+    {
+        yield return new WaitForSeconds(MiniGameManager.Instance.ResultContainer.TimeAttackSeconds);
+        if (_gameOver) yield break;
+
+        Debug.Log("[BollyBall] 시간 종료 → 점수 앞선 팀 승리");
+        EndGame(hachiWins: _hachiScore > _threeScore);
     }
 
     private void EndGame(bool hachiWins)
@@ -130,6 +148,14 @@ public class HechiBollyBallGame : OneVsThreeBase
         IsOneWin       = hachiWins;
         NightmareDelta = hachiWins ? 0 : threeWinNightmare;
 
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

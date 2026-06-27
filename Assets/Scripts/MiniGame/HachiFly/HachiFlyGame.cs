@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,9 +10,8 @@ public class HachiFlyGame : CooperativeBase
     [SerializeField] private GameObject hachiVPrefab;
 
     [Header("게임 설정")]
-    [SerializeField] private float timeLimit  = 60f;
     [SerializeField] private int   maxLives   = 5;
-    [SerializeField] private float invincibleDuration = 1.5f;  // 피격 후 무적 시간
+    [SerializeField] private float invincibleDuration = 1.5f;
     [SerializeField] private Vector3 spawnPos = new(0f, -3f, 0f);
 
     [Header("결과 델타")]
@@ -35,6 +35,17 @@ public class HachiFlyGame : CooperativeBase
 
     private void Start()
     {
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
         _lives = maxLives;
 
         var obj = Instantiate(hachiVPrefab, spawnPos, Quaternion.identity);
@@ -45,14 +56,13 @@ public class HachiFlyGame : CooperativeBase
 
         cam.Follow = obj.transform;
 
-        // 스포너에 플레이어 위치 전달
         var spawner = GetComponent<HachiFlyObstacleSpawner>();
         if (spawner != null) spawner.Init(HachiTransform);
 
-        StartCoroutine(GameRoutine());
+        if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
+            StartCoroutine(GameRoutine());
     }
 
-    // 장애물이 호출
     public void TakeHit()
     {
         if (_gameOver || _invincible) return;
@@ -62,13 +72,9 @@ public class HachiFlyGame : CooperativeBase
         if (livesText != null) livesText.text = $"♥ x{_lives}";
 
         if (_lives <= 0)
-        {
             EndGame(success: false);
-        }
         else
-        {
             StartCoroutine(InvincibleRoutine());
-        }
     }
 
     private IEnumerator InvincibleRoutine()
@@ -83,11 +89,11 @@ public class HachiFlyGame : CooperativeBase
         float elapsed = 0f;
         if (livesText != null) livesText.text = $"♥ x{_lives}";
 
-        while (elapsed < timeLimit && !_gameOver)
+        while (elapsed < MiniGameManager.Instance.ResultContainer.TimeAttackSeconds && !_gameOver)
         {
             elapsed += Time.deltaTime;
             if (timerText != null)
-                timerText.text = (timeLimit - elapsed).ToString("F1");
+                timerText.text = (MiniGameManager.Instance.ResultContainer.TimeAttackSeconds - elapsed).ToString("F1");
             yield return null;
         }
 
@@ -104,6 +110,14 @@ public class HachiFlyGame : CooperativeBase
         NightmareDelta = success ? 0 : failNightmare;
 
         Debug.Log(success ? "[HachiFly] 60초 생존 성공!" : "[HachiFly] 격추 — 악몽 +5");
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

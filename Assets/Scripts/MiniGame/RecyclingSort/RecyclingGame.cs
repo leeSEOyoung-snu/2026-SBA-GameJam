@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -21,7 +22,7 @@ public class RecyclingGame : CooperativeBase
     [Header("게임 설정")]
     [SerializeField] private int   totalTrash        = 15;
     [SerializeField] private int   mistakeLimit      = 3;
-    [SerializeField] private float nextSpawnDelay    = 1.2f;  // 처리 후 다음 스폰까지 딜레이
+    [SerializeField] private float nextSpawnDelay    = 1.2f;
     [SerializeField] private int   failNightmareDelta = 5;
 
     private int  _spawned;
@@ -34,9 +35,20 @@ public class RecyclingGame : CooperativeBase
 
     private void Start()
     {
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
         InitSeesaws();
         InitBins();
-        SpawnTrash(); // 첫 쓰레기 바로 스폰
+        SpawnTrash();
     }
 
     private void InitSeesaws()
@@ -61,7 +73,6 @@ public class RecyclingGame : CooperativeBase
     {
         if (_gameOver || _spawned >= totalTrash) return;
 
-        // 항상 가운데 배출구에서 스폰
         Transform spawnPt = spawnPoints[spawnPoints.Length / 2];
         int typeIdx = Random.Range(0, trashPrefabs.Length);
         var prefab  = trashPrefabs[typeIdx];
@@ -73,7 +84,6 @@ public class RecyclingGame : CooperativeBase
         _spawned++;
     }
 
-    // 처리 후 nextSpawnDelay 뒤에 다음 쓰레기 스폰
     private void ScheduleNextSpawn()
     {
         if (_spawned < totalTrash && !_gameOver)
@@ -132,6 +142,14 @@ public class RecyclingGame : CooperativeBase
         IsSuccess      = success;
         NightmareDelta = success ? 0 : failNightmareDelta;
         Debug.Log($"[RecyclingSort] 종료 — 성공:{success} 실수:{_mistakes}");
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

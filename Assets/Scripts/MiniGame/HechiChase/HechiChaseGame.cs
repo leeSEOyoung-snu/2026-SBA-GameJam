@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,21 +9,33 @@ public class HechiChaseGame : OneVsThreeBase
     [SerializeField] private GameObject hechiPrefab;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Vector3[] playerInitPos; // 4개 필요
-    [SerializeField] private Vector3 hechiInitPos; 
+    [SerializeField] private Vector3 hechiInitPos;
 
     [Header("결과 델타 (해치 승리)")]
     [SerializeField] private int hechiWinNightmare = 5;
 
     private readonly List<ChaseCharacterController> _normalPlayers = new();
     private bool _gameOver;
-    
+
     public override int NightmareDelta { get; protected set; }
     public override bool IsOneWin { get; protected set; }
 
     private void Start()
     {
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
         SpawnCharacters();
-        StartCoroutine(TimerRoutine());
+        if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
+            StartCoroutine(TimerRoutine());
     }
 
     private void SpawnCharacters()
@@ -74,7 +87,15 @@ public class HechiChaseGame : OneVsThreeBase
 
         IsOneWin = hechiWins;
         NightmareDelta = hechiWins ? 0 : hechiWinNightmare;
-        
+
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

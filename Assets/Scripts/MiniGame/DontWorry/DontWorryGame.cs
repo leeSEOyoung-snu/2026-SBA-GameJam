@@ -8,7 +8,6 @@ public class DontWorryGame : OneVsThreeBase
     [SerializeField] private GameObject fakeHachiPrefab;
     [SerializeField] private GameObject aiHachiPrefab;
     [SerializeField] private GameObject crosshairPrefab;
-    [SerializeField] private float timeLimit = 60f;
 
     [Header("랜덤 스폰 범위")]
     [SerializeField] private Vector2 spawnMin = new(-7f, -3.5f);
@@ -26,8 +25,10 @@ public class DontWorryGame : OneVsThreeBase
 
     private void Start()
     {
+        FindObjectOfType<DontWorryPlayerCanvasManager>()?.Init(OnePlayerId);
         SpawnCharacters();
-        StartCoroutine(TimerRoutine());
+        if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
+            StartCoroutine(TimerRoutine());
     }
 
     private void SpawnCharacters()
@@ -59,7 +60,7 @@ public class DontWorryGame : OneVsThreeBase
             SceneManager.MoveGameObjectToScene(fakeObj, gameObject.scene);
 
             var fake = fakeObj.GetComponent<DontWorryFakeHachiController>();
-            fake.Init(OnFakeEliminated);
+            fake.Init(i, OnFakeEliminated);
 
             fakeObj.GetComponent<MiniGameCharacterController>().Init(i);
             _fakePlayers.Add(fake);
@@ -121,7 +122,7 @@ public class DontWorryGame : OneVsThreeBase
 
     private IEnumerator TimerRoutine()
     {
-        float remaining = timeLimit;
+        float remaining = MiniGameManager.Instance.ResultContainer.TimeAttackSeconds;
         while (remaining > 0f && !_gameOver)
         {
             remaining -= Time.deltaTime;

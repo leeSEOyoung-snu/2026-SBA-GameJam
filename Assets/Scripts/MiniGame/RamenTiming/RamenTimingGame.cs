@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 // 해치랑 한강 라면 끓이기
 // 타이머가 3초까지 보이다가 숨겨지고, 10초에 가장 가깝게 버튼을 누른 순서대로 순위 결정
 public class RamenTimingGame : SoloBattleBase
 {
-    [SerializeField] private float targetTime    = 10f;   // 목표 시간 (초)
-    [SerializeField] private float visibleUntil  = 3f;    // 타이머를 보여줄 시간
-    [SerializeField] private float timeoutTime   = 20f;   // 이 시간까지 안 누르면 강제 종료
+    [SerializeField] private float targetTime    = 10f;
+    [SerializeField] private float visibleUntil  = 3f;
+    [SerializeField] private float timeoutTime   = 20f; // IsTimeAttack 미체크 시 폴백
 
-    // 타이머 UI 연결 (없어도 동작)
     [SerializeField] private TMPro.TextMeshProUGUI timerText;
 
     public override int NightmareDelta { get; protected set; } = 0;
@@ -20,10 +20,7 @@ public class RamenTimingGame : SoloBattleBase
     public override int RankPlayer3 { get; protected set; }
     public override int RankPlayer4 { get; protected set; }
 
-    // 플레이어별 입력 리더
     private IPlayerInputReader[] _inputs = new IPlayerInputReader[4];
-
-    // 플레이어별 버튼을 누른 시각 (null = 아직 안 누름)
     private float?[] _pressTimes = new float?[4];
 
     private float _elapsed;
@@ -34,18 +31,31 @@ public class RamenTimingGame : SoloBattleBase
         for (int i = 0; i < 4; i++)
             _inputs[i] = GameManager.Instance.GetPlayerInputReader(i + 1);
 
-        StartCoroutine(GameRoutine());
+        StartCoroutine(WaitForGameStart());
     }
 
-    private IEnumerator GameRoutine()
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
+        float timeout = MiniGameManager.Instance.ResultContainer.IsTimeAttack
+            ? MiniGameManager.Instance.ResultContainer.TimeAttackSeconds
+            : timeoutTime;
+        StartCoroutine(GameRoutine(timeout));
+    }
+
+    private IEnumerator GameRoutine(float timeout)
     {
         _elapsed = 0f;
 
-        while (_elapsed < timeoutTime && !_gameOver)
+        while (_elapsed < timeout && !_gameOver)
         {
             _elapsed += Time.deltaTime;
 
-            // 타이머 UI — visibleUntil 이후 숨김
             if (timerText != null)
             {
                 if (_elapsed <= visibleUntil)
@@ -59,7 +69,6 @@ public class RamenTimingGame : SoloBattleBase
                 }
             }
 
-            // 각 플레이어 입력 체크 (오른쪽 버튼)
             for (int i = 0; i < 4; i++)
             {
                 if (_pressTimes[i] == null && _inputs[i].Right)
@@ -69,7 +78,6 @@ public class RamenTimingGame : SoloBattleBase
                 }
             }
 
-            // 4명 모두 눌렀으면 바로 종료
             if (_pressTimes.All(t => t != null))
                 break;
 
@@ -84,7 +92,6 @@ public class RamenTimingGame : SoloBattleBase
         if (_gameOver) return;
         _gameOver = true;
 
-        // 안 누른 플레이어는 최악의 오차값으로 처리
         for (int i = 0; i < 4; i++)
         {
             if (_pressTimes[i] == null)
@@ -94,7 +101,6 @@ public class RamenTimingGame : SoloBattleBase
             }
         }
 
-        // 오차(|pressTime - targetTime|) 기준 오름차순 정렬 → 순위 결정
         var ranked = Enumerable.Range(0, 4)
             .OrderBy(i => Mathf.Abs(_pressTimes[i].Value - targetTime))
             .ToList();
@@ -108,7 +114,6 @@ public class RamenTimingGame : SoloBattleBase
         RankPlayer3 = ranks[2];
         RankPlayer4 = ranks[3];
 
-        // 결과 로그
         var resultLog = new System.Text.StringBuilder();
         resultLog.AppendLine($"[Ramen] ===== 게임 결과 (목표: {targetTime}초) =====");
         for (int r = 0; r < ranked.Count; r++)
@@ -121,6 +126,14 @@ public class RamenTimingGame : SoloBattleBase
         }
         Debug.Log(resultLog.ToString());
 
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

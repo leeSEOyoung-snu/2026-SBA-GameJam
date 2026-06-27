@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -9,7 +10,6 @@ public class HechiShootingGame : SoloBattleBase
     [SerializeField] private GameObject crosshairPrefab;
     [SerializeField] private GameObject nightmarePrefab;
     [SerializeField] private GameObject hachiPrefab;
-    [SerializeField] private float timeLimit = 60f;
     [SerializeField] private float nightmareSpawnInterval = 2f;
     [SerializeField] private int maxNightmares = 8;
 
@@ -20,7 +20,7 @@ public class HechiShootingGame : SoloBattleBase
     [Header("결과")]
     [SerializeField] private int hachiShotNightmareDelta = 5;
 
-    private readonly int[] _scores = new int[5]; // index 1~4
+    private readonly int[] _scores = new int[5];
     private bool _gameOver;
     private bool _hachiKilledGame;
 
@@ -32,10 +32,22 @@ public class HechiShootingGame : SoloBattleBase
 
     private void Start()
     {
+        StartCoroutine(WaitForGameStart());
+    }
+
+    private IEnumerator WaitForGameStart()
+    {
+        bool started = false;
+        void Handler() { started = true; }
+        BasicMiniGameCanvas.OnGameStarted += Handler;
+        yield return new WaitUntil(() => started);
+        BasicMiniGameCanvas.OnGameStarted -= Handler;
+
         SpawnHachi();
         SpawnCrosshairs();
         StartCoroutine(NightmareSpawnRoutine());
-        StartCoroutine(TimerRoutine());
+        if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
+            StartCoroutine(TimerRoutine());
     }
 
     private void SpawnHachi()
@@ -104,7 +116,7 @@ public class HechiShootingGame : SoloBattleBase
 
     private IEnumerator TimerRoutine()
     {
-        float remaining = timeLimit;
+        float remaining = MiniGameManager.Instance.ResultContainer.TimeAttackSeconds;
         while (remaining > 0f && !_gameOver)
         {
             remaining -= Time.deltaTime;
@@ -125,7 +137,6 @@ public class HechiShootingGame : SoloBattleBase
 
         NightmareDelta = _hachiKilledGame ? hachiShotNightmareDelta : 0;
 
-        // 점수 내림차순 정렬 → 순위 부여
         var ranking = new List<int> { 1, 2, 3, 4 };
         ranking.Sort((a, b) =>
         {
@@ -135,7 +146,7 @@ public class HechiShootingGame : SoloBattleBase
 
         int[] rankResult = new int[5];
         for (int i = 0; i < ranking.Count; i++)
-            rankResult[ranking[i]] = i + 1; // 1등=1, 2등=2, ...
+            rankResult[ranking[i]] = i + 1;
 
         RankPlayer1 = rankResult[1];
         RankPlayer2 = rankResult[2];
@@ -144,6 +155,14 @@ public class HechiShootingGame : SoloBattleBase
 
         Debug.Log($"[HechiShooting] 결과 - 1등:{ranking[0]} 2등:{ranking[1]} 3등:{ranking[2]} 4등:{ranking[3]}");
 
+        StartCoroutine(EndRoutine());
+    }
+
+    private IEnumerator EndRoutine()
+    {
+        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
+        if (canvas != null)
+            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

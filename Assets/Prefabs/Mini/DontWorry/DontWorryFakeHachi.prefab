@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopViewPhysics
   moveSpeed: 3
-  stickOnly: 1
+  stickOnly: 0
 --- !u!114 &7026353133533979844
 MonoBehaviour:
   m_ObjectHideFlags: 0
