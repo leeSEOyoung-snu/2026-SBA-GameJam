@@ -92,33 +92,38 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator MovePiecePhase(int steps)
     {
+        // 이동할 모든 칸을 미리 수집
+        var waypoints = new System.Collections.Generic.List<Vector3>();
+        CellInfo finalCell = _board.CurrentCell;
+
         for (int s = 0; s < steps; s++)
         {
-            CellInfo current = _board.CurrentCell;
-
-            if (current.nextCells.Count == 0)
+            if (finalCell.nextCells.Count == 0)
             {
                 Debug.Log("[MovePhase] 마지막 칸 도달");
-                yield break;
+                break;
             }
+            finalCell = finalCell.nextCells[0];
+            waypoints.Add(finalCell.transform.position);
+        }
 
-            CellInfo next = current.nextCells[0];
-            _board.SetCurrentCell(next);
-            yield return StartCoroutine(_piece.MoveTo(next.transform.position));
+        if (waypoints.Count == 0) yield break;
 
-            UpdateAllProximityUIs(next);
+        _board.SetCurrentCell(finalCell);
 
-            if (next.TryGetComponent<EvolutionCellBehaviour>(out var evo))
-                yield return StartCoroutine(_mainSceneManager.GoGoEvolution());
+        // 모든 칸을 연속으로 이동
+        yield return StartCoroutine(_piece.MoveTo(waypoints.ToArray(), _mainSceneManager.PlayerIdByRanking));
 
-            // 시작 칸 복귀 시 게임 종료
-            if (next == _board.StartCell)
-            {
-                Debug.Log("[MovePhase] 시작 칸 도달 → 게임 종료");
-                _gameEnded = true;
-                OnGameEnd?.Invoke();
-                yield break;
-            }
+        UpdateAllProximityUIs(finalCell);
+
+        if (finalCell.TryGetComponent<EvolutionCellBehaviour>(out var evo))
+            yield return StartCoroutine(_mainSceneManager.GoGoEvolution());
+
+        if (finalCell == _board.StartCell)
+        {
+            Debug.Log("[MovePhase] 시작 칸 도달 → 게임 종료");
+            _gameEnded = true;
+            OnGameEnd?.Invoke();
         }
     }
 
@@ -133,6 +138,9 @@ public class MainGameLoop : MonoBehaviour
         IBoardEvent boardEvent = BoardEventFactory.Create(cell.type);
         if (boardEvent != null)
             yield return StartCoroutine(boardEvent.Execute());
+
+        // 이벤트 종료 후 순위 비주얼 갱신 (sorting order, alpha, offset)
+        _piece.ApplyRanking(_board.CurrentCell.transform.position, _mainSceneManager.PlayerIdByRanking);
     }
 
     private static YutType? GetDebugYutInput()

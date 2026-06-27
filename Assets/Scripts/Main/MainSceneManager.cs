@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -13,6 +14,18 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private HatchUiCanvasManager hatchCanvasManager;
     [SerializeField] private PlayerUiCanvasManager playerCanvasManager;
     [SerializeField] private EvolutionDecidingCanvasManager evolutionDecidingCanvasManager;
+
+    public int[] PlayerIdByRanking
+    {
+        get
+        {
+            var affectionById = _stateContainer.AffectionById;
+            return affectionById
+                .OrderByDescending(kv => kv.Value)
+                .Select(kv => kv.Key)
+                .ToArray();
+        }
+    }
     
     private StateContainer _stateContainer;
 
