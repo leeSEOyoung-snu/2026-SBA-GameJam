@@ -59,6 +59,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3616523028319103339, guid: d158ecafd2eac44469f03fa5bdcd7a63, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4156886390488777662}
+    - targetCorrespondingSourceObject: {fileID: 3616523028319103339, guid: d158ecafd2eac44469f03fa5bdcd7a63, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4015803889204568174}
   m_SourcePrefab: {fileID: 100100000, guid: d158ecafd2eac44469f03fa5bdcd7a63, type: 3}
 --- !u!1 &7223672351235379303 stripped
 GameObject:
@@ -83,3 +86,17 @@ MonoBehaviour:
   playerXMax: 8.5
   yMin: -4.5
   yMax: 4.5
+--- !u!114 &4015803889204568174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7223672351235379303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1904883b397ad45b9320604ce0e776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopViewPhysics
+  moveSpeed: 4
+  stickOnly: 0

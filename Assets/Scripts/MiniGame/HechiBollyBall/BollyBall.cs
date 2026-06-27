@@ -2,45 +2,55 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-// 공 물리 + 골 감지 + 리셋
 [RequireComponent(typeof(Rigidbody2D))]
 public class BollyBall : MonoBehaviour
 {
     [SerializeField] private float launchSpeed = 8f;
-    [SerializeField] private float maxSpeed = 16f;
-    [SerializeField] private float resetDelay = 1f;
+    [SerializeField] private float maxSpeed    = 16f;
+    [SerializeField] private float resetDelay  = 1f;
 
-    // 골 라인 X좌표 (인스펙터에서 씬에 맞게 설정)
-    [SerializeField] private float rightGoalX =  9f;   // 오른쪽 벽 통과 → 해치 득점
-    [SerializeField] private float leftGoalX  = -9f;   // 왼쪽 벽 통과  → 3명 득점
+    [SerializeField] private float rightGoalX =  9f;
+    [SerializeField] private float leftGoalX  = -9f;
 
-    public event Action OnHachiScored;  // 공이 오른쪽 골라인 통과 → 해치 득점
-    public event Action OnThreeScored;  // 공이 왼쪽 골라인 통과  → 3명 득점
+    public event Action OnHachiScored;
+    public event Action OnThreeScored;
 
     private Rigidbody2D _rb;
     private bool _scored;
+    private bool _started;       // 해치가 공을 치기 전까지 false
+    private Vector3 _resetPos;   // ResetBall 호출 시 돌아올 위치
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.gravityScale = 0f;
         _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        // 처음엔 정지 상태 — 해치가 충돌하면 시작
+        _rb.linearVelocity = Vector2.zero;
+        _rb.isKinematic = true;
     }
 
-    private void Start()
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        Launch();
+        // 아직 시작 전이고 해치가 공을 건드리면 게임 시작
+        if (!_started && col.gameObject.TryGetComponent<BollyBallCharacterController>(out var ctrl) && ctrl.IsHachi)
+        {
+            _started = true;
+            _rb.isKinematic = false;
+            // 충돌 방향 기준으로 오른쪽(플레이어 진영)으로 발사
+            LaunchToward(right: true);
+            Debug.Log("[BollyBall] 해치가 공을 침 → 게임 시작!");
+        }
     }
 
     private void FixedUpdate()
     {
-        if (_scored) return;
+        if (!_started || _scored) return;
 
-        // 속도 상한 (튕기다 보면 가속될 수 있어서)
         if (_rb.linearVelocity.magnitude > maxSpeed)
             _rb.linearVelocity = _rb.linearVelocity.normalized * maxSpeed;
 
-        // 골 라인 감지
         float x = transform.position.x;
         if (x >= rightGoalX)
         {
@@ -56,9 +66,10 @@ public class BollyBall : MonoBehaviour
         }
     }
 
-    // 게임에서 호출 — 딜레이 후 공 중앙 리셋
-    public void ResetBall()
+    // 득점 후 게임에서 호출
+    public void ResetBall(Vector3 resetPos)
     {
+        _resetPos = resetPos;
         StartCoroutine(ResetRoutine());
     }
 
@@ -66,26 +77,26 @@ public class BollyBall : MonoBehaviour
     {
         _rb.linearVelocity = Vector2.zero;
         _rb.angularVelocity = 0f;
+        _rb.isKinematic = true;
         gameObject.SetActive(false);
 
         yield return new WaitForSeconds(resetDelay);
 
-        transform.position = Vector3.zero;
+        transform.position = _resetPos;
         gameObject.SetActive(true);
         _scored = false;
-        Launch();
+        _started = false;   // 다시 해치가 쳐야 시작
+        Debug.Log("[BollyBall] 공 리셋 — 해치가 다시 치면 시작");
     }
 
-    private void Launch()
+    // right=true: 오른쪽(플레이어 진영)으로, false: 왼쪽(해치 진영)으로
+    private void LaunchToward(bool right)
     {
-        // 완전 수직/수평을 피해 15~75° 사이 랜덤 각도로 발사
         float angle = UnityEngine.Random.Range(15f, 75f);
-        // 위 또는 아래, 좌 또는 우 랜덤
         if (UnityEngine.Random.value < 0.5f) angle = -angle;
         float radians = angle * Mathf.Deg2Rad;
         var dir = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
-        if (UnityEngine.Random.value < 0.5f) dir.x = -dir.x;
-
+        dir.x = Mathf.Abs(dir.x) * (right ? 1f : -1f);  // X 방향 강제
         _rb.linearVelocity = dir * launchSpeed;
     }
 }

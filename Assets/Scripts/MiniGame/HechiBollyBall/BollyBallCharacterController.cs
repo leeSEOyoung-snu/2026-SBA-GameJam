@@ -16,12 +16,13 @@ public class BollyBallCharacterController : MonoBehaviour
     [SerializeField] private float yMin = -4.5f;
     [SerializeField] private float yMax =  4.5f;
 
+    public bool IsHachi { get; private set; }
+
     private Rigidbody2D _rb;
-    private bool _isHachi;
 
     public void Init(bool isHachi)
     {
-        _isHachi = isHachi;
+        IsHachi = isHachi;
     }
 
     private void Awake()
@@ -33,8 +34,8 @@ public class BollyBallCharacterController : MonoBehaviour
     {
         var pos = _rb.position;
 
-        float xMin = _isHachi ? hachiXMin : playerXMin;
-        float xMax = _isHachi ? hachiXMax : playerXMax;
+        float xMin = IsHachi ? hachiXMin : playerXMin;
+        float xMax = IsHachi ? hachiXMax : playerXMax;
 
         pos.x = Mathf.Clamp(pos.x, xMin, xMax);
         pos.y = Mathf.Clamp(pos.y, yMin, yMax);

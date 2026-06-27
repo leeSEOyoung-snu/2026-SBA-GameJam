@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,15 +9,13 @@ public class HechiBollyBallGame : OneVsThreeBase
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject ballPrefab;
 
-    [Header("스폰 범위 — 해치 (왼쪽 절반)")]
-    [SerializeField] private Vector2 hachiSpawnMin = new(-8f, -3.5f);
-    [SerializeField] private Vector2 hachiSpawnMax = new(-0.5f, 3.5f);
+    [Header("고정 스폰 위치")]
+    [SerializeField] private Vector3 hachiSpawnPos    = new(-5f,  0f, 0f);   // 해치 — 왼쪽 중앙
+    [SerializeField] private Vector3 ballSpawnPos     = new(-1f,  0f, 0f);   // 공 — 네트 바로 왼쪽
+    [SerializeField] private Vector3 playerSpawnPos1  = new( 5f,  2f, 0f);   // 플레이어 위
+    [SerializeField] private Vector3 playerSpawnPos2  = new( 5f,  0f, 0f);   // 플레이어 중앙
+    [SerializeField] private Vector3 playerSpawnPos3  = new( 5f, -2f, 0f);   // 플레이어 아래
 
-    [Header("스폰 범위 — 플레이어 3명 (오른쪽 절반)")]
-    [SerializeField] private Vector2 playerSpawnMin = new(0.5f, -3.5f);
-    [SerializeField] private Vector2 playerSpawnMax = new(8f, 3.5f);
-
-    [SerializeField] private float minSpawnDistance = 1.2f;
     [SerializeField] private int scoreToWin = 3;
 
     [Header("결과 델타")]
@@ -34,7 +31,7 @@ public class HechiBollyBallGame : OneVsThreeBase
     public override bool IsOneWin { get; protected set; }
     public override int OnePlayerId { get; protected set; }
 
-    public event System.Action<int, int> OnScoreChanged; // (hachiScore, threeScore)
+    public event System.Action<int, int> OnScoreChanged;
 
     private void Start()
     {
@@ -47,55 +44,35 @@ public class HechiBollyBallGame : OneVsThreeBase
         _hachiPlayerId = Random.Range(1, 5);
         Debug.Log($"[BollyBall] 해치: Player {_hachiPlayerId}");
 
-        var usedPos = new List<Vector2>();
-
-        // 해치 1명 (왼쪽)
-        var hachiPos = GetRandomPos(hachiSpawnMin, hachiSpawnMax, usedPos);
-        usedPos.Add(hachiPos);
-        var hachiObj = Instantiate(hachiPrefab, (Vector3)hachiPos, Quaternion.identity);
+        // 해치 1명 (왼쪽 고정)
+        var hachiObj = Instantiate(hachiPrefab, hachiSpawnPos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(hachiObj, gameObject.scene);
-        Debug.Log($"[BollyBall] 해치 스폰 완료: {hachiPos}");
-
         if (hachiObj.TryGetComponent<BollyBallCharacterController>(out var hachiCtrl))
             hachiCtrl.Init(isHachi: true);
         else
             Debug.LogError("[BollyBall] hachiPrefab에 BollyBallCharacterController가 없습니다!");
+        hachiObj.GetComponent<MiniGameCharacterController>().Init(_hachiPlayerId);
 
-        if (hachiObj.TryGetComponent<MiniGameCharacterController>(out var hachiMini))
-            hachiMini.Init(_hachiPlayerId);
-        else
-            Debug.LogError("[BollyBall] hachiPrefab에 MiniGameCharacterController가 없습니다!");
-
-        // 플레이어 3명 (오른쪽)
-        int spawnedCount = 0;
+        // 플레이어 3명 (오른쪽 고정, 위→중→아래)
+        var spawnPositions = new[] { playerSpawnPos1, playerSpawnPos2, playerSpawnPos3 };
+        int spawnIdx = 0;
         for (int i = 1; i <= 4; i++)
         {
             if (i == _hachiPlayerId) continue;
 
-            var pos = GetRandomPos(playerSpawnMin, playerSpawnMax, usedPos);
-            usedPos.Add(pos);
-
-            var playerObj = Instantiate(playerPrefab, (Vector3)pos, Quaternion.identity);
+            var playerObj = Instantiate(playerPrefab, spawnPositions[spawnIdx++], Quaternion.identity);
             SceneManager.MoveGameObjectToScene(playerObj, gameObject.scene);
-            spawnedCount++;
-            Debug.Log($"[BollyBall] 플레이어 {i} 스폰 완료: {pos}");
-
             if (playerObj.TryGetComponent<BollyBallCharacterController>(out var ctrl))
                 ctrl.Init(isHachi: false);
             else
                 Debug.LogError($"[BollyBall] playerPrefab에 BollyBallCharacterController가 없습니다! (Player {i})");
-
-            if (playerObj.TryGetComponent<MiniGameCharacterController>(out var mini))
-                mini.Init(i);
-            else
-                Debug.LogError($"[BollyBall] playerPrefab에 MiniGameCharacterController가 없습니다! (Player {i})");
+            playerObj.GetComponent<MiniGameCharacterController>().Init(i);
         }
-        Debug.Log($"[BollyBall] 총 플레이어 스폰: {spawnedCount}명");
     }
 
     private void SpawnBall()
     {
-        var ballObj = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
+        var ballObj = Instantiate(ballPrefab, ballSpawnPos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(ballObj, gameObject.scene);
         _ball = ballObj.GetComponent<BollyBall>();
         _ball.OnHachiScored += () => AddScore(isHachi: true);
@@ -114,7 +91,7 @@ public class HechiBollyBallGame : OneVsThreeBase
 
         if (_hachiScore >= scoreToWin)      EndGame(hachiWins: true);
         else if (_threeScore >= scoreToWin) EndGame(hachiWins: false);
-        else                                _ball.ResetBall();
+        else                                _ball.ResetBall(ballSpawnPos);
     }
 
     private void EndGame(bool hachiWins)
@@ -127,19 +104,5 @@ public class HechiBollyBallGame : OneVsThreeBase
         NightmareDelta = hachiWins ? 0 : threeWinNightmare;
 
         MiniGameManager.Instance.QuitMiniGame();
-    }
-
-    private Vector2 GetRandomPos(Vector2 min, Vector2 max, List<Vector2> used)
-    {
-        const int maxTry = 30;
-        for (int i = 0; i < maxTry; i++)
-        {
-            var c = new Vector2(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
-            bool ok = true;
-            foreach (var u in used)
-                if (Vector2.Distance(c, u) < minSpawnDistance) { ok = false; break; }
-            if (ok) return c;
-        }
-        return new Vector2(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
     }
 }

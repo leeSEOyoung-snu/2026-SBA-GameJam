@@ -50,10 +50,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4167182419005732700, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
       propertyPath: m_Name
-      value: Playable Hechi Base
+      value: Bolly Playable Hechi Base Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4167182419005732700, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7613742665631207527}
+    - targetCorrespondingSourceObject: {fileID: 4167182419005732700, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1336168195622809914}
   m_SourcePrefab: {fileID: 100100000, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
+--- !u!1 &4223094316428007221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4167182419005732700, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
+  m_PrefabInstance: {fileID: 238620081611825257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7613742665631207527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4223094316428007221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1904883b397ad45b9320604ce0e776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopViewPhysics
+  moveSpeed: 3
+  stickOnly: 0
+--- !u!114 &1336168195622809914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4223094316428007221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06106a9dfd923c489759fd9fa92c761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BollyBallCharacterController
+  hachiXMin: -8.5
+  hachiXMax: -0.3
+  playerXMin: 0.3
+  playerXMax: 8.5
+  yMin: -4.5
+  yMax: 4.5

@@ -213,8 +213,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 7223672351235379303, guid: 013d01fe0d90e8741989e7f2386fa8bb, type: 3}
   ballPrefab: {fileID: 3570059936328125597, guid: c3da45fe6401d7d4a883a834f5219283, type: 3}
   hachiSpawnMin: {x: -6, y: 0.5}
-  hachiSpawnMax: {x: 6, y: 3.5}
-  playerSpawnMin: {x: -6, y: -3.5}
+  hachiSpawnMax: {x: 0, y: 3.5}
+  playerSpawnMin: {x: 0, y: -3.5}
   playerSpawnMax: {x: 6, y: -0.5}
   minSpawnDistance: 1.2
   scoreToWin: 3
