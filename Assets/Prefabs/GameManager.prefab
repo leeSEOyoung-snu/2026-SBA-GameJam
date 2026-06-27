@@ -55,6 +55,12 @@ MonoBehaviour:
     SL: 0
     Stick: {x: 0, y: 0}
     Swing: 0
+    UpHeld: 0
+    DownHeld: 0
+    LeftHeld: 0
+    RightHeld: 0
+    SRHeld: 0
+    SLHeld: 0
   printDebug: 0
   upKey: 23
   downKey: 25
@@ -147,6 +153,12 @@ MonoBehaviour:
     SL: 0
     Stick: {x: 0, y: 0}
     Swing: 0
+    UpHeld: 0
+    DownHeld: 0
+    LeftHeld: 0
+    RightHeld: 0
+    SRHeld: 0
+    SLHeld: 0
   printDebug: 0
   upKey: 34
   downKey: 21
@@ -215,6 +227,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7190582254206244233}
+  - {fileID: 6611500331266953635}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7181136580423604796
@@ -284,6 +297,12 @@ MonoBehaviour:
     SL: 0
     Stick: {x: 0, y: 0}
     Swing: 0
+    UpHeld: 0
+    DownHeld: 0
+    LeftHeld: 0
+    RightHeld: 0
+    SRHeld: 0
+    SLHeld: 0
   printDebug: 0
   upKey: 63
   downKey: 64
@@ -375,7 +394,6 @@ MonoBehaviour:
   - {fileID: 1387058983630445889}
   - {fileID: 6684968450122733133}
   - {fileID: 2138689438416899646}
-  playerPrefab: {fileID: 8496314183072010575, guid: 288ac4da4961bf94789830f3f46fc527, type: 3}
   players:
   - {fileID: 6449548400712899766}
   - {fileID: 1768289285261415971}
@@ -394,6 +412,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JoyConMotion
   port: 9870
+--- !u!1 &7699708767945667666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6611500331266953635}
+  - component: {fileID: 1841692121773885565}
+  m_Layer: 0
+  m_Name: Hechi Sprite Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6611500331266953635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7699708767945667666}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 894355780764393659}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1841692121773885565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7699708767945667666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa12814569f5fa4991675f17e41e832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HechiSpriteContainer
+  hechiSpriteData:
+  - conditionCnt: 0
+    condition1: 0
+    condition2: 0
+    mainSprite: {fileID: 3946799784144726957, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 3946799784144726957, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+  - conditionCnt: 1
+    condition1: 1
+    condition2: 0
+    mainSprite: {fileID: -7869426889365227963, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -7869426889365227963, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+  - conditionCnt: 1
+    condition1: 2
+    condition2: 0
+    mainSprite: {fileID: -1556239395278294545, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -1556239395278294545, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+  - conditionCnt: 1
+    condition1: 4
+    condition2: 0
+    mainSprite: {fileID: 7272622380396766534, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 7272622380396766534, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+  - conditionCnt: 1
+    condition1: 3
+    condition2: 0
+    mainSprite: {fileID: -1826788655063610993, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -1826788655063610993, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+  - conditionCnt: 1
+    condition1: 0
+    condition2: 0
+    mainSprite: {fileID: -8586438118734609808, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -8586438118734609808, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
 --- !u!1 &8374999925384097186
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +542,12 @@ MonoBehaviour:
     SL: 0
     Stick: {x: 0, y: 0}
     Swing: 0
+    UpHeld: 0
+    DownHeld: 0
+    LeftHeld: 0
+    RightHeld: 0
+    SRHeld: 0
+    SLHeld: 0
   printDebug: 0
   upKey: 37
   downKey: 33

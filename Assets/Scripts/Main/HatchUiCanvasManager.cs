@@ -13,6 +13,7 @@ public class HatchUiCanvasManager : MonoBehaviour
     [SerializeField] private List<StateGage> gagesRaw;
     [SerializeField] private float gageUpdateDuration;
     [SerializeField] private Ease gageUpdateEase;
+    [SerializeField] private Image hechiProfile;
     
     [Serializable]
     private struct StateGage
@@ -39,6 +40,8 @@ public class HatchUiCanvasManager : MonoBehaviour
             _gageImgDict.Add(r.type, r.gageImg);
             r.gageImg.fillAmount = 0f;
         });
+
+        hechiProfile.sprite = GameManager.Instance.GetHechiSpriteOnMain();
     }
 
     public IEnumerator UpdateStates(Dictionary<StateTypes, int> currStates)
@@ -56,5 +59,12 @@ public class HatchUiCanvasManager : MonoBehaviour
         }
         
         yield return seq.WaitForCompletion();
+    }
+
+    public IEnumerator EvolutionCoroutine(Sprite hechiSprite)
+    {
+        // TODO: 변경 애니메이션
+        hechiProfile.sprite = hechiSprite;
+        yield break;
     }
 }

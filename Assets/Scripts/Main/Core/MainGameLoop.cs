@@ -13,20 +13,27 @@ public class MainGameLoop : MonoBehaviour
     private Board _board;
     private GamePiece _piece;
     private bool _gameEnded;
+    private EvolutionCellBehaviour[] _evolutionCells;
+    private MainSceneManager _mainSceneManager;
 
     public void Init(Board board, GamePiece piece)
     {
         _board = board;
         _piece = piece;
+        
+        _mainSceneManager = GetComponent<MainSceneManager>();
 
         _players = new IPlayerInputReader[PlayerCount];
         for (int i = 0; i < PlayerCount; i++)
             _players[i] = GameManager.Instance.GetPlayerInputReader(i + 1);
 
+        _evolutionCells = FindObjectsByType<EvolutionCellBehaviour>(FindObjectsSortMode.None);
+
         // 미니게임 중에도 이 GameObject는 활성 유지 (코루틴 보호)
         GameManager.Instance.RegisterKeepActive(gameObject);
 
         _piece.PlaceAt(_board.CurrentCell.transform.position);
+        UpdateAllProximityUIs(_board.CurrentCell);
 
         StartCoroutine(GameLoop());
     }
@@ -99,6 +106,11 @@ public class MainGameLoop : MonoBehaviour
             _board.SetCurrentCell(next);
             yield return StartCoroutine(_piece.MoveTo(next.transform.position));
 
+            UpdateAllProximityUIs(next);
+
+            if (next.TryGetComponent<EvolutionCellBehaviour>(out var evo))
+                yield return StartCoroutine(_mainSceneManager.GoGoEvolution());
+
             // 시작 칸 복귀 시 게임 종료
             if (next == _board.StartCell)
             {
@@ -108,6 +120,12 @@ public class MainGameLoop : MonoBehaviour
                 yield break;
             }
         }
+    }
+
+    private void UpdateAllProximityUIs(CellInfo from)
+    {
+        foreach (var evo in _evolutionCells)
+            evo.UpdateProximityUI(from);
     }
 
     private IEnumerator TriggerEvent(CellInfo cell)
