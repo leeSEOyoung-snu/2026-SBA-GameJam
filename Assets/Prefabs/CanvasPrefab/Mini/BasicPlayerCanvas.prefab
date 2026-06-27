@@ -75,6 +75,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4909345416538586995}
+  - component: {fileID: 5456293271160573196}
   - component: {fileID: 4952326562095157975}
   - component: {fileID: 5078468322496030035}
   - component: {fileID: 6397954956639507590}
@@ -105,6 +106,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &5456293271160573196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3897401737034198771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6ecb4eb4d2d6f439747f06c90abc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicPlayerCanvasManager
+  stackCntTexts:
+  - {fileID: 7160597062613743595}
+  - {fileID: 6845623486014673482}
+  - {fileID: 7042454430035578521}
+  - {fileID: 704269115163063584}
 --- !u!223 &4952326562095157975
 Canvas:
   m_ObjectHideFlags: 0
@@ -179,7 +197,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4680254054000513081, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Name
-      value: PlayerPrefab (3)
+      value: 4P
       objectReference: {fileID: 0}
     - target: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Pivot.x
@@ -270,6 +288,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
+--- !u!114 &704269115163063584 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 395165953613795316, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
+  m_PrefabInstance: {fileID: 918162922472487636}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &5627611470994468183 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
@@ -285,7 +314,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4680254054000513081, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Name
-      value: PlayerPrefab (1)
+      value: 2P
       objectReference: {fileID: 0}
     - target: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Pivot.x
@@ -381,6 +410,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
   m_PrefabInstance: {fileID: 6519913862316383678}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6845623486014673482 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 395165953613795316, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
+  m_PrefabInstance: {fileID: 6519913862316383678}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &7259868203023532397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -391,7 +431,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4680254054000513081, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Name
-      value: PlayerPrefab (2)
+      value: 3P
       objectReference: {fileID: 0}
     - target: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Pivot.x
@@ -487,6 +527,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
   m_PrefabInstance: {fileID: 7259868203023532397}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7042454430035578521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 395165953613795316, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
+  m_PrefabInstance: {fileID: 7259868203023532397}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &7360117918626396191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -497,7 +548,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4680254054000513081, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Name
-      value: PlayerPrefab
+      value: 1P
       objectReference: {fileID: 0}
     - target: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
       propertyPath: m_Pivot.x
@@ -589,3 +640,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4802159370632812419, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
   m_PrefabInstance: {fileID: 7360117918626396191}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7160597062613743595 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 395165953613795316, guid: cf972faadf5d64038bdbea3679aa82ae, type: 3}
+  m_PrefabInstance: {fileID: 7360117918626396191}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI

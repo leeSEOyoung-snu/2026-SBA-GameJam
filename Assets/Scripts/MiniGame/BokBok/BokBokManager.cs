@@ -17,9 +17,10 @@ public class BokBokManager : SoloBattleBase
     public override int RankPlayer4 { get; protected set; }
 
     [SerializeField] private BokBokHandVisual[] handVisuals; // index 0~3 = player 1~4
+    [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
 
     // raw 스윙 횟수 누적 → /2 = 세트 수 (위-아래 = 1세트)
-    private int[] _rawSwingCounts = new int[4];
+    private int[] _swingCounts = new int[4];
 
     private IPlayerInputReader[] _inputs = new IPlayerInputReader[4];
     private bool _gameOver;
@@ -40,8 +41,9 @@ public class BokBokManager : SoloBattleBase
         {
             if (!_inputs[i].Swing) continue;
 
-            _rawSwingCounts[i]++;
-            Debug.Log($"[BokBok] Player {i + 1} raw={_rawSwingCounts[i]} 세트={_rawSwingCounts[i] / 2}");
+            _swingCounts[i]++;
+            Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}"); 
+            basicPlayerCanvasManager.UpdateStackCnt(i + 1, _swingCounts[i]);
 
             if (handVisuals != null && i < handVisuals.Length && handVisuals[i] != null)
                 handVisuals[i].PlayStroke();
@@ -66,7 +68,7 @@ public class BokBokManager : SoloBattleBase
         if (_gameOver) return;
         _gameOver = true;
 
-        int[] setCounts = _rawSwingCounts.Select(r => r / 2).ToArray();
+        int[] setCounts = _swingCounts.ToArray();
         int total = setCounts.Sum();
         bool success = total >= successThreshold;
 
@@ -87,7 +89,7 @@ public class BokBokManager : SoloBattleBase
         RankPlayer4 = ranks[3];
 
         for (int i = 0; i < 4; i++)
-            Debug.Log($"[BokBok] Player {i + 1}: raw={_rawSwingCounts[i]} 세트={setCounts[i]}");
+            Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}");
 
         MiniGameManager.Instance.QuitMiniGame();
     }
