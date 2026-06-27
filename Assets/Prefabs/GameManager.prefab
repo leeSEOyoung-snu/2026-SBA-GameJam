@@ -468,31 +468,181 @@ MonoBehaviour:
     condition2: 0
     mainSprite: {fileID: -7869426889365227963, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
     miniGameSprite: {fileID: -5553395156517545934, guid: e110b8752db5e664ea24033017031d56, type: 3}
-    hechiName: 
+    hechiName: "\uC54C\uCE58"
   - conditionCnt: 1
     condition1: 2
     condition2: 0
     mainSprite: {fileID: -1556239395278294545, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
     miniGameSprite: {fileID: -6590652200032028289, guid: e110b8752db5e664ea24033017031d56, type: 3}
-    hechiName: 
+    hechiName: "\uC694\uAC70\uCE58"
   - conditionCnt: 1
     condition1: 4
     condition2: 0
     mainSprite: {fileID: 7272622380396766534, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
     miniGameSprite: {fileID: -5442387875173955805, guid: e110b8752db5e664ea24033017031d56, type: 3}
-    hechiName: 
+    hechiName: "\uAF43\uCE58"
   - conditionCnt: 1
     condition1: 3
     condition2: 0
     mainSprite: {fileID: -1826788655063610993, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
     miniGameSprite: {fileID: 2586945028505827405, guid: e110b8752db5e664ea24033017031d56, type: 3}
-    hechiName: 
+    hechiName: "\uC544\uAE30\uCE58"
   - conditionCnt: 1
     condition1: 0
     condition2: 0
     mainSprite: {fileID: -8586438118734609808, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
     miniGameSprite: {fileID: 7130850037475945122, guid: e110b8752db5e664ea24033017031d56, type: 3}
-    hechiName: 
+    hechiName: "\uB625\uCE58"
+  - conditionCnt: 2
+    condition1: 1
+    condition2: 1
+    mainSprite: {fileID: 3529705425978585131, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 7679677977646961114, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uAC74\uB2F4\uCE58"
+  - conditionCnt: 2
+    condition1: 2
+    condition2: 1
+    mainSprite: {fileID: -1299426055612875091, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 7474834330801949920, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC57C\uCFE0\uB974\uCE58"
+  - conditionCnt: 2
+    condition1: 4
+    condition2: 1
+    mainSprite: {fileID: -2289284124546252719, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 4451099505821089191, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC0CC\uC988\uCE58"
+  - conditionCnt: 2
+    condition1: 3
+    condition2: 1
+    mainSprite: {fileID: 1187665315735724619, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 4030224248558893693, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uAE30\uAC00\uCC44\uCE58"
+  - conditionCnt: 2
+    condition1: 0
+    condition2: 1
+    mainSprite: {fileID: -8481545219813578307, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -560292585581842783, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uD3ED\uBC1C\uCE58"
+  - conditionCnt: 2
+    condition1: 1
+    condition2: 2
+    mainSprite: {fileID: -4375221249534202170, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 874814196042777517, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC720\uB2C8\uCF58\uCE58"
+  - conditionCnt: 2
+    condition1: 2
+    condition2: 2
+    mainSprite: {fileID: -6338553921478352656, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -3025752458284632766, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uBE59\uC218\uCE58"
+  - conditionCnt: 2
+    condition1: 4
+    condition2: 2
+    mainSprite: {fileID: -135471365722588983, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -5760850972757882056, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC694\uC815\uCE58"
+  - conditionCnt: 2
+    condition1: 3
+    condition2: 2
+    mainSprite: {fileID: -912428114930339738, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -4181655990244088679, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uD398\uD398\uCE58"
+  - conditionCnt: 2
+    condition1: 0
+    condition2: 2
+    mainSprite: {fileID: -5216905464776258714, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -5073216712101100697, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uCFE0\uB9C8\uCE58"
+  - conditionCnt: 2
+    condition1: 1
+    condition2: 4
+    mainSprite: {fileID: 4159392868047028412, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 7014464861301994718, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC6A9\uCE58"
+  - conditionCnt: 2
+    condition1: 2
+    condition2: 4
+    mainSprite: {fileID: 1400720807000368084, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -2778851656303060774, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uAE40\uCE58"
+  - conditionCnt: 2
+    condition1: 4
+    condition2: 4
+    mainSprite: {fileID: -5113931952680562604, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 1475905636170626164, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uCE75\uD14C\uCE58"
+  - conditionCnt: 2
+    condition1: 3
+    condition2: 4
+    mainSprite: {fileID: 4274734628238933588, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -549189032912560544, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uBBF8\uCFE0\uCE58"
+  - conditionCnt: 2
+    condition1: 0
+    condition2: 4
+    mainSprite: {fileID: -49264890890555522, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -4831178201962712151, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uAE30\uC800\uADC0\uCE58"
+  - conditionCnt: 2
+    condition1: 1
+    condition2: 3
+    mainSprite: {fileID: 4067754661113372162, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 7576985725765282090, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uB514\uB178\uCE58"
+  - conditionCnt: 2
+    condition1: 2
+    condition2: 3
+    mainSprite: {fileID: -6764706796408346935, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -5205280891551439138, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uCE58\uD0A8\uCE58"
+  - conditionCnt: 2
+    condition1: 4
+    condition2: 3
+    mainSprite: {fileID: 9036595642869357987, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -543267857996584093, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uBC30\uCE58"
+  - conditionCnt: 2
+    condition1: 3
+    condition2: 3
+    mainSprite: {fileID: -2900068314477005399, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -3399293427914817238, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uD398\uC774\uCEE4\uCE58"
+  - conditionCnt: 2
+    condition1: 0
+    condition2: 3
+    mainSprite: {fileID: -4895399010253860194, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -1318181295151587875, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uB9DD\uAC00\uCE58"
+  - conditionCnt: 2
+    condition1: 1
+    condition2: 0
+    mainSprite: {fileID: 7851578366289727509, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 3851444371778394756, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uD6C4\uB77C\uC774\uCE58"
+  - conditionCnt: 2
+    condition1: 2
+    condition2: 0
+    mainSprite: {fileID: 5129643595219082399, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 2899517932058103546, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC4F0\uB808\uAE30\uCE58"
+  - conditionCnt: 2
+    condition1: 4
+    condition2: 0
+    mainSprite: {fileID: -3806966038404621107, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: -4571614715165294399, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC2DC\uB4E0\uAF43\uCE58"
+  - conditionCnt: 2
+    condition1: 3
+    condition2: 0
+    mainSprite: {fileID: -230489765674737573, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 8222061742477321480, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uBA58\uD5E4\uB77C\uCE58"
+  - conditionCnt: 2
+    condition1: 0
+    condition2: 0
+    mainSprite: {fileID: 6307228027905461636, guid: 3e694682b841bb94fa06f3d2ea6db386, type: 3}
+    miniGameSprite: {fileID: 6630385832833016294, guid: e110b8752db5e664ea24033017031d56, type: 3}
+    hechiName: "\uC2A4\uCE74\uCE58"
 --- !u!1 &8374999925384097186
 GameObject:
   m_ObjectHideFlags: 0

@@ -608,6 +608,8 @@ MonoBehaviour:
   gageUpdateDuration: 1
   gageUpdateEase: 1
   hechiProfile: {fileID: 8651736894660290759}
+  gageHeadroom: 20
+  hechiNameText: {fileID: 5541314137651966894}
   evolutionShrinkDuration: 0.3
   evolutionGrowDuration: 0.5
   evolutionShrinkEase: 26

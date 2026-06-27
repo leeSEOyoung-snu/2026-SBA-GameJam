@@ -44,7 +44,7 @@ public class HatchUiCanvasManager : MonoBehaviour
         });
 
         hechiProfile.sprite = GameManager.Instance.GetHechiSpriteOnMain();
-        hechiNameText.text = GameManager.Instance.GetHechiName();
+        hechiNameText.text = $"<wiggle>{GameManager.Instance.GetHechiName()}</wiggle>";
     }
 
     public IEnumerator UpdateStates(Dictionary<StateTypes, int> currStates)
@@ -84,7 +84,7 @@ public class HatchUiCanvasManager : MonoBehaviour
             .WaitForCompletion();
 
         hechiProfile.sprite = hechiSprite;
-        hechiNameText.text = hechiName;
+        hechiNameText.text = $"<wiggle>{hechiName}</wiggle>";
 
         yield return hechiProfile.transform.DOScale(Vector3.one, evolutionGrowDuration)
             .SetEase(evolutionGrowEase)
