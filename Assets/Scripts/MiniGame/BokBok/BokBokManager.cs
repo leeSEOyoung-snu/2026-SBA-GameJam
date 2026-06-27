@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 // 제한 시간 내에 컨트롤러를 최대한 많이 스윙 (위-아래 1세트 = 1회)
@@ -19,6 +20,7 @@ public class BokBokManager : SoloBattleBase
 
     [SerializeField] private BokBokHandVisual[] handVisuals; // index 0~3 = player 1~4
     [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
+    [SerializeField] private TMP_Text goalCountText;
     [SerializeField] private SpriteRenderer bokBokSpriteRenderer;
     [Header("복복 또잉 연출")]
     [SerializeField] private float boingHeight = 40f;
@@ -39,6 +41,7 @@ public class BokBokManager : SoloBattleBase
     {
         ApplyCurrentHechiSprite();
         CacheBokBokTransform();
+        UpdateGoalCountText();
 
         for (int i = 0; i < 4; i++)
             _inputs[i] = GameManager.Instance.GetPlayerInputReader(i + 1);
@@ -79,6 +82,7 @@ public class BokBokManager : SoloBattleBase
             _swingCounts[i]++;
             Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}"); 
             basicPlayerCanvasManager.UpdateStackCnt(i + 1, _swingCounts[i]);
+            UpdateGoalCountText();
 
             if (handVisuals != null && i < handVisuals.Length && handVisuals[i] != null)
                 handVisuals[i].PlayStroke();
@@ -129,6 +133,14 @@ public class BokBokManager : SoloBattleBase
             Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}");
 
         MiniGameManager.Instance.QuitMiniGame();
+    }
+
+    private void UpdateGoalCountText()
+    {
+        if (goalCountText == null)
+            return;
+
+        goalCountText.text = $"{_swingCounts.Sum()}/{successThreshold}";
     }
 
     private void PlayBoing()

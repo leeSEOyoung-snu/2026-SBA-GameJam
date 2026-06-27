@@ -58,6 +58,7 @@ public class MiniGameManager : MonoBehaviour
         
         yield return null;
         GameManager.Instance.SetActiveAllInput(true);
+        StartTimeAttackView();
     }
 
     private IEnumerator MiniGameStartFlow()
@@ -79,7 +80,15 @@ public class MiniGameManager : MonoBehaviour
         if (basicCanvas != null)
             yield return basicCanvas.PlayGameStart().WaitForCompletion();
 
-        if (basicCanvas != null && miniGameResultContainer != null && miniGameResultContainer.IsTimeAttack)
+    }
+
+    private void StartTimeAttackView()
+    {
+        if (miniGameResultContainer == null || !miniGameResultContainer.IsTimeAttack)
+            return;
+
+        BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
+        if (basicCanvas != null)
             basicCanvas.StartTimeAttack(miniGameResultContainer.TimeAttackSeconds);
     }
 
@@ -94,6 +103,9 @@ public class MiniGameManager : MonoBehaviour
     private IEnumerator QuitMiniGameCoroutine(Dictionary<StateTypes, int> delta)
     {
         BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
+
+        if (basicCanvas != null)
+            basicCanvas.StopTimeAttack();
 
         if (basicCanvas != null)
             yield return basicCanvas.PlayGameEnd().WaitForCompletion();

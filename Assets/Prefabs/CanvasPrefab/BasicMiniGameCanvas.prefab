@@ -1728,6 +1728,7 @@ MonoBehaviour:
   gameStartGroup: {fileID: 3793606603883796651}
   resultCanvas: {fileID: 2383699386738065823}
   gameStartTxt: {fileID: 3152918392369716583}
+  timePanel: {fileID: 628252686424792637}
   timeTxt: {fileID: 8037566471983426458}
   countNumTxt: {fileID: 1444584830266876253}
   curtain: {fileID: 1036645754281923813}

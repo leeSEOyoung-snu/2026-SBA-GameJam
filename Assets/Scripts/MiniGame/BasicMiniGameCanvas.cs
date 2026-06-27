@@ -10,6 +10,7 @@ public class BasicMiniGameCanvas : MonoBehaviour
     [SerializeField] private CanvasGroup gameStartGroup;
     [SerializeField] private ResultCanvas resultCanvas;
     [SerializeField] private TMP_Text gameStartTxt;
+    [SerializeField] private GameObject timePanel;
     [SerializeField] private TMP_Text timeTxt;
     [SerializeField] private TMP_Text countNumTxt;
     [SerializeField] private CanvasGroup curtain;
@@ -88,19 +89,23 @@ public class BasicMiniGameCanvas : MonoBehaviour
     {
         StopTimeAttack();
 
-        if (timeTxt == null)
+        if (timePanel == null || timeTxt == null)
             return;
 
+        timePanel.SetActive(true);
         _timeAttackCoroutine = StartCoroutine(TimeAttackCoroutine(Mathf.Max(0, seconds)));
     }
 
     public void StopTimeAttack()
     {
-        if (_timeAttackCoroutine == null)
-            return;
+        if (timePanel != null)
+            timePanel.SetActive(false);
 
-        StopCoroutine(_timeAttackCoroutine);
-        _timeAttackCoroutine = null;
+        if (_timeAttackCoroutine != null)
+        {
+            StopCoroutine(_timeAttackCoroutine);
+            _timeAttackCoroutine = null;
+        }
     }
 
     public void SetCount(int currentCount, int totalCount)
@@ -114,7 +119,6 @@ public class BasicMiniGameCanvas : MonoBehaviour
     private IEnumerator TimeAttackCoroutine(int seconds)
     {
         int remainingSeconds = seconds;
-        SetTimeText(remainingSeconds);
 
         while (remainingSeconds > 0)
         {
@@ -163,5 +167,8 @@ public class BasicMiniGameCanvas : MonoBehaviour
         gameStartGroup.alpha = 0f;
         gameStartGroup.transform.localScale = Vector3.one;
         gameStartGroup.gameObject.SetActive(false);
+
+        if (timePanel != null)
+            timePanel.SetActive(false);
     }
 }
