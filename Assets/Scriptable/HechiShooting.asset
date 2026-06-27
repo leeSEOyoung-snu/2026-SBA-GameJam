@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37fc19b7565804143866670029ac76c6, type: 3}
+  m_Name: HechiShooting
+  m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
+  type: 0
+  gameTitle: 
+  isTimeAttack: 0
+  timeAttackSeconds: 0
+  soloDelta:
+    first: 3
+    second: 1
+    third: 1
+    fourth: 0
+  soloBattleTutorialText:
+    soloWinCondition: 
+    nightmareCondition: 
+  oneVsThreeDelta:
+    oneWin: 0
+    threeWin: 0
+  oneVsThreeTutorialText:
+    oneWinCondition: 
+    threeWinCondition: 
+  twoVsTwoDelta: 0
+  twoVsTwoTutorialText:
+    twoWinCondition: 
+    nightmareCondition: 
+  cooperativeDelta: 0
+  cooperativeTutorialText:
+    coopWinCondition: 
+    nightmareCondition: 
