@@ -21,15 +21,10 @@ public class DuckBoatGame : TwoVsTwoBase
     private bool _gameOver;
 
     public override int NightmareDelta        { get; protected set; }
-    public override List<int> PlayerIdsTeam1  { get; protected set; } = new();
-    public override List<int> PlayerIdsTeam2  { get; protected set; } = new();
     public override TwoVsTwoWinner Winner     { get; protected set; }
 
     private void Start()
     {
-        PlayerIdsTeam1 = new List<int> { 1, 2 };
-        PlayerIdsTeam2 = new List<int> { 3, 4 };
-
         // 왼쪽 레인: X -8 ~ -0.5 / 오른쪽 레인: X 0.5 ~ 8
         _boat1 = SpawnBoat(team1SpawnPos, PlayerIdsTeam1, laneXMin: -8f,  laneXMax: -0.5f);
         _boat2 = SpawnBoat(team2SpawnPos, PlayerIdsTeam2, laneXMin:  0.5f, laneXMax:  8f);

@@ -13,13 +13,28 @@ MonoBehaviour:
   m_Name: DontWorry
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 1
+  gameTitle: 
+  isTimeAttack: 0
+  timeAttackSeconds: 0
   soloDelta:
     first: 0
     second: 0
     third: 0
     fourth: 0
+  soloBattleTutorialText:
+    soloWinCondition: 
+    nightmareCondition: 
   oneVsThreeDelta:
     oneWin: 3
     threeWin: 2
+  oneVsThreeTutorialText:
+    oneWinCondition: 
+    threeWinCondition: 
   twoVsTwoDelta: 0
+  twoVsTwoTutorialText:
+    twoWinCondition: 
+    nightmareCondition: 
   cooperativeDelta: 0
+  cooperativeTutorialText:
+    coopWinCondition: 
+    nightmareCondition: 

@@ -9,18 +9,15 @@ public class HechiChaseGame : OneVsThreeBase
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Vector3[] playerInitPos; // 4개 필요
     [SerializeField] private Vector3 hechiInitPos; 
-    [SerializeField] private float timeLimit = 60f;
 
     [Header("결과 델타 (해치 승리)")]
     [SerializeField] private int hechiWinNightmare = 5;
 
     private readonly List<ChaseCharacterController> _normalPlayers = new();
     private bool _gameOver;
-    private int _hechiPlayerId;
     
     public override int NightmareDelta { get; protected set; }
     public override bool IsOneWin { get; protected set; }
-    public override int OnePlayerId { get; protected set; }
 
     private void Start()
     {
@@ -30,14 +27,11 @@ public class HechiChaseGame : OneVsThreeBase
 
     private void SpawnCharacters()
     {
-        _hechiPlayerId = Random.Range(1, 5); // 1~4 중 랜덤
-        OnePlayerId = _hechiPlayerId;
-        Debug.Log($"[HechiChase] 해치: Player {_hechiPlayerId}");
-
+        Debug.Log($"[HechiChase] 해치: Player {OnePlayerId}");
         int playerCnt = 0;
         for (int i = 1; i <= 4; i++)
         {
-            bool isHechi = i == _hechiPlayerId;
+            bool isHechi = i == OnePlayerId;
             var prefab = isHechi ? hechiPrefab : playerPrefab;
             var pos = isHechi ? hechiInitPos : playerInitPos[playerCnt++];
             var character = Instantiate(prefab, pos, Quaternion.identity);
@@ -61,7 +55,7 @@ public class HechiChaseGame : OneVsThreeBase
 
     private IEnumerator TimerRoutine()
     {
-        float remaining = timeLimit;
+        float remaining = MiniGameManager.Instance.ResultContainer.TimeAttackSeconds;
 
         while (remaining > 0f && !_gameOver)
         {
@@ -79,7 +73,6 @@ public class HechiChaseGame : OneVsThreeBase
         _gameOver = true;
 
         IsOneWin = hechiWins;
-        OnePlayerId = _hechiPlayerId;
         NightmareDelta = hechiWins ? 0 : hechiWinNightmare;
         
         MiniGameManager.Instance.QuitMiniGame();

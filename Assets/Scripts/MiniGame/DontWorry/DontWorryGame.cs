@@ -20,11 +20,9 @@ public class DontWorryGame : OneVsThreeBase
 
     private readonly List<DontWorryFakeHachiController> _fakePlayers = new();
     private bool _gameOver;
-    private int _shooterPlayerId;
 
     public override int NightmareDelta { get; protected set; }
     public override bool IsOneWin { get; protected set; }
-    public override int OnePlayerId { get; protected set; }
 
     private void Start()
     {
@@ -34,9 +32,7 @@ public class DontWorryGame : OneVsThreeBase
 
     private void SpawnCharacters()
     {
-        _shooterPlayerId = Random.Range(1, 5);
-        OnePlayerId = _shooterPlayerId;
-        Debug.Log($"[DontWorry] 슈터: Player {_shooterPlayerId}");
+        Debug.Log($"[DontWorry] 슈터: Player {OnePlayerId}");
 
         var usedPositions = new List<Vector2>();
 
@@ -49,12 +45,12 @@ public class DontWorryGame : OneVsThreeBase
         // 크로스헤어 생성
         var crosshairObj = Instantiate(crosshairPrefab, Vector3.zero, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(crosshairObj, gameObject.scene);
-        crosshairObj.GetComponent<DontWorryCrosshair>().Init(_shooterPlayerId, OnShotFired);
+        crosshairObj.GetComponent<DontWorryCrosshair>().Init(OnePlayerId, OnShotFired);
 
         // 가짜 해치 3명 생성
         for (int i = 1; i <= 4; i++)
         {
-            if (i == _shooterPlayerId) continue;
+            if (i == OnePlayerId) continue;
 
             var pos = GetRandomSpawnPosition(usedPositions);
             usedPositions.Add(pos);
@@ -145,7 +141,6 @@ public class DontWorryGame : OneVsThreeBase
         _gameOver = true;
 
         IsOneWin = shooterWins;
-        OnePlayerId = _shooterPlayerId;
         NightmareDelta = shooterWins ? 0 : realHachiShotNightmare;
 
         MiniGameManager.Instance.QuitMiniGame();

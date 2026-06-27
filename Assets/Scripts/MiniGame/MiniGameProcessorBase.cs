@@ -17,7 +17,12 @@ public abstract class SoloBattleBase : MiniGameProcessorBase
 public abstract class OneVsThreeBase : MiniGameProcessorBase
 {
     public abstract bool IsOneWin { get; protected set; }
-    public abstract int OnePlayerId { get; protected set; }
+    public int OnePlayerId { get; private set; }
+    
+    public void SetRandomPlayer(int onePlayerId)
+    {
+        OnePlayerId = onePlayerId;
+    }
 }
 
 public abstract class TwoVsTwoBase : MiniGameProcessorBase
@@ -29,9 +34,16 @@ public abstract class TwoVsTwoBase : MiniGameProcessorBase
         Team2,
     }
     
-    public abstract List<int> PlayerIdsTeam1 { get; protected set; }
-    public abstract List<int> PlayerIdsTeam2 { get; protected set; }
+    public List<int> PlayerIdsTeam1 { get; private set; }
+    public List<int> PlayerIdsTeam2 { get; private set; }
     public abstract TwoVsTwoWinner Winner { get; protected set; }
+
+    public void SetRandomPlayer(List<int> team1)
+    {
+        PlayerIdsTeam1 = team1;
+        PlayerIdsTeam2 = new List<int>(new int[] { 1, 2, 3, 4 });
+        PlayerIdsTeam2.RemoveAll(id => team1.Contains(id));
+    }
 }
 
 public abstract class AffectionBattleBase : MiniGameProcessorBase

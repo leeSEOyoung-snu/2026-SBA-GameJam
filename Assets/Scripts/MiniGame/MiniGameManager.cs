@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MiniGameManager : MonoBehaviour
 {
@@ -11,12 +12,42 @@ public class MiniGameManager : MonoBehaviour
     
     public static MiniGameManager Instance { get; private set; }
     public EffectManager Effects { get; private set; }
+    
+    public MiniGameResultContainer ResultContainer => miniGameResultContainer;
 
     private void Awake()
     {
         Instance = this;
         Effects = GetComponent<EffectManager>();
         GameManager.Instance.SetActiveAllInput(false);
+
+        switch (miniGameResultContainer.Type)
+        {
+            case MiniGameTypes.OneVsThree:
+                OneVsThreeBase oneThreeBase = FindAnyObjectByType<OneVsThreeBase>();
+                if (oneThreeBase == null)
+                    Debug.LogError($"OneVsThreeBase not found: {miniGameResultContainer.Type}");
+                else
+                    oneThreeBase.SetRandomPlayer(Random.Range(1, 5));
+                break;
+            
+            case MiniGameTypes.TwoVsTwo:
+                TwoVsTwoBase twoVsTwoBase = FindAnyObjectByType<TwoVsTwoBase>();
+                if (twoVsTwoBase == null)
+                    Debug.LogError($"TwoVsTwoBase not found: {miniGameResultContainer.Type}");
+                else
+                {
+                    List<int> team1 = new List<int>();
+                    while (team1.Count < 2)
+                    {
+                        int randomPlayerId = Random.Range(1, 5);
+                        if (!team1.Contains(randomPlayerId))
+                            team1.Add(randomPlayerId);
+                    }
+                    twoVsTwoBase.SetRandomPlayer(team1);
+                }
+                break;
+        }
     }
 
     private IEnumerator Start()

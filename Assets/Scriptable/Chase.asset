@@ -13,19 +13,29 @@ MonoBehaviour:
   m_Name: Chase
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 1
-  gameTitle: 
-  isTimeAttack: 0
-  timeAttackSeconds: 0
+  gameTitle: "\uD574\uCE58\uB97C \uD53C\uD574\uB77C!"
+  isTimeAttack: 1
+  timeAttackSeconds: 30
   soloDelta:
     first: 0
     second: 0
     third: 0
     fourth: 0
+  soloBattleTutorialText:
+    soloWinCondition: 
+    nightmareCondition: 
   oneVsThreeDelta:
     oneWin: 3
     threeWin: 2
   oneVsThreeTutorialText:
-    oneWinCondition: 
-    threeWinCondition: 
+    oneWinCondition: "60\uCD08 \uC548\uC5D0 \uB2E4\uB978 \uD50C\uB808\uC774\uC5B4\uB4E4\uC744
+      \uBAA8\uB450 \uC7A1\uC73C\uBA74 \uD574\uCE58 \uC2B9\uB9AC"
+    threeWinCondition: "60\uCD08 \uB3D9\uC548 \uD574\uCE58\uC5D0\uAC8C\uC11C \uB3C4\uB9DD\uCCD0\uB77C!!"
   twoVsTwoDelta: 0
+  twoVsTwoTutorialText:
+    twoWinCondition: 
+    nightmareCondition: 
   cooperativeDelta: 0
+  cooperativeTutorialText:
+    coopWinCondition: 
+    nightmareCondition: 

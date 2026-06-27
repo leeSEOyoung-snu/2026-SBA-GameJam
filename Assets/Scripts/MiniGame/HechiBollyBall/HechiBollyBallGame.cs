@@ -26,7 +26,6 @@ public class HechiBollyBallGame : OneVsThreeBase
     private int _hachiScore;
     private int _threeScore;
     private bool _gameOver;
-    private int _hachiPlayerId;
 
     private BollyBall _ball;
     private GameObject _hachiObj;
@@ -34,7 +33,6 @@ public class HechiBollyBallGame : OneVsThreeBase
 
     public override int NightmareDelta { get; protected set; }
     public override bool IsOneWin      { get; protected set; }
-    public override int OnePlayerId    { get; protected set; }
 
     public event System.Action<int, int> OnScoreChanged;
 
@@ -46,9 +44,7 @@ public class HechiBollyBallGame : OneVsThreeBase
 
     private void SpawnCharacters()
     {
-        _hachiPlayerId = Random.Range(1, 5);
-        OnePlayerId = _hachiPlayerId;
-        Debug.Log($"[BollyBall] 해치: Player {_hachiPlayerId}");
+        Debug.Log($"[BollyBall] 해치: Player {OnePlayerId}");
 
         // 해치
         _hachiObj = Instantiate(hachiPrefab, hachiSpawnPos, Quaternion.identity);
@@ -57,14 +53,14 @@ public class HechiBollyBallGame : OneVsThreeBase
             hachiCtrl.Init(isHachi: true);
         else
             Debug.LogError("[BollyBall] hachiPrefab에 BollyBallCharacterController가 없습니다!");
-        _hachiObj.GetComponent<MiniGameCharacterController>().Init(_hachiPlayerId);
+        _hachiObj.GetComponent<MiniGameCharacterController>().Init(OnePlayerId);
 
         // 플레이어 3명
         var spawnPositions = new[] { playerSpawnPos1, playerSpawnPos2, playerSpawnPos3 };
         int idx = 0;
         for (int i = 1; i <= 4; i++)
         {
-            if (i == _hachiPlayerId) continue;
+            if (i == OnePlayerId) continue;
             var pos = spawnPositions[idx++];
             var obj = Instantiate(playerPrefab, pos, Quaternion.identity);
             SceneManager.MoveGameObjectToScene(obj, gameObject.scene);
@@ -132,7 +128,6 @@ public class HechiBollyBallGame : OneVsThreeBase
         _gameOver = true;
 
         IsOneWin       = hachiWins;
-        OnePlayerId    = _hachiPlayerId;
         NightmareDelta = hachiWins ? 0 : threeWinNightmare;
 
         MiniGameManager.Instance.QuitMiniGame();
