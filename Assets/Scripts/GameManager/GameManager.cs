@@ -170,11 +170,14 @@ public partial class GameManager : MonoBehaviour
 
     public Sprite GetHechiSpriteOnMiniGame()
         => _hechiSpriteContainer.GetHechiSpriteOnMiniGame(_evolutionRoute);
+
+    public string GetHechiName()
+        => _hechiSpriteContainer.GetHechiName(_evolutionRoute);
     
 
-    public Sprite OnEvolution(StateTypes newState)
+    public (Sprite sprite, string name) OnEvolution(StateTypes newState)
     {
         _evolutionRoute.Add(newState);
-        return GetHechiSpriteOnMain();
+        return (GetHechiSpriteOnMain(),  GetHechiName());
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -26,7 +27,8 @@ public class HatchUiCanvasManager : MonoBehaviour
     
     private Dictionary<StateTypes, Image> _gageImgDict = new();
 
-    private const int MAX_STATE = 50;
+    [SerializeField] private float gageHeadroom = 20f;
+    [SerializeField] private TextMeshProUGUI hechiNameText;
 
     private void Awake()
     {
@@ -42,29 +44,50 @@ public class HatchUiCanvasManager : MonoBehaviour
         });
 
         hechiProfile.sprite = GameManager.Instance.GetHechiSpriteOnMain();
+        hechiNameText.text = GameManager.Instance.GetHechiName();
     }
 
     public IEnumerator UpdateStates(Dictionary<StateTypes, int> currStates)
     {
+        int maxValue = 0;
+        foreach (var curr in currStates)
+        {
+            if (_gageImgDict.ContainsKey(curr.Key) && curr.Value > maxValue)
+                maxValue = curr.Value;
+        }
+
+        float denominator = maxValue + gageHeadroom;
+
         Sequence seq = DOTween.Sequence();
 
         foreach (var curr in currStates)
         {
-            // TODO: Nightmare Gage 연결
-            if (curr.Key == StateTypes.Nightmare)
+            if (!_gageImgDict.ContainsKey(curr.Key))
                 continue;
-            
-            seq.Join(_gageImgDict[curr.Key].DOFillAmount((float)curr.Value / MAX_STATE, gageUpdateDuration)
-                .SetEase(gageUpdateEase));
+
+            float fill = (float)curr.Value / denominator;
+            seq.Join(_gageImgDict[curr.Key].DOFillAmount(fill, gageUpdateDuration).SetEase(gageUpdateEase));
         }
-        
+
         yield return seq.WaitForCompletion();
     }
 
-    public IEnumerator EvolutionCoroutine(Sprite hechiSprite)
+    [SerializeField] private float evolutionShrinkDuration = 0.3f;
+    [SerializeField] private float evolutionGrowDuration = 0.5f;
+    [SerializeField] private Ease evolutionShrinkEase = Ease.InBack;
+    [SerializeField] private Ease evolutionGrowEase = Ease.OutBack;
+
+    public IEnumerator EvolutionCoroutine(Sprite hechiSprite, string hechiName)
     {
-        // TODO: 변경 애니메이션
+        yield return hechiProfile.transform.DOScale(Vector3.zero, evolutionShrinkDuration)
+            .SetEase(evolutionShrinkEase)
+            .WaitForCompletion();
+
         hechiProfile.sprite = hechiSprite;
-        yield break;
+        hechiNameText.text = hechiName;
+
+        yield return hechiProfile.transform.DOScale(Vector3.one, evolutionGrowDuration)
+            .SetEase(evolutionGrowEase)
+            .WaitForCompletion();
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class BasicMiniGameCanvas : MonoBehaviour
 {
     [SerializeField] private TutorialCanvas tutorialCanvas;
     [SerializeField] private CanvasGroup gameStartGroup;
+    [SerializeField] private ResultCanvas resultCanvas;
+    [SerializeField] private TMP_Text gameStartTxt;
+    [SerializeField] private GameObject timePanel;
     [SerializeField] private TMP_Text timeTxt;
     [SerializeField] private TMP_Text countNumTxt;
     [SerializeField] private CanvasGroup curtain;
@@ -55,6 +59,7 @@ public class BasicMiniGameCanvas : MonoBehaviour
         Transform gameStartTransform = gameStartGroup.transform;
         gameStartTransform.DOKill();
         gameStartGroup.DOKill();
+        gameStartTxt.text = "게임 시작!";
         gameStartGroup.gameObject.SetActive(true);
         gameStartTransform.localScale = Vector3.one * 2f;
         gameStartGroup.alpha = 1f;
@@ -103,23 +108,36 @@ public class BasicMiniGameCanvas : MonoBehaviour
         return curtain.DOFade(0f, curtainFadeDuration);
     }
 
+    public Tween ShowCurtain()
+    {
+        if (curtain == null)
+            return DOTween.Sequence();
+
+        curtain.DOKill();
+        return curtain.DOFade(1f, curtainFadeDuration).SetUpdate(true);
+    }
+
     public void StartTimeAttack(int seconds)
     {
         StopTimeAttack();
 
-        if (timeTxt == null)
+        if (timePanel == null || timeTxt == null)
             return;
 
+        timePanel.SetActive(true);
         _timeAttackCoroutine = StartCoroutine(TimeAttackCoroutine(Mathf.Max(0, seconds)));
     }
 
     public void StopTimeAttack()
     {
-        if (_timeAttackCoroutine == null)
-            return;
+        if (timePanel != null)
+            timePanel.SetActive(false);
 
-        StopCoroutine(_timeAttackCoroutine);
-        _timeAttackCoroutine = null;
+        if (_timeAttackCoroutine != null)
+        {
+            StopCoroutine(_timeAttackCoroutine);
+            _timeAttackCoroutine = null;
+        }
     }
 
     public void SetCount(int currentCount, int totalCount)
@@ -133,7 +151,6 @@ public class BasicMiniGameCanvas : MonoBehaviour
     private IEnumerator TimeAttackCoroutine(int seconds)
     {
         int remainingSeconds = seconds;
-        SetTimeText(remainingSeconds);
 
         while (remainingSeconds > 0)
         {
@@ -150,6 +167,30 @@ public class BasicMiniGameCanvas : MonoBehaviour
         timeTxt.text = seconds.ToString();
     }
 
+    public Sequence PlayGameEnd()
+    {
+        if (resultCanvas == null)
+            return DOTween.Sequence();
+
+        return resultCanvas.PlayGameEnd();
+    }
+
+    public Sequence OpenResult(Dictionary<StateTypes, int> delta)
+    {
+        if (resultCanvas == null)
+            return DOTween.Sequence();
+
+        return resultCanvas.OpenResult(delta);
+    }
+
+    public Sequence CloseResult()
+    {
+        if (resultCanvas == null)
+            return DOTween.Sequence();
+
+        return resultCanvas.CloseResult();
+    }
+
     private void SetHidden()
     {
         if (gameStartGroup == null)
@@ -158,5 +199,8 @@ public class BasicMiniGameCanvas : MonoBehaviour
         gameStartGroup.alpha = 0f;
         gameStartGroup.transform.localScale = Vector3.one;
         gameStartGroup.gameObject.SetActive(false);
+
+        if (timePanel != null)
+            timePanel.SetActive(false);
     }
 }

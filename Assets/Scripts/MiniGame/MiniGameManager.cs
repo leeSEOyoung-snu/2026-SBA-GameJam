@@ -9,6 +9,7 @@ public class MiniGameManager : MonoBehaviour
 {
     [SerializeField] private MiniGameResultContainer miniGameResultContainer;
     [SerializeField] private float tutorialShowSeconds = 2.5f;
+    [SerializeField] private float resultShowSeconds = 3f;
     
     public static MiniGameManager Instance { get; private set; }
     public EffectManager Effects { get; private set; }
@@ -57,6 +58,7 @@ public class MiniGameManager : MonoBehaviour
         
         yield return null;
         GameManager.Instance.SetActiveAllInput(true);
+        StartTimeAttackView();
     }
 
     private IEnumerator MiniGameStartFlow()
@@ -78,7 +80,15 @@ public class MiniGameManager : MonoBehaviour
         if (basicCanvas != null)
             yield return basicCanvas.PlayGameStart().WaitForCompletion();
 
-        if (basicCanvas != null && miniGameResultContainer != null && miniGameResultContainer.IsTimeAttack)
+    }
+
+    private void StartTimeAttackView()
+    {
+        if (miniGameResultContainer == null || !miniGameResultContainer.IsTimeAttack)
+            return;
+
+        BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
+        if (basicCanvas != null)
             basicCanvas.StartTimeAttack(miniGameResultContainer.TimeAttackSeconds);
     }
 
@@ -92,9 +102,25 @@ public class MiniGameManager : MonoBehaviour
     
     private IEnumerator QuitMiniGameCoroutine(Dictionary<StateTypes, int> delta)
     {
-        // TODO: 결과창 canvas 연결
+        BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
 
-        yield return null;
+        if (basicCanvas != null)
+            basicCanvas.StopTimeAttack();
+
+        if (basicCanvas != null)
+            yield return basicCanvas.PlayGameEnd().WaitForCompletion();
+
+        if (basicCanvas != null)
+            yield return basicCanvas.ShowCurtain().WaitForCompletion();
+
+        if (basicCanvas != null)
+            yield return basicCanvas.OpenResult(delta).WaitForCompletion();
+
+        yield return new WaitForSecondsRealtime(resultShowSeconds);
+        
+        if (basicCanvas != null)
+            yield return basicCanvas.CloseResult().WaitForCompletion();
+        
         GameManager.Instance.QuitMiniGame(delta);
     }
 
