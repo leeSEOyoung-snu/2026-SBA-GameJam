@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BollyBallCharacterController
   hachiXMin: -8.5
-  hachiXMax: -0.3
-  playerXMin: 0.3
+  hachiXMax: 0
+  playerXMin: 0
   playerXMax: 8.5
   yMin: -4.5
   yMax: 4.5
