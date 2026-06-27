@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,7 @@ public class MainGameLoop : MonoBehaviour
     private bool _gameEnded;
     private EvolutionCellBehaviour[] _evolutionCells;
     private MainSceneManager _mainSceneManager;
+    private YutThrowCanvasController _yutThrowCanvas;
 
     public void Init(Board board, GamePiece piece)
     {
@@ -22,6 +24,9 @@ public class MainGameLoop : MonoBehaviour
         _piece = piece;
         
         _mainSceneManager = GetComponent<MainSceneManager>();
+        YutThrowCanvasController[] yutThrowCanvases =
+            FindObjectsByType<YutThrowCanvasController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        _yutThrowCanvas = yutThrowCanvases.Length > 0 ? yutThrowCanvases[0] : null;
 
         _players = new IPlayerInputReader[PlayerCount];
         for (int i = 0; i < PlayerCount; i++)
@@ -40,6 +45,8 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator GameLoop()
     {
+        yield return new WaitForSeconds(1f);
+        
         while (!_gameEnded)
         {
             // 1단계: 윷 던지기
@@ -56,6 +63,16 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator ThrowYutPhase(Action<YutType> onComplete)
     {
+        //if (_yutThrowCanvas != null && _yutThrowCanvas.isActiveAndEnabled)
+        if (_yutThrowCanvas != null)
+        {
+            yield return _yutThrowCanvas.Open().WaitForCompletion();
+            yield return StartCoroutine(_yutThrowCanvas.PlayThrowRoutine(_players, onComplete));
+            yield return new WaitForSeconds(2f);
+            yield return _yutThrowCanvas.Close().WaitForCompletion();
+            yield break;
+        }
+
         bool[] results   = new bool[PlayerCount];
         bool[] hasThrown = new bool[PlayerCount];
         int thrownCount  = 0;
@@ -88,6 +105,8 @@ public class MainGameLoop : MonoBehaviour
         YutType yut = YutCalculator.Calculate(results);
         Debug.Log($"[YutPhase] 결과: {yut} ({YutCalculator.ToMoveCount(yut)}칸 이동)");
         onComplete?.Invoke(yut);
+        
+        //yield return _yutThrowCanvas.Close().WaitForCompletion();
     }
 
     private IEnumerator MovePiecePhase(int steps)
