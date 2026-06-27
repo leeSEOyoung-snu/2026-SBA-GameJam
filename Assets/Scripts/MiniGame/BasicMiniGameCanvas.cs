@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class BasicMiniGameCanvas : MonoBehaviour
 {
     [SerializeField] private TutorialCanvas tutorialCanvas;
+    [SerializeField] private ResultCanvas resultCanvas;
     [SerializeField] private TMP_Text gameStartTxt;
     [SerializeField] private TMP_Text timeTxt;
     [SerializeField] private CanvasGroup curtain;
@@ -50,6 +52,7 @@ public class BasicMiniGameCanvas : MonoBehaviour
 
         gameStartTxt.transform.DOKill();
         DOTween.Kill(gameStartTxt);
+        gameStartTxt.text = "게임 시작!";
         gameStartTxt.gameObject.SetActive(true);
         gameStartTxt.transform.localScale = Vector3.one * 2f;
         Color color = gameStartTxt.color;
@@ -69,6 +72,15 @@ public class BasicMiniGameCanvas : MonoBehaviour
 
         curtain.DOKill();
         return curtain.DOFade(0f, curtainFadeDuration);
+    }
+
+    public Tween ShowCurtain()
+    {
+        if (curtain == null)
+            return DOTween.Sequence();
+
+        curtain.DOKill();
+        return curtain.DOFade(1f, curtainFadeDuration).SetUpdate(true);
     }
 
     public void StartTimeAttack(int seconds)
@@ -115,6 +127,30 @@ public class BasicMiniGameCanvas : MonoBehaviour
         Color color = gameStartTxt.color;
         color.a = alpha;
         gameStartTxt.color = color;
+    }
+
+    public Sequence PlayGameEnd()
+    {
+        if (resultCanvas == null)
+            return DOTween.Sequence();
+
+        return resultCanvas.PlayGameEnd();
+    }
+
+    public Sequence OpenResult(Dictionary<StateTypes, int> delta)
+    {
+        if (resultCanvas == null)
+            return DOTween.Sequence();
+
+        return resultCanvas.OpenResult(delta);
+    }
+
+    public Sequence CloseResult()
+    {
+        if (resultCanvas == null)
+            return DOTween.Sequence();
+
+        return resultCanvas.CloseResult();
     }
 
     private void SetHidden()

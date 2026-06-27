@@ -9,6 +9,7 @@ public class MiniGameManager : MonoBehaviour
 {
     [SerializeField] private MiniGameResultContainer miniGameResultContainer;
     [SerializeField] private float tutorialShowSeconds = 2.5f;
+    [SerializeField] private float resultShowSeconds = 3f;
     
     public static MiniGameManager Instance { get; private set; }
     public EffectManager Effects { get; private set; }
@@ -92,9 +93,22 @@ public class MiniGameManager : MonoBehaviour
     
     private IEnumerator QuitMiniGameCoroutine(Dictionary<StateTypes, int> delta)
     {
-        // TODO: 결과창 canvas 연결
+        BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
 
-        yield return null;
+        if (basicCanvas != null)
+            yield return basicCanvas.PlayGameEnd().WaitForCompletion();
+
+        if (basicCanvas != null)
+            yield return basicCanvas.ShowCurtain().WaitForCompletion();
+
+        if (basicCanvas != null)
+            yield return basicCanvas.OpenResult(delta).WaitForCompletion();
+
+        yield return new WaitForSecondsRealtime(resultShowSeconds);
+        
+        if (basicCanvas != null)
+            yield return basicCanvas.CloseResult().WaitForCompletion();
+        
         GameManager.Instance.QuitMiniGame(delta);
     }
 
