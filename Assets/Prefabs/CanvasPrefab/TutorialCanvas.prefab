@@ -120,7 +120,13 @@ MonoBehaviour:
   bg: {fileID: 7241116103210392584}
   innerGroup: {fileID: 721227328974257345}
   gameTypeTxt: {fileID: 4157180800873449341}
-  descTxt: {fileID: 9185683105174207345}
+  titleTxt: {fileID: 9185683105174207345}
+  descTxt: {fileID: 861806829918515244}
+  keyIconSpriteAsset: {fileID: 11400000, guid: 3f7ff95bdb0af456b95fca5cac374a55, type: 2}
+  keyIconSizePercent: 180
+  keyIconHorizontalOffsetEm: 1
+  keyIconVerticalOffsetEm: 0.25
+  keyIconColor: {r: 0, g: 0, b: 0, a: 1}
   conditionsRoot: {fileID: 5183348599040143374}
   oneVsThreeConditionsPrefab: {fileID: 889000000000000001, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
   twoVsTwoConditionsPrefab: {fileID: 7386662808170641645, guid: 08f8e6a0a30ea442d9ea339b626200ba, type: 3}
@@ -719,7 +725,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 3f7ff95bdb0af456b95fca5cac374a55, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -832,6 +838,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5757439231056531083, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757439231056531083, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757439231056531083, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757439231056531083, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6546021645423126968, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -939,6 +961,22 @@ PrefabInstance:
     - target: {fileID: 7400287313032025949, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
       propertyPath: m_Name
       value: Conditions_Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218168684517873674, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218168684517873674, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218168684517873674, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218168684517873674, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

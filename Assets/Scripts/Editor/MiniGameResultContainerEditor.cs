@@ -5,6 +5,7 @@ public class MiniGameResultContainerEditor : Editor
 {
     private SerializedProperty type;
     private SerializedProperty gameTitle;
+    private SerializedProperty desc;
     private SerializedProperty isTimeAttack;
     private SerializedProperty timeAttackSeconds;
     private SerializedProperty soloDelta;
@@ -20,6 +21,7 @@ public class MiniGameResultContainerEditor : Editor
     {
         type = serializedObject.FindProperty("type");
         gameTitle = serializedObject.FindProperty("gameTitle");
+        desc = serializedObject.FindProperty("desc");
         isTimeAttack = serializedObject.FindProperty("isTimeAttack");
         timeAttackSeconds = serializedObject.FindProperty("timeAttackSeconds");
         soloDelta = serializedObject.FindProperty("soloDelta");
@@ -38,6 +40,7 @@ public class MiniGameResultContainerEditor : Editor
 
         EditorGUILayout.PropertyField(type);
         EditorGUILayout.PropertyField(gameTitle);
+        EditorGUILayout.PropertyField(desc);
         EditorGUILayout.PropertyField(isTimeAttack);
         if (isTimeAttack.boolValue)
             EditorGUILayout.PropertyField(timeAttackSeconds);
