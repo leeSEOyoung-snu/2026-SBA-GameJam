@@ -123,9 +123,9 @@ MonoBehaviour:
   descTxt: {fileID: 9185683105174207345}
   conditionsRoot: {fileID: 5183348599040143374}
   oneVsThreeConditionsPrefab: {fileID: 889000000000000001, guid: e17a993cb3a864ca9ac648de00eca0a4, type: 3}
-  twoVsTwoConditionsPrefab: {fileID: 889000000000000001, guid: 08f8e6a0a30ea442d9ea339b626200ba, type: 3}
-  soloBattleConditionsPrefab: {fileID: 889000000000000001, guid: 82e9c1c8fa51c40819d3618671d39db8, type: 3}
-  cooperativeConditionsPrefab: {fileID: 889000000000000001, guid: 3a5f0ff29cd924801b374c10455001f7, type: 3}
+  twoVsTwoConditionsPrefab: {fileID: 7386662808170641645, guid: 08f8e6a0a30ea442d9ea339b626200ba, type: 3}
+  soloBattleConditionsPrefab: {fileID: 7386662808170641645, guid: 82e9c1c8fa51c40819d3618671d39db8, type: 3}
+  cooperativeConditionsPrefab: {fileID: 7386662808170641645, guid: 3a5f0ff29cd924801b374c10455001f7, type: 3}
   tweenDuration: 0.35
   ease: 27
 --- !u!1 &4260435990242105297
