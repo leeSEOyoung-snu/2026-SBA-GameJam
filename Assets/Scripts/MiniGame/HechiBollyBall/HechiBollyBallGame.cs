@@ -1,22 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class HechiBollyBallGame : OneVsThreeBase
 {
-    [Header("프리팹")]
-    [SerializeField] private GameObject hachiPrefab;
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject ballPrefab;
-
-    [Header("고정 스폰 위치")]
-    [SerializeField] private Vector3 hachiSpawnPos   = new(-5f,  0f, 0f);
-    [SerializeField] private Vector3 ballSpawnPos    = new(-1f,  0f, 0f);
-    [SerializeField] private Vector3 playerSpawnPos1 = new( 5f,  2f, 0f);
-    [SerializeField] private Vector3 playerSpawnPos2 = new( 5f,  0f, 0f);
-    [SerializeField] private Vector3 playerSpawnPos3 = new( 5f, -2f, 0f);
+    [Header("씬 오브젝트")]
+    [SerializeField] private GameObject hachiObject;
+    [SerializeField] private GameObject[] playerObjects = new GameObject[3];
+    [SerializeField] private BollyBall ball;
 
     [SerializeField] private int   scoreToWin  = 3;
     [SerializeField] private float resetDelay  = 1.5f;
@@ -31,11 +22,20 @@ public class HechiBollyBallGame : OneVsThreeBase
     private BollyBall _ball;
     private GameObject _hachiObj;
     private readonly List<(GameObject obj, Vector3 spawnPos)> _players = new();
+    private Vector3 _hachiSpawnPos;
+    private Vector3 _ballSpawnPos;
+    private Vector3[] _playerSpawnPositions = new Vector3[3];
 
     public override int NightmareDelta { get; protected set; }
     public override bool IsOneWin      { get; protected set; }
 
     public event System.Action<int, int> OnScoreChanged;
+
+    private void Awake()
+    {
+        CacheSceneSpawnPositions();
+        SetSceneObjectsActive(false);
+    }
 
     private void Start()
     {
@@ -50,48 +50,133 @@ public class HechiBollyBallGame : OneVsThreeBase
         yield return new WaitUntil(() => started);
         BasicMiniGameCanvas.OnGameStarted -= Handler;
 
-        SpawnCharacters();
-        SpawnBall();
+        if (!SetupCharacters() || !SetupBall())
+            yield break;
+
         if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
             StartCoroutine(TimerRoutine());
     }
 
-    private void SpawnCharacters()
+    private void CacheSceneSpawnPositions()
     {
+        if (hachiObject != null)
+            _hachiSpawnPos = hachiObject.transform.position;
+
+        if (ball != null)
+            _ballSpawnPos = ball.transform.position;
+
+        if (playerObjects == null)
+            return;
+
+        int count = Mathf.Min(playerObjects.Length, _playerSpawnPositions.Length);
+        for (int i = 0; i < count; i++)
+        {
+            if (playerObjects[i] != null)
+                _playerSpawnPositions[i] = playerObjects[i].transform.position;
+        }
+    }
+
+    private void SetSceneObjectsActive(bool active)
+    {
+        hachiObject?.SetActive(active);
+        ball?.gameObject.SetActive(active);
+
+        if (playerObjects == null)
+            return;
+
+        foreach (var playerObject in playerObjects)
+            playerObject?.SetActive(active);
+    }
+
+    private bool SetupCharacters()
+    {
+        _players.Clear();
+
+        if (hachiObject == null)
+        {
+            Debug.LogError("[BollyBall] 씬에 배치된 hachiObject 참조가 없습니다.");
+            return false;
+        }
+
+        if (playerObjects == null || playerObjects.Length < 3)
+        {
+            Debug.LogError("[BollyBall] 씬에 배치된 playerObjects 3개가 필요합니다.");
+            return false;
+        }
+
         Debug.Log($"[BollyBall] 해치: Player {OnePlayerId}");
 
-        _hachiObj = Instantiate(hachiPrefab, hachiSpawnPos, Quaternion.identity);
-        SceneManager.MoveGameObjectToScene(_hachiObj, gameObject.scene);
-        if (_hachiObj.TryGetComponent<BollyBallCharacterController>(out var hachiCtrl))
-            hachiCtrl.Init(isHachi: true);
-        else
-            Debug.LogError("[BollyBall] hachiPrefab에 BollyBallCharacterController가 없습니다!");
-        _hachiObj.GetComponent<MiniGameCharacterController>().Init(OnePlayerId);
+        _hachiObj = hachiObject;
+        _hachiObj.SetActive(true);
+        ResetActor(_hachiObj, _hachiSpawnPos);
+        if (!InitActor(_hachiObj, isHachi: true, OnePlayerId))
+            return false;
 
-        var spawnPositions = new[] { playerSpawnPos1, playerSpawnPos2, playerSpawnPos3 };
         int idx = 0;
         for (int i = 1; i <= 4; i++)
         {
             if (i == OnePlayerId) continue;
-            var pos = spawnPositions[idx++];
-            var obj = Instantiate(playerPrefab, pos, Quaternion.identity);
-            SceneManager.MoveGameObjectToScene(obj, gameObject.scene);
-            if (obj.TryGetComponent<BollyBallCharacterController>(out var ctrl))
-                ctrl.Init(isHachi: false);
-            else
-                Debug.LogError($"[BollyBall] playerPrefab에 BollyBallCharacterController가 없습니다! (Player {i})");
-            obj.GetComponent<MiniGameCharacterController>().Init(i);
+
+            var obj = playerObjects[idx];
+            if (obj == null)
+            {
+                Debug.LogError($"[BollyBall] 씬에 배치된 playerObjects[{idx}] 참조가 없습니다. (Player {i})");
+                return false;
+            }
+
+            var pos = _playerSpawnPositions[idx];
+            obj.SetActive(true);
+            ResetActor(obj, pos);
+            if (!InitActor(obj, isHachi: false, i))
+                return false;
+
             _players.Add((obj, pos));
+            idx++;
         }
+
+        return true;
     }
 
-    private void SpawnBall()
+    private bool InitActor(GameObject actor, bool isHachi, int playerId)
     {
-        var ballObj = Instantiate(ballPrefab, ballSpawnPos, Quaternion.identity);
-        SceneManager.MoveGameObjectToScene(ballObj, gameObject.scene);
-        _ball = ballObj.GetComponent<BollyBall>();
-        _ball.OnHachiScored += () => AddScore(isHachi: true);
-        _ball.OnThreeScored += () => AddScore(isHachi: false);
+        if (actor.TryGetComponent<BollyBallCharacterController>(out var bollyCtrl))
+            bollyCtrl.Init(isHachi);
+        else
+            Debug.LogError($"[BollyBall] {actor.name}에 BollyBallCharacterController가 없습니다.");
+
+        if (actor.TryGetComponent<MiniGameCharacterController>(out var miniGameCtrl))
+            miniGameCtrl.Init(playerId);
+        else
+            Debug.LogError($"[BollyBall] {actor.name}에 MiniGameCharacterController가 없습니다.");
+
+        return bollyCtrl != null && miniGameCtrl != null;
+    }
+
+    private bool SetupBall()
+    {
+        if (ball == null)
+        {
+            Debug.LogError("[BollyBall] 씬에 배치된 ball 참조가 없습니다.");
+            return false;
+        }
+
+        _ball = ball;
+        _ball.gameObject.SetActive(true);
+        _ball.ResetToPosition(_ballSpawnPos);
+        _ball.OnHachiScored += HandleHachiScored;
+        _ball.OnThreeScored += HandleThreeScored;
+
+        return true;
+    }
+
+    private void HandleHachiScored()
+    {
+        AddScore(isHachi: true);
+    }
+
+    private void HandleThreeScored()
+    {
+        AddScore(isHachi: false);
     }
 
     private void AddScore(bool isHachi)
@@ -114,21 +199,28 @@ public class HechiBollyBallGame : OneVsThreeBase
         yield return new WaitForSeconds(resetDelay);
 
         if (_hachiObj != null)
-        {
-            _hachiObj.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-            _hachiObj.transform.position = hachiSpawnPos;
-        }
+            ResetActor(_hachiObj, _hachiSpawnPos);
 
         foreach (var (obj, pos) in _players)
         {
             if (obj == null) continue;
-            obj.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-            obj.transform.position = pos;
+            ResetActor(obj, pos);
         }
 
-        _ball.ResetToPosition(ballSpawnPos);
+        _ball.ResetToPosition(_ballSpawnPos);
 
         Debug.Log("[BollyBall] 전원 리셋 완료");
+    }
+
+    private static void ResetActor(GameObject actor, Vector3 position)
+    {
+        if (actor.TryGetComponent<Rigidbody2D>(out var rb))
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        actor.transform.position = position;
     }
 
     private IEnumerator TimerRoutine()
@@ -148,14 +240,14 @@ public class HechiBollyBallGame : OneVsThreeBase
         IsOneWin       = hachiWins;
         NightmareDelta = hachiWins ? 0 : threeWinNightmare;
 
-        StartCoroutine(EndRoutine());
+        MiniGameManager.Instance.QuitMiniGame();
     }
 
-    private IEnumerator EndRoutine()
+    private void OnDestroy()
     {
-        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
-        if (canvas != null)
-            yield return canvas.PlayGameEnd().WaitForCompletion();
-        MiniGameManager.Instance.QuitMiniGame();
+        if (_ball == null) return;
+
+        _ball.OnHachiScored -= HandleHachiScored;
+        _ball.OnThreeScored -= HandleThreeScored;
     }
 }

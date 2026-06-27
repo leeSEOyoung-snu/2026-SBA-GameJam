@@ -131,6 +131,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Radius
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626910807134660604, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6402290272622305954, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -422,6 +434,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DontWorry_AI_Hachi
       objectReference: {fileID: 0}
+    - target: {fileID: 2418330409727732813, guid: 3c7b06fc2f433554c82cb6ac9394741b, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3981443985617889555, guid: 3c7b06fc2f433554c82cb6ac9394741b, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -432,6 +448,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3981443985617889555, guid: 3c7b06fc2f433554c82cb6ac9394741b, type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704920921037111413, guid: 3c7b06fc2f433554c82cb6ac9394741b, type: 3}
+      propertyPath: m_Radius
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704920921037111413, guid: 3c7b06fc2f433554c82cb6ac9394741b, type: 3}
+      propertyPath: m_Offset.y
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -675,6 +699,18 @@ PrefabInstance:
     - target: {fileID: -7179540476729650502, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Radius
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626910807134660604, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6402290272622305954, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_Color.b
@@ -1352,6 +1388,18 @@ PrefabInstance:
     - target: {fileID: -7179540476729650502, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Radius
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681945296055126980, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626910807134660604, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6402290272622305954, guid: 07b81c8faef4bb044ba68fd59d30930a, type: 3}
       propertyPath: m_Color.b

@@ -4,8 +4,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BollyBall : MonoBehaviour
 {
-    [SerializeField] private float launchSpeed = 8f;
-    [SerializeField] private float maxSpeed    = 16f;
+    [SerializeField] private float launchSpeed = 12f;
+    [SerializeField] private float maxSpeed    = 24f;
+    [SerializeField] private float minSpeed    = 7f;
+
+    [Header("튕김감")]
+    [SerializeField] private float hachiBounceBoost     = 8f;
+    [SerializeField] private float characterBounceBoost = 3.5f;
+    [SerializeField] private float playerHitMaxSpeed    = 16f;
+    [SerializeField] private float wallBounceBoost      = 1f;
+    [SerializeField] private float spinDegreesPerVelocity = 90f;
 
     [SerializeField] private float rightGoalX =  9f;
     [SerializeField] private float leftGoalX  = -9f;
@@ -27,21 +35,27 @@ public class BollyBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (!_started && col.gameObject.TryGetComponent<BollyBallCharacterController>(out var ctrl) && ctrl.IsHachi)
+        bool hitCharacter = col.gameObject.TryGetComponent<BollyBallCharacterController>(out var ctrl);
+        if (!_started && hitCharacter && ctrl.IsHachi)
         {
             _started = true;
             Unfreeze();
-            LaunchToward(right: true);
+            SpawnHachiHitEffect(col);
+            LaunchFromHachi(col);
             Debug.Log("[BollyBall] 해치가 공을 침 → 게임 시작!");
+            return;
         }
+
+        if (_started && !Scored)
+            ApplyBounceFeel(col, ctrl);
     }
 
     private void FixedUpdate()
     {
         if (!_started || Scored) return;
 
-        if (_rb.linearVelocity.magnitude > maxSpeed)
-            _rb.linearVelocity = _rb.linearVelocity.normalized * maxSpeed;
+        ClampSpeed();
+        ApplySpin();
 
         float x = transform.position.x;
         if (x >= rightGoalX)
@@ -67,24 +81,90 @@ public class BollyBall : MonoBehaviour
         Freeze();
     }
 
-    private void LaunchToward(bool right)
+    private void ApplyBounceFeel(Collision2D col, BollyBallCharacterController character)
     {
-        float angle = UnityEngine.Random.Range(15f, 75f);
-        if (UnityEngine.Random.value < 0.5f) angle = -angle;
-        float radians = angle * Mathf.Deg2Rad;
-        var dir = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
-        dir.x = Mathf.Abs(dir.x) * (right ? 1f : -1f);
-        _rb.linearVelocity = dir * launchSpeed;
+        bool hitCharacter = character != null;
+        bool hitHachi = hitCharacter && character.IsHachi;
+
+        Vector2 dir = _rb.linearVelocity.sqrMagnitude > 0.01f
+            ? _rb.linearVelocity.normalized
+            : Vector2.right;
+
+        if (hitCharacter)
+        {
+            Vector2 awayFromCharacter = (transform.position - col.transform.position).normalized;
+            if (awayFromCharacter.sqrMagnitude > 0.01f)
+                dir = Vector2.Lerp(dir, awayFromCharacter, 0.55f).normalized;
+
+            if (hitHachi)
+                SpawnHachiHitEffect(col);
+        }
+        else if (col.contactCount > 0)
+        {
+            Vector2 bounceNormal = col.GetContact(0).normal;
+            Vector2 blendedDir = Vector2.Lerp(dir, bounceNormal, 0.25f);
+            dir = blendedDir.sqrMagnitude > 0.01f ? blendedDir.normalized : bounceNormal;
+        }
+
+        float boost = hitHachi ? hachiBounceBoost : hitCharacter ? characterBounceBoost : wallBounceBoost;
+        float speedCap = hitHachi || !hitCharacter ? maxSpeed : playerHitMaxSpeed;
+        float speed = Mathf.Clamp(_rb.linearVelocity.magnitude + boost, minSpeed, speedCap);
+        _rb.linearVelocity = dir * speed;
+        ApplySpin();
+    }
+
+    private void ClampSpeed()
+    {
+        float speed = _rb.linearVelocity.magnitude;
+        if (speed > maxSpeed)
+        {
+            _rb.linearVelocity = _rb.linearVelocity.normalized * maxSpeed;
+        }
+        else if (speed > 0.01f && speed < minSpeed)
+        {
+            _rb.linearVelocity = _rb.linearVelocity.normalized * minSpeed;
+        }
+    }
+
+    private void ApplySpin()
+    {
+        _rb.angularVelocity = -_rb.linearVelocity.x * spinDegreesPerVelocity;
+    }
+
+    private void LaunchFromHachi(Collision2D col)
+    {
+        Vector2 dir = (transform.position - col.transform.position).normalized;
+        if (dir.sqrMagnitude <= 0.01f)
+        {
+            float angle = UnityEngine.Random.Range(12f, 68f);
+            if (UnityEngine.Random.value < 0.5f) angle = -angle;
+            float radians = angle * Mathf.Deg2Rad;
+            dir = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+        }
+
+        dir.x = Mathf.Abs(dir.x);
+        _rb.linearVelocity = dir.normalized * Mathf.Min(launchSpeed + hachiBounceBoost, maxSpeed);
+        ApplySpin();
+    }
+
+    private void SpawnHachiHitEffect(Collision2D col)
+    {
+        Vector3 effectPosition = col.contactCount > 0
+            ? col.GetContact(0).point
+            : transform.position;
+
+        MiniGameManager.Instance?.Effects?.Spawn("Boom", effectPosition);
     }
 
     private void Freeze()
     {
         _rb.constraints = RigidbodyConstraints2D.FreezeAll;
         _rb.linearVelocity = Vector2.zero;
+        _rb.angularVelocity = 0f;
     }
 
     private void Unfreeze()
     {
-        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _rb.constraints = RigidbodyConstraints2D.None;
     }
 }
