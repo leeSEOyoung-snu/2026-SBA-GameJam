@@ -291,9 +291,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 10
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -318,9 +318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480cfe8ef7ff147489cc2727cf180403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HachiFlyController
-  thrustForce: 5
+  thrustForce: 1
   gravity: 3
-  maxSpeed: 7
+  maxSpeed: 5
   damping: 0.5
   thrustEffectId: Thrust
   limbTransforms:
