@@ -8,6 +8,7 @@ public class DontWorryGame : OneVsThreeBase
     [SerializeField] private DontWorryCrosshair crosshair;
     [SerializeField] private BoxCollider2D moveArea;
     [SerializeField] private List<DontWorryFakeHachiController> fakeHachis;
+    [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
 
     [Header("결과 델타")]
     [SerializeField] private int realHachiShotNightmare = 5;
@@ -122,6 +123,7 @@ public class DontWorryGame : OneVsThreeBase
     {
         if (_gameOver) return;
 
+        basicPlayerCanvasManager?.GreyOutCharacter(fake.PlayerId);
         _fakePlayers.Remove(fake);
         Debug.Log($"[DontWorry] 가짜 해치 제거 / 남은: {_fakePlayers.Count}");
 

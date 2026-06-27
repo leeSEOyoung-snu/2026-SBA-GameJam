@@ -11,6 +11,8 @@ public class HechiChaseGame : OneVsThreeBase
     [SerializeField] private Vector3[] playerInitPos; // 4개 필요
     [SerializeField] private Vector3 hechiInitPos;
 
+    [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
+
     [Header("결과 델타 (해치 승리)")]
     [SerializeField] private int hechiWinNightmare = 5;
 
@@ -59,8 +61,10 @@ public class HechiChaseGame : OneVsThreeBase
 
     private void OnPlayerEliminated(ChaseCharacterController characterController)
     {
+        int playerId = characterController.GetComponent<MiniGameCharacterController>().PlayerId;
+        basicPlayerCanvasManager?.GreyOutCharacter(playerId);
         _normalPlayers.Remove(characterController);
-        Debug.Log($"[HechiChase] Player {characterController.GetComponent<MiniGameCharacterController>().PlayerId} 제거 / 남은 플레이어: {_normalPlayers.Count}");
+        Debug.Log($"[HechiChase] Player {playerId} 제거 / 남은 플레이어: {_normalPlayers.Count}");
 
         if (_normalPlayers.Count == 0)
             EndGame(hechiWins: true);
