@@ -88,14 +88,6 @@ public class HechiChaseGame : OneVsThreeBase
         IsOneWin = hechiWins;
         NightmareDelta = hechiWins ? 0 : hechiWinNightmare;
 
-        StartCoroutine(EndRoutine());
-    }
-
-    private IEnumerator EndRoutine()
-    {
-        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
-        if (canvas != null)
-            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

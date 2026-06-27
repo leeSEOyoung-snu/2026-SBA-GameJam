@@ -2451,7 +2451,7 @@ PrefabInstance:
     - target: {fileID: 7449757672843360925, guid: c0f40ed2c09ea4570b1d7ce65cbbba8d, type: 3}
       propertyPath: nightmareDelta
       value: 
-      objectReference: {fileID: 512311873029238988}
+      objectReference: {fileID: 4492492109998126658}
     - target: {fileID: 7449757672843360925, guid: c0f40ed2c09ea4570b1d7ce65cbbba8d, type: 3}
       propertyPath: miniGameTypeText
       value: 
@@ -2500,17 +2500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &512311873029238988 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4713679170844494798, guid: c0f40ed2c09ea4570b1d7ce65cbbba8d, type: 3}
-  m_PrefabInstance: {fileID: 5077319110174931714}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &628431873721259676 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5678724265322950046, guid: c0f40ed2c09ea4570b1d7ce65cbbba8d, type: 3}
@@ -2547,6 +2536,17 @@ MonoBehaviour:
 --- !u!114 &3916433564265713572 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8083879176680961190, guid: c0f40ed2c09ea4570b1d7ce65cbbba8d, type: 3}
+  m_PrefabInstance: {fileID: 5077319110174931714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &4492492109998126658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8660082411145104704, guid: c0f40ed2c09ea4570b1d7ce65cbbba8d, type: 3}
   m_PrefabInstance: {fileID: 5077319110174931714}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

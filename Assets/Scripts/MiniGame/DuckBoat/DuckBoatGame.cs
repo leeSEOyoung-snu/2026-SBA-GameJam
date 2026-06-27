@@ -80,7 +80,7 @@ public class DuckBoatGame : TwoVsTwoBase
         }
 
         _gameOver = true;
-        StartCoroutine(EndRoutine());
+        MiniGameManager.Instance.QuitMiniGame();
     }
 
     private IEnumerator TimerRoutine()
@@ -92,14 +92,6 @@ public class DuckBoatGame : TwoVsTwoBase
         NightmareDelta = 0;
         Winner = _boat1.Distance >= _boat2.Distance ? TwoVsTwoWinner.Team1 : TwoVsTwoWinner.Team2;
         _gameOver = true;
-        StartCoroutine(EndRoutine());
-    }
-
-    private IEnumerator EndRoutine()
-    {
-        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
-        if (canvas != null)
-            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

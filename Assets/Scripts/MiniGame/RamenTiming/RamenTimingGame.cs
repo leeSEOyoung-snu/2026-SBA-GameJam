@@ -126,14 +126,6 @@ public class RamenTimingGame : SoloBattleBase
         }
         Debug.Log(resultLog.ToString());
 
-        StartCoroutine(EndRoutine());
-    }
-
-    private IEnumerator EndRoutine()
-    {
-        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
-        if (canvas != null)
-            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }

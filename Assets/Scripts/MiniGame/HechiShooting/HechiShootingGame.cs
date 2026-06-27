@@ -155,14 +155,6 @@ public class HechiShootingGame : SoloBattleBase
 
         Debug.Log($"[HechiShooting] 결과 - 1등:{ranking[0]} 2등:{ranking[1]} 3등:{ranking[2]} 4등:{ranking[3]}");
 
-        StartCoroutine(EndRoutine());
-    }
-
-    private IEnumerator EndRoutine()
-    {
-        var canvas = FindObjectOfType<BasicMiniGameCanvas>();
-        if (canvas != null)
-            yield return canvas.PlayGameEnd().WaitForCompletion();
         MiniGameManager.Instance.QuitMiniGame();
     }
 }
