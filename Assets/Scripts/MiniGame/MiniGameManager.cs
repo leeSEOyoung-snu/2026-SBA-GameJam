@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class MiniGameManager : MonoBehaviour
 {
     [SerializeField] private MiniGameResultContainer miniGameResultContainer;
+    [SerializeField] private float tutorialShowSeconds = 2.5f;
     
     public static MiniGameManager Instance { get; private set; }
     public EffectManager Effects { get; private set; }
@@ -13,6 +16,27 @@ public class MiniGameManager : MonoBehaviour
     {
         Instance = this;
         Effects = GetComponent<EffectManager>();
+    }
+
+    private IEnumerator Start()
+    {
+        yield return MiniGameStartFlow();
+    }
+
+    private IEnumerator MiniGameStartFlow()
+    {
+        TutorialCanvas tutorialCanvas = FindAnyObjectByType<TutorialCanvas>();
+        BasicMiniGameCanvas basicCanvas = FindAnyObjectByType<BasicMiniGameCanvas>();
+
+        if (tutorialCanvas != null)
+        {
+            yield return tutorialCanvas.Open().WaitForCompletion();
+            yield return new WaitForSeconds(tutorialShowSeconds);
+            yield return tutorialCanvas.Close().WaitForCompletion();
+        }
+
+        if (basicCanvas != null)
+            yield return basicCanvas.PlayGameStart().WaitForCompletion();
     }
 
     public void QuitMiniGame()
