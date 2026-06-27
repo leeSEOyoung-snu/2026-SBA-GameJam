@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f8b847dea582c4d6ca171725a85651f4
+guid: 5b5f974d2134e404282a4d3ed7b4df01
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6028704391311975085
-    second: ArrowKey_0
+      213: -6552355168463547175
+    second: Minigame Background_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +100,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ArrowKey_0
+      name: Minigame Background_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 19
-        height: 19
+        width: 640
+        height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da2ecf3d3b24aa350800000000000000
-      internalID: 6028704391311975085
+      spriteID: 9d4198da0bb5115a0800000000000000
+      internalID: -6552355168463547175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minigame Background_1
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de59ffb3f388342aabda997071841e4c
+      internalID: 714401699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minigame Background_2
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e48ebad8fa4b24983a3748ac80c5a551
+      internalID: -1825757594
       vertices: []
       indices: 
       edges: []
@@ -125,7 +169,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 2e9ed6fbc9cd94fe0978cfa6cbe45997
     internalID: 0
     vertices: []
     indices: 
@@ -133,9 +177,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":640.0,"y":360.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      ArrowKey_0: 6028704391311975085
+      Minigame Background_0: -6552355168463547175
+      Minigame Background_1: 714401699
+      Minigame Background_2: -1825757594
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
