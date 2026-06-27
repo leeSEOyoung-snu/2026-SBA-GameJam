@@ -56,6 +56,9 @@ public partial class GameManager : MonoBehaviour
     public IPlayerInputReader GetPlayerInputReader(int playerId)
         => _inputManager.GetPlayerInputReader(playerId);
 
+    public void SetActiveAllInput(bool active)
+        => _inputManager.SetActiveAllInput(active);
+
     public void LoadMiniGame()
     {
         if (IsMiniGameRunning) return;

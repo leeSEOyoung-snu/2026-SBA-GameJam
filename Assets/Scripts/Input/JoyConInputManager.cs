@@ -33,6 +33,9 @@ public class JoyConInputManager : MonoBehaviour
         return players[playerId-1];
     }
 
+    public void SetActiveAllInput(bool active)
+        => players.ForEach(p => p.SetActiveInput(active));
+
     private void HandleSwing(int playerId, char side, float magnitude)
     {
         //Debug.Log($"[JoyConInputProcessor {playerId}P - {side}] 스윙 감지! 세기={magnitude:F2}g");

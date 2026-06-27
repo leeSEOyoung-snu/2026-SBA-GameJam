@@ -24,6 +24,9 @@ public interface IPlayerInputReader
     public Vector2 Stick { get; }
 
     public void Reset();
+    
+    // Activeness
+    public void SetActiveInput(bool active);
 }
 
 public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
@@ -80,6 +83,7 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
     [SerializeField] private Key srKey;
     
     private JoyConButtonDetector _buttonDetector;
+    private bool _activeInput = true;
     
     public void Init()
     {
@@ -103,6 +107,12 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
 
     private void Update()
     {
+        if (!_activeInput)
+        {
+            Reset();
+            Stick = Vector2.zero;
+        }
+        
         Stick = _buttonDetector.StickValue;
         GetKeyDown();
         
@@ -164,5 +174,10 @@ public class PlayerInputProcessor : MonoBehaviour, IPlayerInputReader
     public void SwingDetected()
     {
         Swing = true;
+    }
+    
+    public void SetActiveInput(bool active)
+    {
+        _activeInput = active;
     }
 }

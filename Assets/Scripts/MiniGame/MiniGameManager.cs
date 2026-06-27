@@ -16,11 +16,15 @@ public class MiniGameManager : MonoBehaviour
     {
         Instance = this;
         Effects = GetComponent<EffectManager>();
+        GameManager.Instance.SetActiveAllInput(false);
     }
 
     private IEnumerator Start()
     {
         yield return MiniGameStartFlow();
+        
+        yield return null;
+        GameManager.Instance.SetActiveAllInput(true);
     }
 
     private IEnumerator MiniGameStartFlow()
@@ -43,8 +47,21 @@ public class MiniGameManager : MonoBehaviour
 
     public void QuitMiniGame()
     {
-        Dictionary<StateTypes, int> delta = new();
+        Dictionary<StateTypes, int> delta = CalculateStatesDelta();
+        StartCoroutine(QuitMiniGameCoroutine(delta));
+    }
+    
+    private IEnumerator QuitMiniGameCoroutine(Dictionary<StateTypes, int> delta)
+    {
+        // TODO: 결과창 canvas 연결
 
+        yield return null;
+        GameManager.Instance.QuitMiniGame(delta);
+    }
+
+    private Dictionary<StateTypes, int> CalculateStatesDelta()
+    {
+        Dictionary<StateTypes, int> delta = new();
         switch (miniGameResultContainer.Type)
         {
             case MiniGameTypes.SoloBattle:
@@ -87,8 +104,8 @@ public class MiniGameManager : MonoBehaviour
                     delta = CooperativeQuitMiniGame(cooperative);
                 break;
         }
-            
-        GameManager.Instance.QuitMiniGame(delta);
+
+        return delta;
     }
     
     private Dictionary<StateTypes, int> SoloBattleQuitMiniGame(SoloBattleBase soloBattleBase)
