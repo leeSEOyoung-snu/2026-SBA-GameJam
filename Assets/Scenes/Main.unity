@@ -1640,6 +1640,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8778186659418935840, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
+      propertyPath: type
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1998,6 +2002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8778186659418935840, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
+      propertyPath: type
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2203,7 +2211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8778186659418935840, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
       propertyPath: type
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2659,7 +2667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8778186659418935840, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
       propertyPath: type
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3274,6 +3282,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell 1st Evolution
       objectReference: {fileID: 0}
+    - target: {fileID: 8778186659418935840, guid: ee05a85ebce0d6a40a385e4c3fdaef8e, type: 3}
+      propertyPath: type
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3317,7 +3329,7 @@ SceneRoots:
   - {fileID: 1184155060}
   - {fileID: 702160501}
   - {fileID: 1186057967}
+  - {fileID: 2258448447943532693}
   - {fileID: 1473765299}
   - {fileID: 1977865177}
-  - {fileID: 2258448447943532693}
   - {fileID: 4646434}

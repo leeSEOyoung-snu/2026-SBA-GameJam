@@ -154,7 +154,7 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator TriggerEvent(CellInfo cell)
     {
-        IBoardEvent boardEvent = BoardEventFactory.Create(cell.type);
+        IBoardEvent boardEvent = BoardEventFactory.Create(cell.type, _mainSceneManager, _players);
         if (boardEvent != null)
             yield return StartCoroutine(boardEvent.Execute());
 

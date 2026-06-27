@@ -27,6 +27,8 @@ public class MainSceneManager : MonoBehaviour
         }
     }
     
+    public StateContainer StateContainer => _stateContainer;
+
     private StateContainer _stateContainer;
 
     private void OnEnable()
@@ -71,6 +73,16 @@ public class MainSceneManager : MonoBehaviour
         GameManager.Instance.IsMiniGameRunning = false;
     }
     
+    public IEnumerator RefreshStatesUI()
+    {
+        yield return hatchCanvasManager.UpdateStates(_stateContainer.CommonStats);
+    }
+
+    public IEnumerator RefreshAffectionUI()
+    {
+        yield return playerCanvasManager.UpdateAffection(_stateContainer.AffectionById);
+    }
+
     public IEnumerator GoGoEvolution()
     {
         yield return GetHighestState();

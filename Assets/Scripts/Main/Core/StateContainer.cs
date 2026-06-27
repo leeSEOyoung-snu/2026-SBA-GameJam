@@ -39,6 +39,14 @@ public class StateContainer
         LogStats();
     }
 
+    // CommonStats와 무관하게 순수 호감도만 직접 이전
+    public void TransferAffection(int fromPlayerId, int toPlayerId, int amount)
+    {
+        AffectionById[fromPlayerId] -= amount;
+        AffectionById[toPlayerId]   += amount;
+        LogStats();
+    }
+
     private void LogStats()
     {
         foreach (var (state, value) in CommonStats)
