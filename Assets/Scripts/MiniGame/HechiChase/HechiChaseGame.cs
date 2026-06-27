@@ -17,6 +17,7 @@ public class HechiChaseGame : OneVsThreeBase
     [SerializeField] private int hechiWinNightmare = 5;
 
     private readonly List<ChaseCharacterController> _normalPlayers = new();
+    private int _totalPlayers;
     private bool _gameOver;
 
     public override int NightmareDelta { get; protected set; }
@@ -24,6 +25,7 @@ public class HechiChaseGame : OneVsThreeBase
 
     private void Start()
     {
+        MiniGameManager.Instance?.ArrangeOneVsThreePlayerLayout(OnePlayerId);
         StartCoroutine(WaitForGameStart());
     }
 
@@ -57,6 +59,18 @@ public class HechiChaseGame : OneVsThreeBase
             if (!isHechi)
                 _normalPlayers.Add(character.GetComponent<ChaseCharacterController>());
         }
+
+        _totalPlayers = _normalPlayers.Count;
+        // 이 씬 전용: 해치(1인팀) 말풍선을 캐릭터와 안 겹치게 위로 올리고 크게, 글자는 작게
+        basicPlayerCanvasManager?.StyleStackBubble(OnePlayerId, 175f, new Vector2(230f, 150f), 28f);
+        UpdateHechiCatchText();
+    }
+
+    // 해치(1인팀, 1P 자리) 슬롯에 잡은 캐릭터 수 표기
+    private void UpdateHechiCatchText()
+    {
+        int caught = _totalPlayers - _normalPlayers.Count;
+        basicPlayerCanvasManager?.SetStackAsString(OnePlayerId, $"잡은 캐릭터\n{caught} / {_totalPlayers}");
     }
 
     private void OnPlayerEliminated(ChaseCharacterController characterController)
@@ -64,6 +78,7 @@ public class HechiChaseGame : OneVsThreeBase
         int playerId = characterController.GetComponent<MiniGameCharacterController>().PlayerId;
         basicPlayerCanvasManager?.GreyOutCharacter(playerId);
         _normalPlayers.Remove(characterController);
+        UpdateHechiCatchText();
         Debug.Log($"[HechiChase] Player {playerId} 제거 / 남은 플레이어: {_normalPlayers.Count}");
 
         if (_normalPlayers.Count == 0)

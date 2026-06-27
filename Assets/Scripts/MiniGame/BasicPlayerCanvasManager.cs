@@ -37,6 +37,41 @@ public class BasicPlayerCanvasManager : MonoBehaviour
     {
         stackCntTexts[playerId - 1].text = stackCnt.ToString();
     }
+    
+    public void SetStackAsString(int playerId, string stackStr)
+    {
+        TextMeshProUGUI text = stackCntTexts[playerId - 1];
+        // 텍스트가 속한 Stacking 오브젝트가 비활성일 수 있으므로 활성화
+        if (text.transform.parent != null)
+            text.transform.parent.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
+        text.text = stackStr;
+    }
+
+    // 특정 플레이어의 스택 말풍선 크기/위치/폰트 조정 (씬별 커스텀용)
+    // bubbleYOffset: Stacking 로컬 y(캐릭터와 안 겹치게 위로 올림), boxSize: 말풍선/텍스트 크기, fontSize: 글자 크기
+    public void StyleStackBubble(int playerId, float bubbleYOffset, Vector2 boxSize, float fontSize)
+    {
+        TextMeshProUGUI text = stackCntTexts[playerId - 1];
+
+        Transform stacking = text.transform.parent;
+        if (stacking is RectTransform stackingRt)
+        {
+            Vector2 pos = stackingRt.anchoredPosition;
+            pos.y = bubbleYOffset;
+            stackingRt.anchoredPosition = pos;
+
+            Transform box = stacking.Find("StackBox");
+            if (box is RectTransform boxRt)
+                boxRt.sizeDelta = boxSize;
+        }
+
+        text.rectTransform.sizeDelta = boxSize;
+        text.enableAutoSizing = false;
+        text.fontSize = fontSize;
+        text.enableWordWrapping = true;
+        text.alignment = TextAlignmentOptions.Center;
+    }
 
     // playerId: 1~4, 게임오버된 캐릭터의 초상화를 회색으로 처리
     public void GreyOutCharacter(int playerId)
