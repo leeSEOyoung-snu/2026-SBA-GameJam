@@ -374,6 +374,59 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &2062260595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062260597}
+  - component: {fileID: 2062260596}
+  m_Layer: 0
+  m_Name: HechiShootingGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2062260596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062260595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f458f519e197614c82c281d8d7d29e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HechiShootingGame
+  crosshairPrefab: {fileID: 4686479624526481590, guid: 77bf3dc9ff251244c87a4f5f9c0d1170, type: 3}
+  nightmarePrefab: {fileID: 3623132087631189910, guid: f3a745d8646cfff4599a09904659b772, type: 3}
+  hachiPrefab: {fileID: 2649069100692433701, guid: 57ba1eb367f6e5844ada16e9128389ba, type: 3}
+  timeLimit: 60
+  nightmareSpawnInterval: 2
+  maxNightmares: 8
+  spawnMin: {x: -7, y: -3.5}
+  spawnMax: {x: 7, y: 3.5}
+  hachiShotNightmareDelta: 5
+--- !u!4 &2062260597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062260595}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.64473, y: -25.44654, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -381,3 +434,4 @@ SceneRoots:
   - {fileID: 1008864669}
   - {fileID: 954941659}
   - {fileID: 631168717}
+  - {fileID: 2062260597}
