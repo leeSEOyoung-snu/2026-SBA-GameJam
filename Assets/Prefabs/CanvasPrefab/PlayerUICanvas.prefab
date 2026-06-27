@@ -225,6 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2998000683954997709}
+  - component: {fileID: 974027444876701805}
   - component: {fileID: 274597551616085948}
   - component: {fileID: 4747892286403270001}
   - component: {fileID: 8456250025737300640}
@@ -257,6 +258,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &974027444876701805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8274060429689966135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8c875496e446f4aafcd13f6fb03751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUiCanvasManager
+  playerAffectionRaw:
+  - playerId: 1
+    affection: {fileID: 8196515269763228952}
+  - playerId: 2
+    affection: {fileID: 4697690714539435841}
+  - playerId: 3
+    affection: {fileID: 9047638659195581262}
+  - playerId: 4
+    affection: {fileID: 7992587290841728598}
 --- !u!223 &274597551616085948
 Canvas:
   m_ObjectHideFlags: 0
@@ -351,7 +373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2823732930515743479, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Name
-      value: PortraitArea (3)
+      value: 4P PortraitArea
       objectReference: {fileID: 0}
     - target: {fileID: 2958576343418435901, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Color.b
@@ -459,6 +481,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4388000437267527726, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
   m_PrefabInstance: {fileID: 349953457743898020}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7992587290841728598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7651641174625805298, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
+  m_PrefabInstance: {fileID: 349953457743898020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1711293603300724924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -489,7 +522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2823732930515743479, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Name
-      value: PortraitArea (2)
+      value: 3P PortraitArea
       objectReference: {fileID: 0}
     - target: {fileID: 2958576343418435901, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Color.b
@@ -593,6 +626,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4388000437267527726, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
   m_PrefabInstance: {fileID: 1711293603300724924}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9047638659195581262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7651641174625805298, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
+  m_PrefabInstance: {fileID: 1711293603300724924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1986026061797754602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -603,7 +647,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2823732930515743479, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Name
-      value: PortraitArea
+      value: 1P PortraitArea
       objectReference: {fileID: 0}
     - target: {fileID: 4388000437267527726, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Pivot.x
@@ -695,6 +739,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4388000437267527726, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
   m_PrefabInstance: {fileID: 1986026061797754602}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8196515269763228952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7651641174625805298, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
+  m_PrefabInstance: {fileID: 1986026061797754602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &3098929316710630579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -725,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2823732930515743479, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Name
-      value: PortraitArea (1)
+      value: 2P PortraitArea
       objectReference: {fileID: 0}
     - target: {fileID: 2958576343418435901, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
       propertyPath: m_Color.b
@@ -833,3 +888,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4388000437267527726, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
   m_PrefabInstance: {fileID: 3098929316710630579}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4697690714539435841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7651641174625805298, guid: e1fe0c7302f74426f944b84556a5ce03, type: 3}
+  m_PrefabInstance: {fileID: 3098929316710630579}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI

@@ -8,7 +8,9 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private Board board;
     [SerializeField] private MainGameLoop gameLoop;
     [SerializeField] private GamePiece piece;
+    [Space(10)]
     [SerializeField] private HatchUiCanvasManager hatchCanvasManager;
+    [SerializeField] private PlayerUiCanvasManager playerCanvasManager;
     
     private StateContainer _stateContainer;
 
@@ -47,6 +49,8 @@ public class MainSceneManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         yield return hatchCanvasManager.UpdateStates(_stateContainer.CommonStats);
+        yield return new WaitForSeconds(0.2f);
+        yield return playerCanvasManager.UpdateAffection(_stateContainer.AffectionById);
         
         GameManager.Instance.SetActiveAllInput(true);
         GameManager.Instance.IsMiniGameRunning = false;

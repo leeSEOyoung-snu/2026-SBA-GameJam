@@ -6,9 +6,9 @@ public class StateContainer
 {
     // 공통 스탯 (모든 플레이어 공유)
     public Dictionary<StateTypes, int> CommonStats { get; private set; }
+    public Dictionary<int, int> AffectionById { get; private set; }
 
     // 플레이어별 호감도 (index 0 = Player 1)
-    public int[] PlayerAffections { get; private set; }
     private const int PlayerCount = 4;
     
     public StateContainer()
@@ -17,7 +17,7 @@ public class StateContainer
         foreach (StateTypes state in Enum.GetValues(typeof(StateTypes)))
             CommonStats[state] = 0;
 
-        PlayerAffections = new int[PlayerCount]; // 전부 0으로 초기화
+        AffectionById = new() { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 } }; // 전부 0으로 초기화
     }
     
     // 공통 스탯 업데이트 + 플레이어 Id와 대응하는 스탯 delta를 affection에 반영
@@ -33,7 +33,7 @@ public class StateContainer
             // 2. StateTypes 값이 플레이어 Id(1~4)에 해당하면 해당 플레이어 affection에도 반영
             int stateValue = (int)state;
             if (stateValue >= 1 && stateValue <= PlayerCount)
-                PlayerAffections[stateValue - 1] += delta;
+                AffectionById[stateValue] += delta;
         }
 
         LogStats();
@@ -45,7 +45,7 @@ public class StateContainer
             Debug.Log($"[Stats] {state}: {value}");
 
         for (int i = 0; i < PlayerCount; i++)
-            Debug.Log($"[Affection] Player {i + 1}: {PlayerAffections[i]}");
+            Debug.Log($"[Affection] Player {i + 1}: {AffectionById[i + 1]}");
     }
 
     public override string ToString()
@@ -56,7 +56,7 @@ public class StateContainer
 
         stats += "Player Affections:\n";
         for (int i = 0; i < PlayerCount; i++)
-            stats += $"Player {i + 1}: {PlayerAffections[i]}\n";
+            stats += $"Player {i + 1}: {AffectionById[i + 1]}\n";
 
         return stats;
     }
