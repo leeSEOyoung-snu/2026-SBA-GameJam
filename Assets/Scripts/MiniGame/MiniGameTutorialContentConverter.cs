@@ -6,6 +6,7 @@ public readonly struct MiniGameTutorialContent
 {
     public readonly string GameTypeText;
     public readonly string GameTitleText;
+    public readonly string GameDescText;
     public readonly string LeftPlayerText;
     public readonly string RightPlayerText;
     public readonly string LeftConditionText;
@@ -14,6 +15,7 @@ public readonly struct MiniGameTutorialContent
     public MiniGameTutorialContent(
         string gameTypeText,
         string gameTitleText,
+        string gameDescText,
         string leftPlayerText,
         string rightPlayerText,
         string leftConditionText,
@@ -21,6 +23,7 @@ public readonly struct MiniGameTutorialContent
     {
         GameTypeText = gameTypeText;
         GameTitleText = gameTitleText;
+        GameDescText = gameDescText;
         LeftPlayerText = leftPlayerText;
         RightPlayerText = rightPlayerText;
         LeftConditionText = leftConditionText;
@@ -48,6 +51,7 @@ public static class MiniGameTutorialContentConverter
         return new MiniGameTutorialContent(
             "개인전",
             FormatTitle(data.GameTitle),
+            data.Desc,
             null,
             null,
             text.soloWinCondition,
@@ -64,6 +68,7 @@ public static class MiniGameTutorialContentConverter
         return new MiniGameTutorialContent(
             "1vs3",
             FormatTitle(data.GameTitle),
+            data.Desc,
             FormatPlayers(onePlayerId),
             FormatPlayers(threePlayerIds),
             text.oneWinCondition,
@@ -76,6 +81,7 @@ public static class MiniGameTutorialContentConverter
         return new MiniGameTutorialContent(
             "2vs2",
             FormatTitle(data.GameTitle),
+            data.Desc,
             $"{FormatPlayers(twoVsTwo.PlayerIdsTeam1)} VS. {FormatPlayers(twoVsTwo.PlayerIdsTeam2)}",
             "악몽 조건",
             text.twoWinCondition,
@@ -88,6 +94,7 @@ public static class MiniGameTutorialContentConverter
         return new MiniGameTutorialContent(
             "협동전",
             FormatTitle(data.GameTitle),
+            data.Desc,
             null,
             null,
             text.coopWinCondition,

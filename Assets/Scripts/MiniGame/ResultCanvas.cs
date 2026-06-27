@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ResultCanvas : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup gameEndGroup;
     [SerializeField] private TMP_Text gameEndTxt;
     [SerializeField] private RectTransform resultBg;
     [SerializeField] private CanvasGroup resultInnerGroup;
@@ -37,34 +38,37 @@ public class ResultCanvas : MonoBehaviour
         gameObject.SetActive(true);
 
         Sequence sequence = DOTween.Sequence().SetUpdate(true);
-        if (gameEndTxt == null)
+        if (gameEndGroup == null)
             return sequence;
 
-        gameEndTxt.DOKill();
-        DOTween.Kill(gameEndTxt);
-        gameEndTxt.text = "게임 종료!";
-        gameEndTxt.gameObject.SetActive(true);
-        gameEndTxt.transform.localScale = Vector3.one * 2f;
-        SetGameEndAlpha(1f);
+        Transform gameEndTransform = gameEndGroup.transform;
+        gameEndTransform.DOKill();
+        gameEndGroup.DOKill();
+        if (gameEndTxt != null)
+            gameEndTxt.text = "게임 종료!";
+        gameEndGroup.gameObject.SetActive(true);
+        gameEndTransform.localScale = Vector3.one * 2f;
+        gameEndGroup.alpha = 1f;
 
-        sequence.Append(gameEndTxt.transform.DOScale(Vector3.one, gameEndPunchDuration).SetEase(punchEase).SetUpdate(true));
-        sequence.Append(DOTween.To(() => gameEndTxt.color.a, SetGameEndAlpha, 0f, gameEndFadeDuration).SetTarget(gameEndTxt).SetEase(Ease.InQuad).SetUpdate(true));
-        sequence.OnComplete(() => gameEndTxt.gameObject.SetActive(false));
+        sequence.Append(gameEndTransform.DOScale(Vector3.one, gameEndPunchDuration).SetEase(punchEase));
+        sequence.Append(gameEndGroup.DOFade(0f, gameEndFadeDuration).SetEase(Ease.InQuad));
+        sequence.OnComplete(() => gameEndGroup.gameObject.SetActive(false));
         return sequence;
     }
 
     public Sequence OpenResult(Dictionary<StateTypes, int> delta)
     {
+        gameObject.SetActive(true);
         SetPanelOpened(false);
         KillPanelTweens();
         SetResultContent(delta);
 
         Sequence sequence = DOTween.Sequence().SetUpdate(true);
         if (resultBg != null)
-            sequence.Append(resultBg.DOSizeDelta(_bgOpenSize, tweenDuration).SetEase(panelEase).SetUpdate(true));
+            sequence.Append(resultBg.DOSizeDelta(_bgOpenSize, tweenDuration).SetEase(panelEase));
 
         if (resultInnerGroup != null)
-            sequence.Append(resultInnerGroup.DOFade(1f, tweenDuration).SetEase(panelEase).SetUpdate(true));
+            sequence.Append(resultInnerGroup.DOFade(1f, tweenDuration).SetEase(panelEase));
 
         return sequence;
     }
@@ -75,10 +79,10 @@ public class ResultCanvas : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence().SetUpdate(true);
         if (resultInnerGroup != null)
-            sequence.Append(resultInnerGroup.DOFade(0f, tweenDuration).SetEase(panelEase).SetUpdate(true));
+            sequence.Append(resultInnerGroup.DOFade(0f, tweenDuration).SetEase(panelEase));
 
         if (resultBg != null)
-            sequence.Append(resultBg.DOSizeDelta(new Vector2(_bgOpenSize.x, 0f), tweenDuration).SetEase(panelEase).SetUpdate(true));
+            sequence.Append(resultBg.DOSizeDelta(new Vector2(_bgOpenSize.x, 0f), tweenDuration).SetEase(panelEase));
 
         sequence.OnComplete(() => gameObject.SetActive(false));
         return sequence;
@@ -141,18 +145,11 @@ public class ResultCanvas : MonoBehaviour
 
     private void SetHidden()
     {
-        if (gameEndTxt == null)
+        if (gameEndGroup == null)
             return;
 
-        SetGameEndAlpha(0f);
-        gameEndTxt.transform.localScale = Vector3.one;
-        gameEndTxt.gameObject.SetActive(false);
-    }
-
-    private void SetGameEndAlpha(float alpha)
-    {
-        Color color = gameEndTxt.color;
-        color.a = alpha;
-        gameEndTxt.color = color;
+        gameEndGroup.alpha = 0f;
+        gameEndGroup.transform.localScale = Vector3.one;
+        gameEndGroup.gameObject.SetActive(false);
     }
 }

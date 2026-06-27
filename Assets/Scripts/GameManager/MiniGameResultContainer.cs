@@ -10,6 +10,9 @@ public class MiniGameResultContainer : ScriptableObject
     [SerializeField] private string gameTitle;
     public string GameTitle => gameTitle;
 
+    [SerializeField, TextArea] private string desc;
+    public string Desc => desc;
+
     [SerializeField] private bool isTimeAttack;
     public bool IsTimeAttack => isTimeAttack;
 

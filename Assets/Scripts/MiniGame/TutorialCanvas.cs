@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,13 @@ public class TutorialCanvas : MonoBehaviour
     [SerializeField] private RectTransform bg;
     [SerializeField] private CanvasGroup innerGroup;
     [SerializeField] private TMP_Text gameTypeTxt;
+    [SerializeField] private TMP_Text titleTxt;
     [SerializeField] private TMP_Text descTxt;
+    [SerializeField] private TMP_SpriteAsset keyIconSpriteAsset;
+    [SerializeField, Range(50, 300)] private int keyIconSizePercent = 140;
+    [SerializeField, Range(-1f, 1f)] private float keyIconHorizontalOffsetEm;
+    [SerializeField, Range(-1f, 1f)] private float keyIconVerticalOffsetEm;
+    [SerializeField] private Color keyIconColor = Color.white;
     [SerializeField] private Transform conditionsRoot;
     [SerializeField] private TutorialConditionView oneVsThreeConditionsPrefab;
     [SerializeField] private TutorialConditionView twoVsTwoConditionsPrefab;
@@ -33,7 +40,9 @@ public class TutorialCanvas : MonoBehaviour
     {
         MiniGameTutorialContent content = MiniGameTutorialContentConverter.Convert(data, processor);
         gameTypeTxt.text = content.GameTypeText;
-        descTxt.text = content.GameTitleText;
+        titleTxt.text = content.GameTitleText;
+        descTxt.spriteAsset = keyIconSpriteAsset;
+        descTxt.text = ConvertKeyIconTags(content.GameDescText);
 
         ClearConditions();
         _currentConditions = Instantiate(GetConditionsPrefab(data.Type), conditionsRoot);
@@ -101,6 +110,36 @@ public class TutorialCanvas : MonoBehaviour
             MiniGameTypes.Cooperative => cooperativeConditionsPrefab,
             _ => throw new NotSupportedException($"Tutorial conditions prefab is not assigned for {type}."),
         };
+    }
+
+    private string ConvertKeyIconTags(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return string.Empty;
+
+        return text
+            .Replace("<SL>", FormatKeyIconTag("SL"))
+            .Replace("<SR>", FormatKeyIconTag("SR"))
+            .Replace("<L>", FormatKeyIconTag("L"))
+            .Replace("<U>", FormatKeyIconTag("U"))
+            .Replace("<R>", FormatKeyIconTag("R"))
+            .Replace("<D>", FormatKeyIconTag("D"))
+            .Replace("<Joy>", FormatKeyIconTag("Joy"));
+    }
+
+    private string FormatKeyIconTag(string iconName)
+    {
+        string horizontalOffset = Mathf.Abs(keyIconHorizontalOffsetEm).ToString("0.###", CultureInfo.InvariantCulture);
+        string offset = keyIconVerticalOffsetEm.ToString("0.###", CultureInfo.InvariantCulture);
+        string icon = $"<voffset={offset}em><size={keyIconSizePercent}%><sprite name=\"{iconName}\" color=#{ColorUtility.ToHtmlStringRGBA(keyIconColor)}></size></voffset>";
+
+        if (keyIconHorizontalOffsetEm > 0f)
+            return $"<space={horizontalOffset}em>{icon}";
+
+        if (keyIconHorizontalOffsetEm < 0f)
+            return $"{icon}<space={horizontalOffset}em>";
+
+        return icon;
     }
 
     private void ClearConditions()

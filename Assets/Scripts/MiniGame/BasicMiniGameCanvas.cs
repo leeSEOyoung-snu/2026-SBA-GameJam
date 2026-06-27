@@ -7,9 +7,11 @@ using UnityEngine;
 public class BasicMiniGameCanvas : MonoBehaviour
 {
     [SerializeField] private TutorialCanvas tutorialCanvas;
+    [SerializeField] private CanvasGroup gameStartGroup;
     [SerializeField] private ResultCanvas resultCanvas;
     [SerializeField] private TMP_Text gameStartTxt;
     [SerializeField] private TMP_Text timeTxt;
+    [SerializeField] private TMP_Text countNumTxt;
     [SerializeField] private CanvasGroup curtain;
     [SerializeField] private float punchDuration = 0.25f;
     [SerializeField] private float fadeDuration = 0.45f;
@@ -47,20 +49,19 @@ public class BasicMiniGameCanvas : MonoBehaviour
     public Sequence PlayGameStart()
     {
         Sequence sequence = DOTween.Sequence().SetUpdate(true);
-        if (gameStartTxt == null)
+        if (gameStartGroup == null)
             return sequence;
 
-        gameStartTxt.transform.DOKill();
-        DOTween.Kill(gameStartTxt);
+        Transform gameStartTransform = gameStartGroup.transform;
+        gameStartTransform.DOKill();
+        gameStartGroup.DOKill();
         gameStartTxt.text = "게임 시작!";
-        gameStartTxt.gameObject.SetActive(true);
-        gameStartTxt.transform.localScale = Vector3.one * 2f;
-        Color color = gameStartTxt.color;
-        color.a = 1f;
-        gameStartTxt.color = color;
+        gameStartGroup.gameObject.SetActive(true);
+        gameStartTransform.localScale = Vector3.one * 2f;
+        gameStartGroup.alpha = 1f;
 
-        sequence.Append(gameStartTxt.transform.DOScale(Vector3.one, punchDuration).SetEase(ease));
-        sequence.Append(DOTween.To(() => gameStartTxt.color.a, SetGameStartAlpha, 0f, fadeDuration).SetTarget(gameStartTxt).SetEase(Ease.InQuad).SetUpdate(true));
+        sequence.Append(gameStartTransform.DOScale(Vector3.one, punchDuration).SetEase(ease));
+        sequence.Append(gameStartGroup.DOFade(0f, fadeDuration).SetEase(Ease.InQuad).SetUpdate(true));
         sequence.OnComplete(SetHidden);
         return sequence;
     }
@@ -102,6 +103,14 @@ public class BasicMiniGameCanvas : MonoBehaviour
         _timeAttackCoroutine = null;
     }
 
+    public void SetCount(int currentCount, int totalCount)
+    {
+        if (countNumTxt == null)
+            return;
+
+        countNumTxt.text = $"{Mathf.Max(0, currentCount)}/{Mathf.Max(0, totalCount)}";
+    }
+
     private IEnumerator TimeAttackCoroutine(int seconds)
     {
         int remainingSeconds = seconds;
@@ -120,13 +129,6 @@ public class BasicMiniGameCanvas : MonoBehaviour
     private void SetTimeText(int seconds)
     {
         timeTxt.text = seconds.ToString();
-    }
-
-    private void SetGameStartAlpha(float alpha)
-    {
-        Color color = gameStartTxt.color;
-        color.a = alpha;
-        gameStartTxt.color = color;
     }
 
     public Sequence PlayGameEnd()
@@ -155,13 +157,11 @@ public class BasicMiniGameCanvas : MonoBehaviour
 
     private void SetHidden()
     {
-        if (gameStartTxt == null)
+        if (gameStartGroup == null)
             return;
 
-        Color color = gameStartTxt.color;
-        color.a = 0f;
-        gameStartTxt.color = color;
-        gameStartTxt.transform.localScale = Vector3.one;
-        gameStartTxt.gameObject.SetActive(false);
+        gameStartGroup.alpha = 0f;
+        gameStartGroup.transform.localScale = Vector3.one;
+        gameStartGroup.gameObject.SetActive(false);
     }
 }
