@@ -6,49 +6,37 @@ using Random = UnityEngine.Random;
 
 /// <summary>
 /// 분류해라! 재활용 쓰레기 — 협동 미니게임.
-///
-/// 규칙:
-///   · 4명이 각자 시소 하나를 SL/SR로 조작
-///   · 하늘 배출구(3곳)에서 15개의 쓰레기가 랜덤 낙하 (뒤로 갈수록 간격 단축)
-///   · 올바른 통에 넣으면 성공 카운트++
-///   · 틀린 통 또는 화면 밖 낙하 → 실수++
-///   · 실수 3회 → 즉시 실패 (악몽+5)
-///   · 15개 모두 처리 후 실수 < 3 → 성공
+/// 쓰레기가 처리(빈 투입 or 낙하)된 직후 짧은 딜레이로 다음 쓰레기 스폰.
 /// </summary>
 public class RecyclingGame : CooperativeBase
 {
-    // ── Inspector ──────────────────────────────────────────
     [Header("씬 오브젝트 참조")]
-    [SerializeField] private RecyclingSeesaw[] seesaws;        // 인덱스 0=플레이어1 … 3=플레이어4
-    [SerializeField] private RecyclingBin[]    bins;           // 4개, AcceptedType 각각 설정
-    [SerializeField] private Transform[]       spawnPoints;    // 3개 배출구 위치
+    [SerializeField] private RecyclingSeesaw[] seesaws;
+    [SerializeField] private RecyclingBin[]    bins;
+    [SerializeField] private Transform[]       spawnPoints;
 
     [Header("쓰레기 프리팹 (TrashType 순서 0~3)")]
-    [SerializeField] private GameObject[] trashPrefabs;        // Paper, Plastic, Glass, Metal
+    [SerializeField] private GameObject[] trashPrefabs;
 
     [Header("게임 설정")]
     [SerializeField] private int   totalTrash        = 15;
     [SerializeField] private int   mistakeLimit      = 3;
-    [SerializeField] private float spawnIntervalMin  = 0.8f;   // 최소 간격(초)
-    [SerializeField] private float spawnIntervalMax  = 2.5f;   // 최대 간격(초, 처음)
+    [SerializeField] private float nextSpawnDelay    = 1.2f;  // 처리 후 다음 스폰까지 딜레이
     [SerializeField] private int   failNightmareDelta = 5;
 
-    // ── 상태 ───────────────────────────────────────────────
     private int  _spawned;
-    private int  _processed;   // 빈에 들어갔거나 화면 밖으로 사라진 수
+    private int  _processed;
     private int  _mistakes;
     private bool _gameOver;
 
-    // ── CooperativeBase ────────────────────────────────────
-    public override bool IsSuccess    { get; protected set; }
+    public override bool IsSuccess     { get; protected set; }
     public override int  NightmareDelta { get; protected set; }
 
-    // ──────────────────────────────────────────────────────
     private void Start()
     {
         InitSeesaws();
         InitBins();
-        StartCoroutine(SpawnRoutine());
+        SpawnTrash(); // 첫 쓰레기 바로 스폰
     }
 
     private void InitSeesaws()
@@ -56,8 +44,7 @@ public class RecyclingGame : CooperativeBase
         for (int i = 0; i < seesaws.Length; i++)
         {
             if (seesaws[i] == null) continue;
-            int playerId = i + 1; // 1~4
-            seesaws[i].Init(playerId);
+            seesaws[i].Init(i + 1);
         }
     }
 
@@ -70,41 +57,35 @@ public class RecyclingGame : CooperativeBase
         }
     }
 
-    // ── 쓰레기 스폰 ────────────────────────────────────────
-    private IEnumerator SpawnRoutine()
-    {
-        while (_spawned < totalTrash && !_gameOver)
-        {
-            // 진행될수록 간격 단축 (선형 보간)
-            float t        = (float)_spawned / totalTrash;
-            float interval = Mathf.Lerp(spawnIntervalMax, spawnIntervalMin, t);
-            yield return new WaitForSeconds(interval);
-
-            if (_gameOver) yield break;
-            SpawnTrash();
-        }
-    }
-
     private void SpawnTrash()
     {
-        // 랜덤 배출구 선택
-        Transform spawnPt = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        if (_gameOver || _spawned >= totalTrash) return;
 
-        // 랜덤 쓰레기 종류
+        // 항상 가운데 배출구에서 스폰
+        Transform spawnPt = spawnPoints[spawnPoints.Length / 2];
         int typeIdx = Random.Range(0, trashPrefabs.Length);
         var prefab  = trashPrefabs[typeIdx];
         if (prefab == null) return;
 
         var obj = Instantiate(prefab, spawnPt.position, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(obj, gameObject.scene);
-
-        var trash = obj.GetComponent<RecyclingTrash>();
-        trash.Init((RecyclingTrashType)typeIdx, OnTrashFellOff);
-
+        obj.GetComponent<RecyclingTrash>().Init((RecyclingTrashType)typeIdx, OnTrashFellOff);
         _spawned++;
     }
 
-    // ── 이벤트 콜백 ───────────────────────────────────────
+    // 처리 후 nextSpawnDelay 뒤에 다음 쓰레기 스폰
+    private void ScheduleNextSpawn()
+    {
+        if (_spawned < totalTrash && !_gameOver)
+            StartCoroutine(SpawnAfterDelay());
+    }
+
+    private IEnumerator SpawnAfterDelay()
+    {
+        yield return new WaitForSeconds(nextSpawnDelay);
+        SpawnTrash();
+    }
+
     private void OnTrashEnterBin(bool correct, RecyclingTrash trash)
     {
         if (_gameOver) return;
@@ -113,11 +94,7 @@ public class RecyclingGame : CooperativeBase
         {
             _mistakes++;
             Debug.Log($"[RecyclingSort] 오분류! 실수 {_mistakes}/{mistakeLimit}");
-            if (_mistakes >= mistakeLimit)
-            {
-                EndGame(success: false);
-                return;
-            }
+            if (_mistakes >= mistakeLimit) { EndGame(false); return; }
         }
         else
         {
@@ -126,6 +103,7 @@ public class RecyclingGame : CooperativeBase
 
         _processed++;
         CheckAllProcessed();
+        ScheduleNextSpawn();
     }
 
     private void OnTrashFellOff(RecyclingTrash trash)
@@ -133,31 +111,26 @@ public class RecyclingGame : CooperativeBase
         if (_gameOver) return;
 
         _mistakes++;
-        Debug.Log($"[RecyclingSort] 쓰레기 낙하 실수 {_mistakes}/{mistakeLimit}");
-        if (_mistakes >= mistakeLimit)
-        {
-            EndGame(success: false);
-            return;
-        }
+        Debug.Log($"[RecyclingSort] 낙하 실수 {_mistakes}/{mistakeLimit}");
+        if (_mistakes >= mistakeLimit) { EndGame(false); return; }
 
         _processed++;
         CheckAllProcessed();
+        ScheduleNextSpawn();
     }
 
     private void CheckAllProcessed()
     {
         if (_processed >= totalTrash)
-            EndGame(success: _mistakes < mistakeLimit);
+            EndGame(_mistakes < mistakeLimit);
     }
 
-    // ── 게임 종료 ──────────────────────────────────────────
     private void EndGame(bool success)
     {
         if (_gameOver) return;
-        _gameOver  = true;
-        IsSuccess  = success;
+        _gameOver      = true;
+        IsSuccess      = success;
         NightmareDelta = success ? 0 : failNightmareDelta;
-
         Debug.Log($"[RecyclingSort] 종료 — 성공:{success} 실수:{_mistakes}");
         MiniGameManager.Instance.QuitMiniGame();
     }
