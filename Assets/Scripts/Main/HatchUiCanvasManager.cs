@@ -61,10 +61,21 @@ public class HatchUiCanvasManager : MonoBehaviour
         yield return seq.WaitForCompletion();
     }
 
+    [SerializeField] private float evolutionShrinkDuration = 0.3f;
+    [SerializeField] private float evolutionGrowDuration = 0.5f;
+    [SerializeField] private Ease evolutionShrinkEase = Ease.InBack;
+    [SerializeField] private Ease evolutionGrowEase = Ease.OutBack;
+
     public IEnumerator EvolutionCoroutine(Sprite hechiSprite)
     {
-        // TODO: 변경 애니메이션
+        yield return hechiProfile.transform.DOScale(Vector3.zero, evolutionShrinkDuration)
+            .SetEase(evolutionShrinkEase)
+            .WaitForCompletion();
+
         hechiProfile.sprite = hechiSprite;
-        yield break;
+
+        yield return hechiProfile.transform.DOScale(Vector3.one, evolutionGrowDuration)
+            .SetEase(evolutionGrowEase)
+            .WaitForCompletion();
     }
 }
