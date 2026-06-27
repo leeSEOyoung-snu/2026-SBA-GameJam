@@ -6,6 +6,7 @@ public class DontWorryGame : OneVsThreeBase
 {
     [SerializeField] private DontWorryAIHachi aiHachi;
     [SerializeField] private DontWorryCrosshair crosshair;
+    [SerializeField] private BoxCollider2D moveArea;
     [SerializeField] private List<DontWorryFakeHachiController> fakeHachis;
 
     [Header("결과 델타")]
@@ -19,6 +20,7 @@ public class DontWorryGame : OneVsThreeBase
 
     private void Start()
     {
+        BasicMiniGameCanvas.OnGameStarted += HandleGameStarted;
         FindObjectOfType<DontWorryPlayerCanvasManager>()?.Init(OnePlayerId);
         InitSceneCharacters();
         if (MiniGameManager.Instance.ResultContainer.IsTimeAttack)
@@ -32,8 +34,16 @@ public class DontWorryGame : OneVsThreeBase
         if (fakeHachis == null)
             fakeHachis = new List<DontWorryFakeHachiController>();
 
+        bool hasMoveBounds = TryGetMoveBounds(out Bounds moveBounds);
+
         if (aiHachi == null)
             Debug.LogWarning("[DontWorry] AI 해치가 씬에 할당되지 않았습니다.", this);
+        else
+        {
+            MiniGameManager.Instance.ApplyCurrentMiniGameHechiSprite(aiHachi.gameObject);
+            if (hasMoveBounds)
+                aiHachi.SetMoveBounds(moveBounds);
+        }
 
         if (crosshair == null)
             Debug.LogWarning("[DontWorry] 크로스헤어가 씬에 할당되지 않았습니다.", this);
@@ -59,10 +69,26 @@ public class DontWorryGame : OneVsThreeBase
             if (character != null)
                 character.Init(i);
 
+            if (hasMoveBounds && fake.TryGetComponent<TopViewPhysics>(out var topViewPhysics))
+                topViewPhysics.SetMoveBounds(moveBounds);
+
             SetupSceneFakeHachi(fake.gameObject);
             _fakePlayers.Add(fake);
             fakeIndex++;
         }
+    }
+
+    private bool TryGetMoveBounds(out Bounds moveBounds)
+    {
+        if (moveArea == null)
+        {
+            moveBounds = default;
+            Debug.LogWarning("[DontWorry] MoveArea가 씬에 할당되지 않았습니다.", this);
+            return false;
+        }
+
+        moveBounds = moveArea.bounds;
+        return true;
     }
 
     private void SetupSceneFakeHachi(GameObject fakeObj)
@@ -72,6 +98,12 @@ public class DontWorryGame : OneVsThreeBase
             moveDust.enabled = false;
 
         MiniGameManager.Instance.ApplyCurrentMiniGameHechiSprite(fakeObj);
+    }
+
+    private void HandleGameStarted()
+    {
+        BasicMiniGameCanvas.OnGameStarted -= HandleGameStarted;
+        aiHachi?.StartMovingAfterDelay();
     }
 
     // 크로스헤어가 발사됐을 때 호출
@@ -125,5 +157,10 @@ public class DontWorryGame : OneVsThreeBase
         NightmareDelta = shooterWins ? 0 : realHachiShotNightmare;
 
         MiniGameManager.Instance.QuitMiniGame();
+    }
+
+    private void OnDestroy()
+    {
+        BasicMiniGameCanvas.OnGameStarted -= HandleGameStarted;
     }
 }

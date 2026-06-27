@@ -11,5 +11,5 @@ public abstract class MiniGamePhysicsBase : MonoBehaviour
         _rb  = GetComponent<Rigidbody2D>();
     }
     
-    public abstract void UpdatePhysics(float deltaTime);
+    public abstract Vector2 UpdatePhysics(float deltaTime);
 }

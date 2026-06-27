@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 1
   gameTitle: "\uB3C8 \uC6CC\uB9AC, \uBE44 \uD574\uCE58"
-  isTimeAttack: 0
-  timeAttackSeconds: 0
+  desc: "<Joy>\uB85C \uC774\uB3D9\uD574\uB77C! \uC2DC\uBC1C \uD06C\uB85C\uC2A4\uD5E4\uC5B4
+    \uD0A4 \uBB50\uB0D0 \uC724\uC6B0\uC528"
+  isTimeAttack: 1
+  timeAttackSeconds: 60
   soloDelta:
     first: 0
     second: 0
