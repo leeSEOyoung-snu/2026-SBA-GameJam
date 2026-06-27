@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 8483741262947204992, guid: 82d8a9c32e5fd48c3a92b3eb866d8599, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,9 +106,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.65
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.01
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -169,8 +169,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04855557688fbe4da31b308c424af1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BollyBall
-  launchSpeed: 8
-  maxSpeed: 16
-  resetDelay: 1
-  topGoalY: 5
-  bottomGoalY: -5
+  launchSpeed: 12
+  maxSpeed: 24
+  minSpeed: 7
+  hachiBounceBoost: 8
+  characterBounceBoost: 3.5
+  playerHitMaxSpeed: 16
+  wallBounceBoost: 1
+  spinDegreesPerVelocity: 90
+  rightGoalX: 9
+  leftGoalX: -9
