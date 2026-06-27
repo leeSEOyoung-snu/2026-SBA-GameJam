@@ -4,9 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class HachiFlyObstacle : MonoBehaviour
 {
-    [SerializeField] private float destroyDistance = 40f;
+    [SerializeField] private float destroyMargin = 2f;
 
     private HachiFlyGame _game;
+    private bool _enteredCamera;
 
     private void Awake()
     {
@@ -23,19 +24,26 @@ public class HachiFlyObstacle : MonoBehaviour
     private void Update()
     {
         if (_game == null) return;
-        if (Vector2.Distance(transform.position, _game.HachiTransform.position) > destroyDistance)
-            Destroy(gameObject);
+        bool outside = HachiFlyUtils.IsOutsideCamera(transform.position, destroyMargin);
+        if (!outside) _enteredCamera = true;
+        if (_enteredCamera && outside) Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.TryGetComponent<HachiFlyController>(out _))
+        {
             _game?.TakeHit();
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.TryGetComponent<HachiFlyController>(out _))
+        {
             _game?.TakeHit();
+            Destroy(gameObject);
+        }
     }
 }

@@ -4,16 +4,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class HachiFlyMissile : MonoBehaviour
 {
-    [SerializeField] private float speed        = 6f;
-    [SerializeField] private float trackingTime = 1.5f;  // 이 시간 동안만 추적, 이후 직선
-    [SerializeField] private float turnSpeed    = 120f;   // 추적 회전 속도 (도/초)
-    [SerializeField] private float lifeTime     = 8f;
+    [SerializeField] private float speed         = 6f;
+    [SerializeField] private float trackingTime  = 1.5f;
+    [SerializeField] private float turnSpeed     = 120f;
+    [SerializeField] private float lifeTime      = 8f;
+    [SerializeField] private float destroyMargin = 2f;
 
     private Transform    _player;
     private HachiFlyGame _game;
     private Rigidbody2D  _rb;
     private float        _elapsed;
     private bool         _hit;
+    private bool         _enteredCamera;
 
     public void Init(Transform player, HachiFlyGame game)
     {
@@ -34,6 +36,14 @@ public class HachiFlyMissile : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.gravityScale = 0f;
+    }
+
+    private void Update()
+    {
+        if (_hit) return;
+        bool outside = HachiFlyUtils.IsOutsideCamera(transform.position, destroyMargin);
+        if (!outside) _enteredCamera = true;
+        if (_enteredCamera && outside) Destroy(gameObject);
     }
 
     private void FixedUpdate()

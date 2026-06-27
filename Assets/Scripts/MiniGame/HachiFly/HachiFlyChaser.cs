@@ -7,13 +7,14 @@ public class HachiFlyChaser : MonoBehaviour
     [SerializeField] private float moveSpeed     = 3f;
     [SerializeField] private float acceleration  = 2f;   // 점점 빨라짐
     [SerializeField] private float maxSpeed      = 7f;
-    [SerializeField] private float destroyDistance = 50f;
+    [SerializeField] private float destroyMargin = 2f;
 
     private Transform    _player;
     private HachiFlyGame _game;
     private Rigidbody2D  _rb;
     private float        _currentSpeed;
     private bool         _hit;
+    private bool         _enteredCamera;
 
     public void Init(Transform player)
     {
@@ -33,12 +34,9 @@ public class HachiFlyChaser : MonoBehaviour
     {
         if (_player == null) return;
 
-        // 너무 멀어지면 제거
-        if (Vector2.Distance(transform.position, _player.position) > destroyDistance)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        bool outside = HachiFlyUtils.IsOutsideCamera(transform.position, destroyMargin);
+        if (!outside) _enteredCamera = true;
+        if (_enteredCamera && outside) { Destroy(gameObject); return; }
 
         // 플레이어 방향으로 점점 빠르게 추적
         _currentSpeed = Mathf.Min(_currentSpeed + acceleration * Time.fixedDeltaTime, maxSpeed);

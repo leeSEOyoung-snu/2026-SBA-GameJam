@@ -8,10 +8,11 @@ public class HachiFlyTurret : MonoBehaviour
 {
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private float fireInterval = 2f;
-    [SerializeField] private float destroyDistance = 40f;
+    [SerializeField] private float destroyMargin = 2f;
 
     private Transform _player;
     private HachiFlyGame _game;
+    private bool _enteredCamera;
 
     private void Awake()
     {
@@ -30,8 +31,9 @@ public class HachiFlyTurret : MonoBehaviour
     private void Update()
     {
         if (_game == null || _player == null) return;
-        if (Vector2.Distance(transform.position, _player.position) > destroyDistance)
-            Destroy(gameObject);
+        bool outside = HachiFlyUtils.IsOutsideCamera(transform.position, destroyMargin);
+        if (!outside) _enteredCamera = true;
+        if (_enteredCamera && outside) Destroy(gameObject);
     }
 
     private IEnumerator FireRoutine()
