@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class MainSceneManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class MainSceneManager : MonoBehaviour
     [Space(10)]
     [SerializeField] private HatchUiCanvasManager hatchCanvasManager;
     [SerializeField] private PlayerUiCanvasManager playerCanvasManager;
+    [SerializeField] private EvolutionDecidingCanvasManager evolutionDecidingCanvasManager;
     
     private StateContainer _stateContainer;
 
@@ -54,5 +56,56 @@ public class MainSceneManager : MonoBehaviour
         
         GameManager.Instance.SetActiveAllInput(true);
         GameManager.Instance.IsMiniGameRunning = false;
+    }
+    
+    public IEnumerator GoGoEvolution()
+    {
+        yield return GetHighestState();
+        StateTypes highestState = _resolvedHighestState;
+
+        Sprite hechiSprite = GameManager.Instance.OnEvolution(highestState);
+
+        yield return hatchCanvasManager.EvolutionCoroutine(hechiSprite);
+    }
+
+    private StateTypes _resolvedHighestState;
+
+    public IEnumerator GetHighestState()
+    {
+        var currStates = _stateContainer.CommonStats;
+
+        List<StateTypes> possibleHighestStateTypes = new();
+        int possibleHighestState = -99;
+
+        foreach (var state in currStates)
+        {
+            if (state.Value == possibleHighestState)
+            {
+                possibleHighestStateTypes.Add(state.Key);
+            }
+            else if (state.Value > possibleHighestState)
+            {
+                possibleHighestStateTypes.Clear();
+                possibleHighestStateTypes.Add(state.Key);
+                possibleHighestState = state.Value;
+            }
+        }
+
+        // TODO: 절망 어떻게 처리하죠
+        // 동점자 처리
+        if (possibleHighestStateTypes.Count > 1)
+        {
+            if (possibleHighestStateTypes.Contains(StateTypes.Nightmare))
+                _resolvedHighestState = StateTypes.Nightmare;
+            else
+            {
+                yield return evolutionDecidingCanvasManager.DecideEvolutionStateType(possibleHighestStateTypes);
+                _resolvedHighestState = evolutionDecidingCanvasManager.DecidedStateType;
+            }
+        }
+        else
+        {
+            _resolvedHighestState = possibleHighestStateTypes[0];
+        }
     }
 }

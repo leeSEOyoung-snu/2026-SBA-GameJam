@@ -17,6 +17,8 @@ public partial class GameManager : MonoBehaviour
     public Action<Dictionary<StateTypes, int>> OnMiniGameQuited;
 
     private JoyConInputManager _inputManager;
+    private List<StateTypes> _evolutionRoute = new();
+    private HechiSpriteContainer _hechiSpriteContainer;
 
     private static readonly HashSet<string> MainSceneKeepActive = new()
     {
@@ -51,6 +53,8 @@ public partial class GameManager : MonoBehaviour
     {
         _inputManager = GetComponentInChildren<JoyConInputManager>();
         _inputManager.Init();
+        
+        _hechiSpriteContainer = GetComponentInChildren<HechiSpriteContainer>();
     }
 
     public IPlayerInputReader GetPlayerInputReader(int playerId)
@@ -159,5 +163,18 @@ public partial class GameManager : MonoBehaviour
 
         Debug.Log("[GameManager] 미니게임 씬 종료, Main으로 복귀");
         OnMiniGameQuited?.Invoke(deltaStates);
+    }
+
+    public Sprite GetHechiSpriteOnMain()
+        => _hechiSpriteContainer.GetHechiSpriteOnMain(_evolutionRoute);
+
+    public Sprite GetHechiSpriteOnMiniGame()
+        => _hechiSpriteContainer.GetHechiSpriteOnMiniGame(_evolutionRoute);
+    
+
+    public Sprite OnEvolution(StateTypes newState)
+    {
+        _evolutionRoute.Add(newState);
+        return GetHechiSpriteOnMain();
     }
 }
