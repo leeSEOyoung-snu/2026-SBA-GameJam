@@ -6112,6 +6112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VictoryCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2501304130155963529, guid: fb620c1e10ee04bbf8e24db7db94ed67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2837125169036318675, guid: fb620c1e10ee04bbf8e24db7db94ed67, type: 3}
       propertyPath: m_Alpha
       value: 0

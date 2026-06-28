@@ -1,78 +1,59 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public static class BoardPathBuilder
 {
-    private static float _minX, _maxX, _minY, _maxY, _eps;
-
-    public static void Build(List<CellInfo> cells)
+    public static void Build(List<CellInfo> cells, CellInfo startCell)
     {
         if (cells.Count < 2) return;
-
-        _minX = cells.Min(c => c.transform.position.x);
-        _maxX = cells.Max(c => c.transform.position.x);
-        _minY = cells.Min(c => c.transform.position.y);
-        _maxY = cells.Max(c => c.transform.position.y);
-        _eps  = Mathf.Min(_maxX - _minX, _maxY - _minY) * 0.15f;
+        if (startCell == null) startCell = cells[0];
 
         foreach (var cell in cells)
             cell.nextCells.Clear();
 
-        foreach (var cell in cells)
-            cell.nextCells = ComputeNext(cell, cells);
+        List<CellInfo> path = BuildNearestPath(cells, startCell);
+
+        for (int i = 0; i < path.Count; i++)
+            path[i].nextCells.Add(path[(i + 1) % path.Count]);
 
         LogPaths(cells);
     }
 
-    static bool OnRight(Vector3 p)  => Mathf.Abs(p.x - _maxX) < _eps;
-    static bool OnLeft(Vector3 p)   => Mathf.Abs(p.x - _minX) < _eps;
-    static bool OnTop(Vector3 p)    => Mathf.Abs(p.y - _maxY) < _eps;
-    static bool OnBottom(Vector3 p) => Mathf.Abs(p.y - _minY) < _eps;
-
-    static List<CellInfo> ComputeNext(CellInfo cell, List<CellInfo> all)
+    private static List<CellInfo> BuildNearestPath(List<CellInfo> cells, CellInfo startCell)
     {
-        var p = cell.transform.position;
-        var result = new List<CellInfo>();
+        var path = new List<CellInfo> { startCell };
+        var unvisited = new List<CellInfo>(cells);
+        unvisited.Remove(startCell);
 
-        bool onRight  = OnRight(p);
-        bool onLeft   = OnLeft(p);
-        bool onTop    = OnTop(p);
-        bool onBottom = OnBottom(p);
-
-        if      (onRight && onBottom) Add(result, Closest(p, all, c => OnRight(c.transform.position)  && c.transform.position.y > p.y)); // BR → 위
-        else if (onRight && onTop)    Add(result, Closest(p, all, c => OnTop(c.transform.position)    && c.transform.position.x < p.x)); // TR → 왼쪽
-        else if (onLeft  && onTop)    Add(result, Closest(p, all, c => OnLeft(c.transform.position)   && c.transform.position.y < p.y)); // TL → 아래
-        else if (onLeft  && onBottom) Add(result, Closest(p, all, c => OnBottom(c.transform.position) && c.transform.position.x > p.x)); // BL → 오른쪽
-        else if (onRight)             Add(result, Closest(p, all, c => OnRight(c.transform.position)  && c.transform.position.y > p.y)); // R열 → 위
-        else if (onTop)               Add(result, Closest(p, all, c => OnTop(c.transform.position)    && c.transform.position.x < p.x)); // T행 → 왼쪽
-        else if (onLeft)              Add(result, Closest(p, all, c => OnLeft(c.transform.position)   && c.transform.position.y < p.y)); // L열 → 아래
-        else if (onBottom)            Add(result, Closest(p, all, c => OnBottom(c.transform.position) && c.transform.position.x > p.x)); // B행 → 오른쪽
-
-        return result;
-    }
-
-    static CellInfo Closest(Vector3 from, List<CellInfo> all, Func<CellInfo, bool> filter)
-    {
-        CellInfo best = null;
-        float bestDist = float.MaxValue;
-
-        foreach (var c in all)
+        while (unvisited.Count > 0)
         {
-            if (!filter(c)) continue;
-            float dist = Vector3.Distance(from, c.transform.position);
-            if (dist < 0.01f) continue;
-            if (dist < bestDist) { bestDist = dist; best = c; }
+            CellInfo current = path[path.Count - 1];
+            CellInfo nearest = FindNearest(current, unvisited);
+            path.Add(nearest);
+            unvisited.Remove(nearest);
         }
 
-        return best;
+        return path;
     }
 
-    static void Add(List<CellInfo> list, CellInfo cell)
+    private static CellInfo FindNearest(CellInfo from, List<CellInfo> candidates)
     {
-        if (cell != null && !list.Contains(cell))
-            list.Add(cell);
+        CellInfo nearest = null;
+        float nearestSqrDistance = float.MaxValue;
+        Vector3 fromPosition = from.transform.position;
+
+        foreach (var candidate in candidates)
+        {
+            float sqrDistance = (candidate.transform.position - fromPosition).sqrMagnitude;
+            if (sqrDistance >= nearestSqrDistance)
+                continue;
+
+            nearest = candidate;
+            nearestSqrDistance = sqrDistance;
+        }
+
+        return nearest;
     }
 
     static void LogPaths(List<CellInfo> cells)
