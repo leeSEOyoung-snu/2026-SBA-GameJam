@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4476420502920226256}
   - component: {fileID: 7631398046724101762}
   - component: {fileID: 8630773527666436742}
-  - component: {fileID: 380311906513356805}
+  - component: {fileID: 4774806068965724285}
+  - component: {fileID: 6987987944412547282}
   m_Layer: 0
   m_Name: Missile
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.64473, y: -25.44654, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +85,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2652058752177054486, guid: 7afd8b4126f00c149b51a70fecdac89e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +138,8 @@ MonoBehaviour:
   trackingTime: 1.5
   turnSpeed: 120
   lifeTime: 8
---- !u!58 &380311906513356805
+  destroyMargin: 2
+--- !u!58 &4774806068965724285
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,9 +169,26 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: -0.5, y: -0.0625}
+  m_Radius: 0.3
+--- !u!114 &6987987944412547282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3219542953074115386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4464dc37600d2743bf4cd33c3579e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleAnimationPlayer
+  frames:
+  - {fileID: -2652058752177054486, guid: 7afd8b4126f00c149b51a70fecdac89e, type: 3}
+  - {fileID: -2755539092288017778, guid: 7afd8b4126f00c149b51a70fecdac89e, type: 3}
+  - {fileID: -2051582024582387862, guid: 7afd8b4126f00c149b51a70fecdac89e, type: 3}
+  frameDuration: 0.1
