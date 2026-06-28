@@ -53,6 +53,8 @@ public class MainSceneManager : MonoBehaviour
         Debug.Log("[MainSceneManager] 게임 종료!");
         // TODO: 엔딩 로직 연결
     }
+    
+    
 
     private void OnMiniGameQuited(Dictionary<StateTypes, int> deltaStates)
     {

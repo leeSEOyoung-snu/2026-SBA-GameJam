@@ -19,6 +19,7 @@ public partial class GameManager : MonoBehaviour
     private JoyConInputManager _inputManager;
     private List<StateTypes> _evolutionRoute = new();
     private HechiSpriteContainer _hechiSpriteContainer;
+    private AudioManager _audioManager;
 
     private static readonly HashSet<string> MainSceneKeepActive = new()
     {
