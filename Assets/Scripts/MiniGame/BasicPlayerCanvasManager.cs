@@ -49,8 +49,8 @@ public class BasicPlayerCanvasManager : MonoBehaviour
     }
 
     // 특정 플레이어의 스택 말풍선 크기/위치/폰트 조정 (씬별 커스텀용)
-    // bubbleYOffset: Stacking 로컬 y(캐릭터와 안 겹치게 위로 올림), boxSize: 말풍선/텍스트 크기, fontSize: 글자 크기
-    public void StyleStackBubble(int playerId, float bubbleYOffset, Vector2 boxSize, float fontSize)
+    // bubbleYOffset: Stacking 로컬 y(캐릭터와 안 겹치게 위로 올림), boxSize: 말풍선/텍스트 크기, fontSize: 글자 크기, textYOffset: 텍스트 로컬 y 조정
+    public void StyleStackBubble(int playerId, float bubbleYOffset, Vector2 boxSize, float fontSize, float textYOffset = 0f)
     {
         TextMeshProUGUI text = stackCntTexts[playerId - 1];
 
@@ -67,6 +67,9 @@ public class BasicPlayerCanvasManager : MonoBehaviour
         }
 
         text.rectTransform.sizeDelta = boxSize;
+        Vector2 textPos = text.rectTransform.anchoredPosition;
+        textPos.y = textYOffset;
+        text.rectTransform.anchoredPosition = textPos;
         text.enableAutoSizing = false;
         text.fontSize = fontSize;
         text.enableWordWrapping = true;

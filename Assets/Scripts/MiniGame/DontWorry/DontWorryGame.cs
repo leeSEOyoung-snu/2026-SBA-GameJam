@@ -81,7 +81,7 @@ public class DontWorryGame : OneVsThreeBase
 
         _totalFakes = _fakePlayers.Count;
         // 이 씬 전용: 슈터 말풍선을 캐릭터와 안 겹치게 위로 올리고 크게, 글자는 작게
-        basicPlayerCanvasManager?.StyleStackBubble(OnePlayerId, 175f, new Vector2(230f, 150f), 28f);
+        basicPlayerCanvasManager?.StyleStackBubble(OnePlayerId, 125f, new Vector2(240f, 180f), 28f, -15f);
         UpdateShooterCatchText();
     }
 
