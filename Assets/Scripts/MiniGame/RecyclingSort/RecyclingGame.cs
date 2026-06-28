@@ -22,6 +22,11 @@ public class RecyclingGame : CooperativeBase
     [Header("쓰레기 프리팹 (TrashType 순서 0~3)")]
     [SerializeField] private GameObject[] trashPrefabs;
 
+    [Header("오디오")]
+    [SerializeField] private AudioClip spawnClip;
+    [SerializeField] private AudioClip rightClip;
+    [SerializeField] private AudioClip wrongClip;
+
     [Header("게임 설정")]
     [SerializeField] private int   totalTrash        = 15;
     [SerializeField] private int   mistakeLimit      = 3;
@@ -86,6 +91,7 @@ public class RecyclingGame : CooperativeBase
         var obj = Instantiate(prefab, spawnPt.position, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(obj, gameObject.scene);
         obj.GetComponent<RecyclingTrash>().Init((RecyclingTrashType)typeIdx, OnTrashFellOff);
+        MiniGameManager.Instance.Audio?.PlaySfx(spawnClip);
         _spawned++;
     }
 
@@ -108,12 +114,14 @@ public class RecyclingGame : CooperativeBase
         if (!correct)
         {
             _mistakes++;
+            MiniGameManager.Instance.Audio?.PlaySfx(wrongClip);
             Debug.Log($"[RecyclingSort] 오분류! 실수 {_mistakes}/{mistakeLimit}");
             if (_mistakes >= mistakeLimit) { EndGame(false); return; }
         }
         else
         {
             _sortedCorrectly++;
+            MiniGameManager.Instance.Audio?.PlaySfx(rightClip);
             Debug.Log("[RecyclingSort] 정확한 분류!");
         }
 
@@ -128,6 +136,7 @@ public class RecyclingGame : CooperativeBase
         if (_gameOver) return;
 
         _mistakes++;
+        MiniGameManager.Instance.Audio?.PlaySfx(wrongClip);
         Debug.Log($"[RecyclingSort] 낙하 실수 {_mistakes}/{mistakeLimit}");
         if (_mistakes >= mistakeLimit) { EndGame(false); return; }
 

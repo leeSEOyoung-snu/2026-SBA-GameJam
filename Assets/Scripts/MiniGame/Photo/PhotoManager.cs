@@ -21,6 +21,10 @@ public class PhotoManager : SoloBattleBase
     // 플레이어 1~4 대표 이미지 (인스펙터에서 순서대로 연결)
     [SerializeField] private Transform[] playerIcons = new Transform[4];
 
+    [Header("오디오")]
+    [SerializeField] private AudioClip cameraClip;
+    [SerializeField] private AudioClip swaamClip;
+
     [Header("Shutter VFX")]
     [SerializeField] private float punchScale = 3.6f;
     [SerializeField] private float punchDuration = 0.08f;
@@ -91,6 +95,7 @@ public class PhotoManager : SoloBattleBase
 
             _currentRound++;
             _hechiVisible = true;
+            MiniGameManager.Instance.Audio?.PlaySfx(swaamClip);
             hechi.Launch();
             
             yield return new WaitUntil(() => !_hechiVisible || _gameOver);
@@ -101,6 +106,7 @@ public class PhotoManager : SoloBattleBase
 
     private void OnPlayerShoot(int playerIndex)
     {
+        MiniGameManager.Instance.Audio?.PlaySfx(cameraClip);
         PlayShutterVFX(playerIndex);
 
         if (hechi.IsInPhotoZone)

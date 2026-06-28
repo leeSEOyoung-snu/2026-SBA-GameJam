@@ -11,9 +11,16 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] private MiniGameResultContainer miniGameResultContainer;
     [SerializeField] private float tutorialShowSeconds = 2.5f;
     [SerializeField] private float resultShowSeconds = 3f;
-    
+
+    [Header("오디오")]
+    [SerializeField] private AudioManager audioManager;
+    [SerializeField] private AudioClip gameStartClip;
+    [SerializeField] private AudioClip gameFailClip;
+    [SerializeField] private AudioClip bgmClip;
+
     public static MiniGameManager Instance { get; private set; }
     public EffectManager Effects { get; private set; }
+    public AudioManager Audio => audioManager;
     
     public MiniGameResultContainer ResultContainer => miniGameResultContainer;
 
@@ -77,6 +84,12 @@ public class MiniGameManager : MonoBehaviour
 
         if (basicCanvas != null)
             yield return basicCanvas.HideCurtain().WaitForCompletion();
+
+        if (audioManager != null && bgmClip != null)
+            audioManager.PlayBgm(bgmClip);
+
+        if (audioManager != null && gameStartClip != null)
+            audioManager.PlaySfx(gameStartClip);
 
         if (basicCanvas != null)
             yield return basicCanvas.PlayGameStart().WaitForCompletion();
@@ -219,6 +232,11 @@ public class MiniGameManager : MonoBehaviour
 
         if (basicCanvas != null)
             basicCanvas.StopTimeAttack();
+
+        if (audioManager != null && gameFailClip != null)
+            audioManager.PlaySfx(gameFailClip);
+        if (audioManager != null)
+            audioManager.FadeOutBgm();
 
         if (basicCanvas != null)
             yield return basicCanvas.PlayGameEnd().WaitForCompletion();

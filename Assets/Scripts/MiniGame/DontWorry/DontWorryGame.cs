@@ -14,6 +14,10 @@ public class DontWorryGame : OneVsThreeBase
     [Header("결과 델타")]
     [SerializeField] private int realHachiShotNightmare = 5;
 
+    [Header("오디오")]
+    [SerializeField] private AudioClip crosshairFireClip;
+    [SerializeField] private AudioClip explodeClip;
+
     private readonly List<DontWorryFakeHachiController> _fakePlayers = new();
     private int _totalFakes;
     private bool _gameOver;
@@ -125,6 +129,7 @@ public class DontWorryGame : OneVsThreeBase
     private void OnShotFired(bool hitRealHachi)
     {
         if (_gameOver) return;
+        MiniGameManager.Instance.Audio?.PlaySfx(crosshairFireClip);
 
         if (hitRealHachi)
         {
@@ -137,6 +142,7 @@ public class DontWorryGame : OneVsThreeBase
     {
         if (_gameOver) return;
 
+        MiniGameManager.Instance.Audio?.PlaySfx(explodeClip);
         basicPlayerCanvasManager?.GreyOutCharacter(fake.PlayerId);
         _fakePlayers.Remove(fake);
         UpdateShooterCatchText();

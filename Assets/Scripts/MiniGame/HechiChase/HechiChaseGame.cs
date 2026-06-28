@@ -13,6 +13,10 @@ public class HechiChaseGame : OneVsThreeBase
 
     [Header("결과 델타 (해치 승리)")]
     [SerializeField] private int hechiWinNightmare = 5;
+
+    [Header("오디오")]
+    [SerializeField] private AudioClip catchClip;
+    [SerializeField] private AudioClip explodeClip;
     private List<ChaseCharacterController> _normalPlayers = new List<ChaseCharacterController>();
 
     private int _totalPlayers;
@@ -81,6 +85,7 @@ public class HechiChaseGame : OneVsThreeBase
         basicPlayerCanvasManager?.GreyOutCharacter(playerId);
         _normalPlayers.Remove(characterController);
         UpdateHechiCatchText();
+        MiniGameManager.Instance.Audio?.PlaySfx(catchClip);
         Debug.Log($"[HechiChase] Player {playerId} 제거 / 남은 플레이어: {_normalPlayers.Count}");
 
         if (_normalPlayers.Count == 0)
@@ -108,6 +113,9 @@ public class HechiChaseGame : OneVsThreeBase
 
         IsOneWin = hechiWins;
         NightmareDelta = hechiWins ? 0 : hechiWinNightmare;
+
+        if (hechiWins)
+            MiniGameManager.Instance.Audio?.PlaySfx(explodeClip);
 
         MiniGameManager.Instance.QuitMiniGame();
     }

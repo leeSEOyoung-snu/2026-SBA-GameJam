@@ -52,6 +52,9 @@ public class YutThrowCanvasController : MonoBehaviour
         [NonSerialized] public Vector3 PlayerStartScale;
     }
 
+    [SerializeField] private AudioManager audioManager;
+    [SerializeField] private AudioClip yutThrowClip;
+
     [SerializeField] private PlayerThrowView[] players = new PlayerThrowView[PlayerCount];
     [SerializeField] private Image bgImage;
     [SerializeField] private CanvasGroup innerGroup;
@@ -252,6 +255,8 @@ public class YutThrowCanvasController : MonoBehaviour
 
     private void PlayPlayerThrow(int index)
     {
+        audioManager?.PlaySfx(yutThrowClip);
+
         PlayerThrowView player = players[index];
 
         if (player.playerImage != null && player.throwingSprite != null)
