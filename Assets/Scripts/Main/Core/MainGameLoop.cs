@@ -116,38 +116,59 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator MovePiecePhase(int steps)
     {
-        // 이동할 모든 칸을 미리 수집
-        var waypoints = new System.Collections.Generic.List<Vector3>();
-        CellInfo finalCell = _board.CurrentCell;
-
+        // 이동할 칸 목록을 미리 수집
+        var cellsToVisit = new System.Collections.Generic.List<CellInfo>();
+        CellInfo cursor = _board.CurrentCell;
         for (int s = 0; s < steps; s++)
         {
-            if (finalCell.nextCells.Count == 0)
-            {
-                Debug.Log("[MovePhase] 마지막 칸 도달");
-                break;
-            }
-            finalCell = finalCell.nextCells[0];
-            waypoints.Add(finalCell.transform.position);
+            if (cursor.nextCells.Count == 0) { Debug.Log("[MovePhase] 마지막 칸 도달"); break; }
+            cursor = cursor.nextCells[0];
+            cellsToVisit.Add(cursor);
         }
+        if (cellsToVisit.Count == 0) yield break;
 
-        if (waypoints.Count == 0) yield break;
-
-        _board.SetCurrentCell(finalCell);
-
-        // 모든 칸을 연속으로 이동
-        yield return StartCoroutine(_piece.MoveTo(waypoints.ToArray(), _mainSceneManager.PlayerIdByRanking));
-
-        UpdateAllProximityUIs(finalCell);
-
-        if (finalCell.TryGetComponent<EvolutionCellBehaviour>(out var evo))
-            yield return StartCoroutine(_mainSceneManager.GoGoEvolution());
-
-        if (finalCell == _board.StartCell)
+        // Evolution Cell 기준으로 구간을 나눠 이동
+        int segStart = 0;
+        while (segStart < cellsToVisit.Count)
         {
-            Debug.Log("[MovePhase] 시작 칸 도달 → 게임 종료");
-            _gameEnded = true;
-            OnGameEnd?.Invoke();
+            // 다음 Evolution Cell까지(포함) 구간 수집
+            var segmentWaypoints = new System.Collections.Generic.List<Vector3>();
+            CellInfo segmentEnd = null;
+            bool hitEvo = false;
+
+            for (int i = segStart; i < cellsToVisit.Count; i++)
+            {
+                CellInfo cell = cellsToVisit[i];
+                segmentWaypoints.Add(cell.transform.position);
+                segmentEnd = cell;
+
+                if (cell.TryGetComponent<EvolutionCellBehaviour>(out _))
+                {
+                    hitEvo = true;
+                    segStart = i + 1;
+                    break;
+                }
+
+                if (i == cellsToVisit.Count - 1)
+                    segStart = cellsToVisit.Count;
+            }
+
+            // 구간 연속 이동
+            yield return StartCoroutine(_piece.MoveTo(segmentWaypoints.ToArray(), _mainSceneManager.PlayerIdByRanking));
+
+            _board.SetCurrentCell(segmentEnd);
+            UpdateAllProximityUIs(segmentEnd);
+
+            if (hitEvo)
+                yield return StartCoroutine(_mainSceneManager.GoGoEvolution());
+
+            if (segmentEnd == _board.StartCell)
+            {
+                Debug.Log("[MovePhase] 시작 칸 도달 → 게임 종료");
+                _gameEnded = true;
+                OnGameEnd?.Invoke();
+                yield break;
+            }
         }
     }
 
