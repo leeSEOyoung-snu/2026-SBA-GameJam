@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -8,7 +7,8 @@ using Random = UnityEngine.Random;
 
 /// <summary>
 /// 분류해라! 재활용 쓰레기 — 협동 미니게임.
-/// 쓰레기가 처리(빈 투입 or 낙하)된 직후 짧은 딜레이로 다음 쓰레기 스폰.
+/// SO의 totalTrash를 timeAttackSeconds 내에 올바르게 분류하면 성공.
+/// 제한 시간 초과 시 실패 (실수 횟수와 무관).
 /// </summary>
 public class RecyclingGame : CooperativeBase
 {
@@ -29,14 +29,11 @@ public class RecyclingGame : CooperativeBase
 
     [Header("게임 설정")]
     [SerializeField] private int   totalTrash        = 15;
-    [SerializeField] private int   mistakeLimit      = 3;
     [SerializeField] private float nextSpawnDelay    = 1.2f;
     [SerializeField] private int   failNightmareDelta = 5;
 
     private int  _spawned;
-    private int  _processed;
     private int  _sortedCorrectly;
-    private int  _mistakes;
     private bool _gameOver;
 
     public override bool IsSuccess     { get; protected set; }
@@ -58,7 +55,20 @@ public class RecyclingGame : CooperativeBase
         InitSeesaws();
         InitBins();
         UpdateGoalView();
-        SpawnTrash(); // 첫 쓰레기 바로 스폰
+        SpawnTrash();
+
+        StartCoroutine(TimerRoutine());
+    }
+
+    private IEnumerator TimerRoutine()
+    {
+        float seconds = MiniGameManager.Instance.ResultContainer.TimeAttackSeconds;
+        yield return new WaitForSeconds(seconds);
+        if (!_gameOver)
+        {
+            Debug.Log("[RecyclingSort] 시간 초과 → 실패");
+            EndGame(false);
+        }
     }
 
     private void InitSeesaws()
@@ -111,23 +121,25 @@ public class RecyclingGame : CooperativeBase
     {
         if (_gameOver) return;
 
-        if (!correct)
-        {
-            _mistakes++;
-            MiniGameManager.Instance.Audio?.PlaySfx(wrongClip);
-            Debug.Log($"[RecyclingSort] 오분류! 실수 {_mistakes}/{mistakeLimit}");
-            if (_mistakes >= mistakeLimit) { EndGame(false); return; }
-        }
-        else
+        if (correct)
         {
             _sortedCorrectly++;
             MiniGameManager.Instance.Audio?.PlaySfx(rightClip);
-            Debug.Log("[RecyclingSort] 정확한 분류!");
+            Debug.Log($"[RecyclingSort] 정확한 분류! {_sortedCorrectly}/{totalTrash}");
+
+            if (_sortedCorrectly >= totalTrash)
+            {
+                EndGame(true);
+                return;
+            }
+        }
+        else
+        {
+            MiniGameManager.Instance.Audio?.PlaySfx(wrongClip);
+            Debug.Log("[RecyclingSort] 오분류 (실수)");
         }
 
-        _processed++;
         UpdateGoalView();
-        CheckAllProcessed();
         ScheduleNextSpawn();
     }
 
@@ -135,21 +147,11 @@ public class RecyclingGame : CooperativeBase
     {
         if (_gameOver) return;
 
-        _mistakes++;
         MiniGameManager.Instance.Audio?.PlaySfx(wrongClip);
-        Debug.Log($"[RecyclingSort] 낙하 실수 {_mistakes}/{mistakeLimit}");
-        if (_mistakes >= mistakeLimit) { EndGame(false); return; }
+        Debug.Log("[RecyclingSort] 낙하");
 
-        _processed++;
         UpdateGoalView();
-        CheckAllProcessed();
         ScheduleNextSpawn();
-    }
-
-    private void CheckAllProcessed()
-    {
-        if (_processed >= totalTrash)
-            EndGame(_mistakes < mistakeLimit);
     }
 
     private void EndGame(bool success)
@@ -158,7 +160,7 @@ public class RecyclingGame : CooperativeBase
         _gameOver      = true;
         IsSuccess      = success;
         NightmareDelta = success ? 0 : failNightmareDelta;
-        Debug.Log($"[RecyclingSort] 종료 — 성공:{success} 실수:{_mistakes}");
+        Debug.Log($"[RecyclingSort] 종료 — 성공:{success} 정확:{_sortedCorrectly}/{totalTrash}");
         MiniGameManager.Instance.QuitMiniGame();
     }
 
