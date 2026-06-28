@@ -52,6 +52,8 @@ public class PhotoManager : SoloBattleBase
         for (int i = 0; i < 4; i++)
             _inputs[i] = GameManager.Instance.GetPlayerInputReader(i + 1);
 
+        MiniGameManager.Instance.ApplyCurrentMiniGameHechiSprite(hechi.gameObject);
+        
         hechi.OnExited += OnHechiExited;
         hechi.gameObject.SetActive(false);
         if (basicMiniGameCanvas == null)
@@ -60,7 +62,7 @@ public class PhotoManager : SoloBattleBase
             basicPlayerCanvasManager = FindAnyObjectByType<BasicPlayerCanvasManager>(FindObjectsInactive.Include);
         UpdateNightmareCount();
         UpdateHechiPassCount(0);
-
+        
         StartCoroutine(InputRoutine());
         StartCoroutine(GameRoutine());
     }
