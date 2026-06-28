@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 해치랑 한강 라면 끓이기
 // 타이머가 3초까지 보이다가 숨겨지고, 10초에 가장 가깝게 버튼을 누른 순서대로 순위 결정
@@ -13,6 +14,10 @@ public class RamenTimingGame : SoloBattleBase
     [SerializeField] private float timeoutTime   = 20f; // IsTimeAttack 미체크 시 폴백
 
     [SerializeField] private TMPro.TextMeshProUGUI timerText;
+    [SerializeField] private Image timerImage;
+    [SerializeField] private GameObject hechi;
+    [SerializeField] private List<GameObject> stackObjs;
+    [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
 
     public override int NightmareDelta { get; protected set; } = 0;
     public override int RankPlayer1 { get; protected set; }
@@ -31,6 +36,9 @@ public class RamenTimingGame : SoloBattleBase
         for (int i = 0; i < 4; i++)
             _inputs[i] = GameManager.Instance.GetPlayerInputReader(i + 1);
 
+        MiniGameManager.Instance.ApplyCurrentMiniGameHechiSprite(hechi);
+        stackObjs.ForEach(stackObj => stackObj.SetActive(false));
+        
         StartCoroutine(WaitForGameStart());
     }
 
@@ -52,20 +60,24 @@ public class RamenTimingGame : SoloBattleBase
     {
         _elapsed = 0f;
 
+        bool timerVisible = true;
+        
         while (_elapsed < timeout && !_gameOver)
         {
             _elapsed += Time.deltaTime;
+            timerText.text = _elapsed.ToString("F2");
 
             if (timerText != null)
             {
                 if (_elapsed <= visibleUntil)
                 {
-                    timerText.text = _elapsed.ToString("F1");
                     timerText.enabled = true;
                 }
-                else
+                else if (timerVisible)
                 {
-                    timerText.enabled = false;
+                    timerVisible = false;
+                    timerText.DOColor(Color.clear, 0.5f).OnComplete(() => timerText.enabled = false);
+                    timerImage.DOColor(Color.clear, 0.5f).OnComplete(() => timerImage.enabled = false);
                 }
             }
 
@@ -74,6 +86,8 @@ public class RamenTimingGame : SoloBattleBase
                 if (_pressTimes[i] == null && _inputs[i].Right)
                 {
                     _pressTimes[i] = _elapsed;
+                    basicPlayerCanvasManager.SetStackAsString(i+1, "!");
+                    stackObjs[i].SetActive(true);
                     Debug.Log($"[Ramen] Player {i + 1} 버튼 입력: {_elapsed:F3}초 (오차: {Mathf.Abs(_elapsed - targetTime):F3}초)");
                 }
             }
@@ -84,7 +98,30 @@ public class RamenTimingGame : SoloBattleBase
             yield return null;
         }
 
+        yield return ShowResult();
+
         EndGame();
+    }
+
+    private IEnumerator ShowResult()
+    {
+        yield return new WaitForSeconds(2f);
+        Sequence seq = DOTween.Sequence();
+        timerText.enabled = true;
+        timerImage.enabled = true;
+        seq.Join(timerText.DOColor(Color.white, 0.5f));
+        seq.Join(timerImage.DOColor(Color.white, 0.5f));
+        yield return seq.WaitForCompletion();
+        
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < 4; i++)
+        {
+            basicPlayerCanvasManager.SetStackAsString(i + 1,
+                _pressTimes[i] == null ? "--:--" : _pressTimes[i]?.ToString("F2"));
+        }
+        
+        yield return new WaitForSeconds(5f);
     }
 
     private void EndGame()
