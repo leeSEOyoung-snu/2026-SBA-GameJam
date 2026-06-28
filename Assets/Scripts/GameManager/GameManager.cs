@@ -52,9 +52,11 @@ public partial class GameManager : MonoBehaviour
 
     private void Init()
     {
+        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
+
         _inputManager = GetComponentInChildren<JoyConInputManager>();
         _inputManager.Init();
-        
+
         _hechiSpriteContainer = GetComponentInChildren<HechiSpriteContainer>();
     }
 
