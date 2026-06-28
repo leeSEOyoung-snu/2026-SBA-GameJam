@@ -32,7 +32,7 @@ public class PlayerUiCanvasManager : MonoBehaviour
         playerAffectionRaw.ForEach(r =>
         {
             _playerAffectionDict.Add(r.playerId, r.affection);
-            r.affection.text = "0";
+            r.affection.text = "10";
         });
     }
 

@@ -17,7 +17,7 @@ public class StateContainer
         foreach (StateTypes state in Enum.GetValues(typeof(StateTypes)))
             CommonStats[state] = 0;
 
-        AffectionById = new() { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 } }; // 전부 0으로 초기화
+        AffectionById = new() { { 1, 10 }, { 2, 10 }, { 3, 10 }, { 4, 10 } }; // 전부 0으로 초기화
     }
     
     // 공통 스탯 업데이트 + 플레이어 Id와 대응하는 스탯 delta를 affection에 반영
