@@ -35,6 +35,7 @@ public class HechiBollyBallGame : OneVsThreeBase
     {
         CacheSceneSpawnPositions();
         SetSceneObjectsActive(false);
+        MiniGameManager.Instance.ApplyCurrentMiniGameHechiSprite(hachiObject);
     }
 
     private void Start()
