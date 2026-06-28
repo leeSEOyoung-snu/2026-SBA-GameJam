@@ -356,19 +356,15 @@ public class EventCanvas : MonoBehaviour
 
     private void KillActiveSequence()
     {
-        if (_activeSequence == null)
-            return;
-
-        _activeSequence.Kill();
+        if (_activeSequence != null && _activeSequence.IsActive())
+            _activeSequence.Kill();
         _activeSequence = null;
     }
 
     private void KillAffectionImageSequence()
     {
-        if (_affectionImageSequence == null)
-            return;
-
-        _affectionImageSequence.Kill();
+        if (_affectionImageSequence != null && _affectionImageSequence.IsActive())
+            _affectionImageSequence.Kill();
         _affectionImageSequence = null;
     }
 }

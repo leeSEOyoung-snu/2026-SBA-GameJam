@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HachiFlyGame
   hachiVPrefab: {fileID: 4941228493854244277, guid: 9ed0e296e9f96c24ab2bb0abf652c5c0, type: 3}
-  timeLimit: 60
+  timeLimit: 30
   maxLives: 3
   invincibleDuration: 1.5
   spawnPos: {x: 0, y: 30, z: 0}

@@ -625,7 +625,7 @@ public class YutThrowCanvasController : MonoBehaviour
 
     private Sprite GetFinalYutSprite(bool isFront)
     {
-        Sprite sprite = GetRandomSprite(isFront ? yutFrontSprites : yutBackSprites);
+        Sprite sprite = GetRandomSprite(isFront ? yutBackSprites : yutFrontSprites);
         return sprite != null ? sprite : GetRandomRevealSprite();
     }
 
