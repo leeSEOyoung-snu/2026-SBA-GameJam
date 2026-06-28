@@ -17,6 +17,7 @@ public class MainGameLoop : MonoBehaviour
     private EvolutionCellBehaviour[] _evolutionCells;
     private MainSceneManager _mainSceneManager;
     private YutThrowCanvasController _yutThrowCanvas;
+    private EventCanvas _eventCanvas;
 
     public void Init(Board board, GamePiece piece)
     {
@@ -27,6 +28,10 @@ public class MainGameLoop : MonoBehaviour
         YutThrowCanvasController[] yutThrowCanvases =
             FindObjectsByType<YutThrowCanvasController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         _yutThrowCanvas = yutThrowCanvases.Length > 0 ? yutThrowCanvases[0] : null;
+        
+        EventCanvas[] eventCanvases =
+            FindObjectsByType<EventCanvas>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        _eventCanvas = eventCanvases.Length > 0 ? eventCanvases[0] : null;
 
         _players = new IPlayerInputReader[PlayerCount];
         for (int i = 0; i < PlayerCount; i++)
@@ -154,12 +159,33 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator TriggerEvent(CellInfo cell)
     {
+        bool useEventCanvas = UsesEventCanvas(cell.type) && _eventCanvas != null;
+
+        if (useEventCanvas)
+            yield return _eventCanvas.Open(cell.type, _mainSceneManager.StateContainer).WaitForCompletion();
+
         IBoardEvent boardEvent = BoardEventFactory.Create(cell.type, _mainSceneManager, _players);
         if (boardEvent != null)
             yield return StartCoroutine(boardEvent.Execute());
 
+        if (useEventCanvas)
+            yield return _eventCanvas.Close().WaitForCompletion();
+
         // 이벤트 종료 후 순위 비주얼 갱신 (sorting order, alpha, offset)
         _piece.ApplyRanking(_board.CurrentCell.transform.position, _mainSceneManager.PlayerIdByRanking);
+    }
+
+    private static bool UsesEventCanvas(CellType cellType)
+    {
+        switch (cellType)
+        {
+            case CellType.AffectionSteal:
+            case CellType.StateChange:
+            case CellType.NightmarePit:
+                return true;
+            default:
+                return false;
+        }
     }
 
     private static YutType? GetDebugYutInput()
