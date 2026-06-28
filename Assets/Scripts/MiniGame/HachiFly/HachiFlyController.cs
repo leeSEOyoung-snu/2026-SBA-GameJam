@@ -12,7 +12,7 @@ public class HachiFlyController : MonoBehaviour
     [SerializeField] private float damping      = 1.5f;  // 속도 감쇠
 
     [Header("이펙트")]
-    [SerializeField] private string thrustEffectId = "Thrust";  // EffectManager 이펙트 ID
+    [SerializeField] private string thrustEffectId = "ThrustJet";  // EffectManager 이펙트 ID
 
     // 4개 팔다리 추진 위치 (시각적으로 이펙트 위치 조절)
     [SerializeField] private Transform[] limbTransforms = new Transform[4];

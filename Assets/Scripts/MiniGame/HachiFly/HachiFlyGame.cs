@@ -44,6 +44,7 @@ public class HachiFlyGame : CooperativeBase
         _hachiSprite = obj.GetComponent<SpriteRenderer>();
         _hachiV.Init();
         HachiTransform = obj.transform;
+        MiniGameManager.Instance.ApplyCurrentMiniGameHechiSprite(obj);
 
         cam.Follow = obj.transform;
 
