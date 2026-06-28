@@ -14,6 +14,7 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private HatchUiCanvasManager hatchCanvasManager;
     [SerializeField] private PlayerUiCanvasManager playerCanvasManager;
     [SerializeField] private EvolutionDecidingCanvasManager evolutionDecidingCanvasManager;
+    [SerializeField] private VictoryCanvasManager victoryCanvasManager;
 
     [Header("오디오")]
     [SerializeField] private AudioManager audioManager;
@@ -49,6 +50,9 @@ public class MainSceneManager : MonoBehaviour
 
     private void Start()
     {
+        if (victoryCanvasManager == null)
+            victoryCanvasManager = FindAnyObjectByType<VictoryCanvasManager>(FindObjectsInactive.Include);
+
         gameLoop.Init(board, piece);
         gameLoop.OnGameEnd += HandleGameEnd;
         _stateContainer = new StateContainer();
@@ -61,7 +65,7 @@ public class MainSceneManager : MonoBehaviour
     {
         Debug.Log("[MainSceneManager] 게임 종료!");
         SettleWinners();
-        // TODO: 엔딩 로직 연결
+        victoryCanvasManager?.PlayVictory(WinnerPlayerIds, WinningAffection);
     }
     
     

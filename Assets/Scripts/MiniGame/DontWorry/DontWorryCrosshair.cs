@@ -8,10 +8,11 @@ public class DontWorryCrosshair : CrosshairBase
 
     private Action<bool> _onShotFired; // true = 진짜 해치 맞춤
 
-    public void Init(int playerId, Action<bool> onShotFired)
+    public void Init(int playerId, Action<bool> onShotFired, Sprite sprite)
     {
         base.Init(playerId);
         _onShotFired = onShotFired;
+        GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
     protected override void OnUpdate()

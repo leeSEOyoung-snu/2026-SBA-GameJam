@@ -33,11 +33,12 @@ public class Board : MonoBehaviour
         for (int i = 0; i < _cells.Count; i++)
             _cells[i].Index = i;
 
-        // 월드 좌표 기반 다음 칸 자동 연결 (윷놀이 규칙 적용)
-        BoardPathBuilder.Build(_cells);
-
         // 시작점: 가장 우하단 셀
         StartCell = _cells[FindBottomRightIndex()];
+
+        // 시작점부터 가장 가까운 칸을 따라 보드 루프 연결
+        BoardPathBuilder.Build(_cells, StartCell);
+
         CurrentCell = StartCell;
 
         Debug.Log($"[Board] 총 {_cells.Count}개 칸 초기화 / 시작: {CurrentCell.name}({CurrentCell.Index})");
