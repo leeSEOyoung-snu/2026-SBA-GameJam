@@ -192,7 +192,9 @@ public class MainGameLoop : MonoBehaviour
         if (boardEvent != null)
             yield return StartCoroutine(boardEvent.Execute());
 
-        if (useEventCanvas)
+        if (useEventCanvas && boardEvent is AffectionStealEvent affectionStealEvent)
+            yield return StartCoroutine(_eventCanvas.PlayAffectionStealResult(affectionStealEvent));
+        else if (useEventCanvas)
             yield return new WaitForSeconds(_eventCanvas.DisplayDuration);
 
         if (useEventCanvas)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -25,6 +26,30 @@ public class EventCanvas : MonoBehaviour
         public Color color;
     }
 
+    [Serializable]
+    private struct AffectionStealCountView
+    {
+        public CanvasGroup countGroup;
+        public TextMeshProUGUI signText;
+        public TextMeshProUGUI amountText;
+
+        public void Reset()
+        {
+            if (countGroup != null)
+                countGroup.alpha = 0f;
+        }
+
+        public void Set(string sign, int amount)
+        {
+            if (signText != null)
+                signText.text = sign;
+            if (amountText != null)
+                amountText.text = Mathf.Abs(amount).ToString();
+            if (countGroup != null)
+                countGroup.alpha = 1f;
+        }
+    }
+
     [Header("References")]
     [SerializeField] private CanvasGroup affectionStealMainEvent;
     [SerializeField] private CanvasGroup stateChangeMainEvent;
@@ -35,6 +60,9 @@ public class EventCanvas : MonoBehaviour
     [SerializeField] private Image stateIconImage;
     [SerializeField] private TextMeshProUGUI stateSignText;
     [SerializeField] private TextMeshProUGUI stateAmountText;
+    [SerializeField] private GameObject affectionStealInputDesc;
+    [SerializeField] private AffectionStealCountView affectionStealThiefCount;
+    [SerializeField] private AffectionStealCountView affectionStealTargetCount;
 
     [Header("Positions")]
     [SerializeField] private float hiddenPosX = 1300f;
@@ -49,6 +77,8 @@ public class EventCanvas : MonoBehaviour
     [SerializeField] private float mainEventFadeDelay = 1f;
     [SerializeField] private float mainEventFadeDuration = 0.2f;
     [SerializeField] private Ease openEase = Ease.OutQuad;
+    [SerializeField] private float affectionStealResultRevealDelay = 0.2f;
+    [SerializeField] private float affectionStealResultDisplayDuration = 2f;
 
     [Header("Close Timing")]
     [SerializeField] private float closeDuration = 0.2f;
@@ -118,6 +148,20 @@ public class EventCanvas : MonoBehaviour
         _activeSequence.OnComplete(() => SetMainEventHidden(_currentMainEvent));
 
         return _activeSequence;
+    }
+
+    public IEnumerator PlayAffectionStealResult(AffectionStealEvent affectionStealEvent)
+    {
+        if (affectionStealInputDesc != null)
+            affectionStealInputDesc.SetActive(false);
+
+        yield return new WaitForSeconds(affectionStealResultRevealDelay);
+
+        int stealAmount = affectionStealEvent != null ? affectionStealEvent.StealAmount : 0;
+        affectionStealThiefCount.Set("+", stealAmount);
+        affectionStealTargetCount.Set("-", stealAmount);
+
+        yield return new WaitForSeconds(affectionStealResultDisplayDuration);
     }
 
     private void ApplyEventData(CellType cellType, StateContainer stateContainer, IBoardEvent boardEvent)
@@ -246,6 +290,7 @@ public class EventCanvas : MonoBehaviour
         SetMainEventHidden(stateChangeMainEvent);
         eventImgArea.anchoredPosition = new Vector2(hiddenPosX, eventImgArea.anchoredPosition.y);
         eventType.anchoredPosition = new Vector2(hiddenPosX, eventType.anchoredPosition.y);
+        ResetAffectionStealResultView();
     }
 
     private void SelectMainEvent(CanvasGroup mainEvent)
@@ -263,6 +308,15 @@ public class EventCanvas : MonoBehaviour
         mainEvent.alpha = 0f;
         mainEvent.interactable = false;
         mainEvent.blocksRaycasts = false;
+    }
+
+    private void ResetAffectionStealResultView()
+    {
+        if (affectionStealInputDesc != null)
+            affectionStealInputDesc.SetActive(true);
+
+        affectionStealThiefCount.Reset();
+        affectionStealTargetCount.Reset();
     }
 
     private void KillSequences()

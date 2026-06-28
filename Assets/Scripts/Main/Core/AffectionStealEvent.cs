@@ -11,6 +11,8 @@ public class AffectionStealEvent : IBoardEvent
     private readonly IPlayerInputReader[] _players;
 
     public int ThiefId { get; }
+    public int TargetId { get; private set; }
+    public int StealAmount { get; private set; }
 
     public AffectionStealEvent(MainSceneManager sceneManager, IPlayerInputReader[] players)
     {
@@ -25,39 +27,39 @@ public class AffectionStealEvent : IBoardEvent
             .ToArray();
 
         ThiefId = lowestPlayerIds[Random.Range(0, lowestPlayerIds.Length)];
+        TargetId = PickHighestAffectionTarget(affectionById);
     }
 
     public IEnumerator Execute()
     {
-        var affectionById = _sceneManager.StateContainer.AffectionById;
-
-        // 나머지 3명을 Left / Up / Right 에 배정
-        int[] others = affectionById.Keys.Where(id => id != ThiefId).ToArray();
-        // others는 순서 보장 안 되므로 정렬
-        System.Array.Sort(others);
-
-        // Left=others[0], Up=others[1], Right=others[2]
-        Debug.Log($"[AffectionSteal] Player {ThiefId}가 강탈자. Left=P{others[0]}, Up=P{others[1]}, Right=P{others[2]}");
-        Debug.Log("[AffectionSteal] Left/Up/Right 버튼으로 강탈 대상 선택");
+        Debug.Log($"[AffectionSteal] Player {ThiefId}가 강탈자. Player {TargetId}에게서 강탈 예정");
+        Debug.Log("[AffectionSteal] 강탈자가 조이콘을 흔들면 강탈 실행");
 
         IPlayerInputReader thiefInput = _players[ThiefId - 1];
-        int targetId = -1;
-
-        while (targetId == -1)
-        {
-            if (thiefInput.Left)  targetId = others[0];
-            if (thiefInput.Up)    targetId = others[1];
-            if (thiefInput.Right) targetId = others[2];
+        while (!thiefInput.Swing)
             yield return null;
-        }
 
-        int stealAmount = Random.Range(StealMin, StealMax + 1);
+        StealAmount = Random.Range(StealMin, StealMax + 1);
 
         // CommonStats와 무관한 순수 호감도 이전
-        _sceneManager.StateContainer.TransferAffection(targetId, ThiefId, stealAmount);
+        _sceneManager.StateContainer.TransferAffection(TargetId, ThiefId, StealAmount);
 
-        Debug.Log($"[AffectionSteal] Player {ThiefId}가 Player {targetId}에게서 {stealAmount} 강탈");
+        Debug.Log($"[AffectionSteal] Player {ThiefId}가 Player {TargetId}에게서 {StealAmount} 강탈");
 
         yield return _sceneManager.RefreshAffectionUI();
+    }
+
+    private int PickHighestAffectionTarget(System.Collections.Generic.Dictionary<int, int> affectionById)
+    {
+        int highestAffection = affectionById
+            .Where(kv => kv.Key != ThiefId)
+            .Max(kv => kv.Value);
+
+        int[] highestPlayerIds = affectionById
+            .Where(kv => kv.Key != ThiefId && kv.Value == highestAffection)
+            .Select(kv => kv.Key)
+            .ToArray();
+
+        return highestPlayerIds[Random.Range(0, highestPlayerIds.Length)];
     }
 }
