@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Title.unity
     guid: 306eef47c65f70d4a9fc7f32c52b6ef7
   - enabled: 1
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGame/DontWorry.unity
     guid: 9f122a3b1f8b725489c701b104abe3a5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MiniGame/DuckBoat.unity
     guid: b978c1eb9b81e5a4fb2e9b9c9cca4b94
   - enabled: 1
@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGame/HechiFly.unity
     guid: 7adce42a84a37d9498d0707b27327f33
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MiniGame/HechiShooting.unity
     guid: afa4b306ff43b29429d1906d15d0121e
   - enabled: 1

@@ -9,6 +9,7 @@ public class DontWorryGame : OneVsThreeBase
     [SerializeField] private BoxCollider2D moveArea;
     [SerializeField] private List<DontWorryFakeHachiController> fakeHachis;
     [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
+    [SerializeField] private Sprite[] crossHairSprites;
 
     [Header("결과 델타")]
     [SerializeField] private int realHachiShotNightmare = 5;
@@ -50,7 +51,7 @@ public class DontWorryGame : OneVsThreeBase
         if (crosshair == null)
             Debug.LogWarning("[DontWorry] 크로스헤어가 씬에 할당되지 않았습니다.", this);
         else
-            crosshair.Init(OnePlayerId, OnShotFired);
+            crosshair.Init(OnePlayerId, OnShotFired, crossHairSprites[OnePlayerId - 1]);
 
         int fakeIndex = 0;
         for (int i = 1; i <= 4; i++)

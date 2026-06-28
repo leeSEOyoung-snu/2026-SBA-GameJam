@@ -285,6 +285,11 @@ MonoBehaviour:
   - {fileID: 647118176}
   - {fileID: 1854273442}
   basicPlayerCanvasManager: {fileID: 1360801756}
+  crossHairSprites:
+  - {fileID: -4078206745798097880, guid: 098ee316284354544abac02ba10403f9, type: 3}
+  - {fileID: 7399964733077010823, guid: 098ee316284354544abac02ba10403f9, type: 3}
+  - {fileID: 3018202948365928464, guid: 098ee316284354544abac02ba10403f9, type: 3}
+  - {fileID: -8892192805393557516, guid: 098ee316284354544abac02ba10403f9, type: 3}
   realHachiShotNightmare: 5
 --- !u!4 &188681496
 Transform:

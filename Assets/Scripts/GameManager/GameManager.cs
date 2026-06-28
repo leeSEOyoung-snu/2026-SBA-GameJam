@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public partial class GameManager : MonoBehaviour
 {
-    private const int TitleSceneIdx = 0;
-    private const int MainSceneIdx  = 1;
+    private const int TitleSceneIdx = 99;
+    private const int MainSceneIdx  = 0;
 
     public static GameManager Instance { get; private set; }
 
