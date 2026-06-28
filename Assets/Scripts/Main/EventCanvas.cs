@@ -17,12 +17,24 @@ public class EventCanvas : MonoBehaviour
         public Sprite second;
     }
 
+    [Serializable]
+    private struct StateIconVisual
+    {
+        public StateTypes type;
+        public Sprite icon;
+        public Color color;
+    }
+
     [Header("References")]
-    [SerializeField] private CanvasGroup mainEvent;
+    [SerializeField] private CanvasGroup affectionStealMainEvent;
+    [SerializeField] private CanvasGroup stateChangeMainEvent;
     [SerializeField] private RectTransform eventImgArea;
     [SerializeField] private RectTransform eventType;
     [SerializeField] private TextMeshProUGUI eventTypeTxt;
     [SerializeField] private Image eventImg;
+    [SerializeField] private Image stateIconImage;
+    [SerializeField] private TextMeshProUGUI stateSignText;
+    [SerializeField] private TextMeshProUGUI stateAmountText;
 
     [Header("Positions")]
     [SerializeField] private float hiddenPosX = 1300f;
@@ -30,6 +42,7 @@ public class EventCanvas : MonoBehaviour
     [SerializeField] private float eventImgAreaOpenPosX = 430f;
 
     [Header("Open Timing")]
+    [SerializeField] private float displayDuration = 3f;
     [SerializeField] private float eventTypeMoveDuration = 0.2f;
     [SerializeField] private float eventImgAreaMoveDelay = 0.1f;
     [SerializeField] private float eventImgAreaMoveDuration = 0.2f;
@@ -48,16 +61,22 @@ public class EventCanvas : MonoBehaviour
 
     [Header("Images")]
     [SerializeField] private List<PlayerEventSprites> affectionStealSprites = new();
+    [SerializeField] private List<StateIconVisual> stateIconVisuals = new();
     [SerializeField] private Sprite nightmarePitSprite;
     [SerializeField] private float affectionFrameInterval = 0.18f;
 
     private readonly Dictionary<int, Sprite[]> _affectionStealSpritesByPlayerId = new();
+    private readonly Dictionary<StateTypes, StateIconVisual> _stateIconVisualsByType = new();
     private Sequence _activeSequence;
     private Sequence _affectionImageSequence;
+    private CanvasGroup _currentMainEvent;
+
+    public float DisplayDuration => displayDuration;
 
     private void Awake()
     {
         InitAffectionSpriteMap();
+        InitStateIconMap();
         ResetView();
     }
 
@@ -66,9 +85,9 @@ public class EventCanvas : MonoBehaviour
         KillSequences();
     }
 
-    public Sequence Open(CellType cellType, StateContainer stateContainer)
+    public Sequence Open(CellType cellType, StateContainer stateContainer, IBoardEvent boardEvent)
     {
-        ApplyEventData(cellType, stateContainer);
+        ApplyEventData(cellType, stateContainer, boardEvent);
         ResetView();
         KillActiveSequence();
 
@@ -76,7 +95,12 @@ public class EventCanvas : MonoBehaviour
         _activeSequence.Append(eventType.DOAnchorPosX(eventTypeOpenPosX, eventTypeMoveDuration).SetEase(openEase));
         _activeSequence.Insert(eventImgAreaMoveDelay,
             eventImgArea.DOAnchorPosX(eventImgAreaOpenPosX, eventImgAreaMoveDuration).SetEase(openEase));
-        _activeSequence.Insert(mainEventFadeDelay, mainEvent.DOFade(1f, mainEventFadeDuration));
+        if (_currentMainEvent != null)
+        {
+            _currentMainEvent.interactable = true;
+            _currentMainEvent.blocksRaycasts = true;
+            _activeSequence.Insert(mainEventFadeDelay, _currentMainEvent.DOFade(1f, mainEventFadeDuration));
+        }
 
         return _activeSequence;
     }
@@ -87,37 +111,80 @@ public class EventCanvas : MonoBehaviour
         KillAffectionImageSequence();
 
         _activeSequence = DOTween.Sequence();
-        _activeSequence.Join(mainEvent.DOFade(0f, closeDuration));
+        if (_currentMainEvent != null)
+            _activeSequence.Join(_currentMainEvent.DOFade(0f, closeDuration));
         _activeSequence.Join(eventImgArea.DOAnchorPosX(hiddenPosX, closeDuration).SetEase(closeEase));
         _activeSequence.Join(eventType.DOAnchorPosX(hiddenPosX, closeDuration).SetEase(closeEase));
+        _activeSequence.OnComplete(() => SetMainEventHidden(_currentMainEvent));
 
         return _activeSequence;
     }
 
-    private void ApplyEventData(CellType cellType, StateContainer stateContainer)
+    private void ApplyEventData(CellType cellType, StateContainer stateContainer, IBoardEvent boardEvent)
     {
         KillAffectionImageSequence();
 
         switch (cellType)
         {
             case CellType.AffectionSteal:
+                SelectMainEvent(affectionStealMainEvent);
                 eventTypeTxt.text = affectionStealText;
-                ApplyAffectionStealImage(stateContainer);
+                ApplyAffectionStealImage(stateContainer, boardEvent);
                 break;
             case CellType.StateChange:
+                SelectMainEvent(stateChangeMainEvent);
                 eventTypeTxt.text = stateChangeText;
                 eventImg.sprite = GameManager.Instance.GetHechiSpriteOnMiniGame();
+                ApplyStateChangeData(boardEvent);
                 break;
             case CellType.NightmarePit:
+                SelectMainEvent(stateChangeMainEvent);
                 eventTypeTxt.text = nightmarePitText;
                 eventImg.sprite = nightmarePitSprite;
+                ApplyStateChangeData(boardEvent);
                 break;
         }
     }
 
-    private void ApplyAffectionStealImage(StateContainer stateContainer)
+    private void ApplyStateChangeData(IBoardEvent boardEvent)
     {
-        int playerId = GetLowestAffectionPlayerId(stateContainer.AffectionById);
+        StateTypes stateType;
+        int delta;
+
+        if (boardEvent is StateChangeEvent stateChangeEvent)
+        {
+            stateType = stateChangeEvent.Target;
+            delta = stateChangeEvent.Delta;
+        }
+        else if (boardEvent is NightmarePitEvent nightmarePitEvent)
+        {
+            stateType = nightmarePitEvent.Target;
+            delta = nightmarePitEvent.Delta;
+        }
+        else
+        {
+            return;
+        }
+
+        stateSignText.text = delta >= 0 ? "+" : "-";
+        stateAmountText.text = Mathf.Abs(delta).ToString();
+
+        if (!_stateIconVisualsByType.TryGetValue(stateType, out StateIconVisual visual))
+        {
+            stateIconImage.sprite = null;
+            return;
+        }
+
+        stateIconImage.sprite = visual.icon;
+        stateSignText.color = visual.color;
+        stateAmountText.color = visual.color;
+    }
+
+    private void ApplyAffectionStealImage(StateContainer stateContainer, IBoardEvent boardEvent)
+    {
+        int playerId = boardEvent is AffectionStealEvent affectionStealEvent
+            ? affectionStealEvent.ThiefId
+            : GetLowestAffectionPlayerId(stateContainer.AffectionById);
         if (!_affectionStealSpritesByPlayerId.TryGetValue(playerId, out Sprite[] sprites) || sprites.Length == 0)
         {
             eventImg.sprite = null;
@@ -165,11 +232,37 @@ public class EventCanvas : MonoBehaviour
         }
     }
 
+    private void InitStateIconMap()
+    {
+        _stateIconVisualsByType.Clear();
+
+        foreach (StateIconVisual visual in stateIconVisuals)
+            _stateIconVisualsByType[visual.type] = visual;
+    }
+
     private void ResetView()
     {
-        mainEvent.alpha = 0f;
+        SetMainEventHidden(affectionStealMainEvent);
+        SetMainEventHidden(stateChangeMainEvent);
         eventImgArea.anchoredPosition = new Vector2(hiddenPosX, eventImgArea.anchoredPosition.y);
         eventType.anchoredPosition = new Vector2(hiddenPosX, eventType.anchoredPosition.y);
+    }
+
+    private void SelectMainEvent(CanvasGroup mainEvent)
+    {
+        _currentMainEvent = mainEvent;
+        SetMainEventHidden(affectionStealMainEvent);
+        SetMainEventHidden(stateChangeMainEvent);
+    }
+
+    private static void SetMainEventHidden(CanvasGroup mainEvent)
+    {
+        if (mainEvent == null)
+            return;
+
+        mainEvent.alpha = 0f;
+        mainEvent.interactable = false;
+        mainEvent.blocksRaycasts = false;
     }
 
     private void KillSequences()

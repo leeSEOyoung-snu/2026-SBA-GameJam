@@ -159,14 +159,17 @@ public class MainGameLoop : MonoBehaviour
 
     private IEnumerator TriggerEvent(CellInfo cell)
     {
+        IBoardEvent boardEvent = BoardEventFactory.Create(cell.type, _mainSceneManager, _players);
         bool useEventCanvas = UsesEventCanvas(cell.type) && _eventCanvas != null;
 
         if (useEventCanvas)
-            yield return _eventCanvas.Open(cell.type, _mainSceneManager.StateContainer).WaitForCompletion();
+            yield return _eventCanvas.Open(cell.type, _mainSceneManager.StateContainer, boardEvent).WaitForCompletion();
 
-        IBoardEvent boardEvent = BoardEventFactory.Create(cell.type, _mainSceneManager, _players);
         if (boardEvent != null)
             yield return StartCoroutine(boardEvent.Execute());
+
+        if (useEventCanvas)
+            yield return new WaitForSeconds(_eventCanvas.DisplayDuration);
 
         if (useEventCanvas)
             yield return _eventCanvas.Close().WaitForCompletion();
