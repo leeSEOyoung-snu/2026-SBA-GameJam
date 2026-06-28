@@ -2352,8 +2352,7 @@ MonoBehaviour:
   spawnClip: {fileID: 8300000, guid: dd58e4e7f72283a42bce7e36b28d1b80, type: 3}
   rightClip: {fileID: 8300000, guid: 3f2d2c8f373131646bcf39e9a23d2c5a, type: 3}
   wrongClip: {fileID: 8300000, guid: b1eca56243e2e7e4599c2ef45adf8167, type: 3}
-  totalTrash: 15
-  mistakeLimit: 3
+  totalTrash: 10
   nextSpawnDelay: 1.2
   failNightmareDelta: 5
 --- !u!4 &2090077257
