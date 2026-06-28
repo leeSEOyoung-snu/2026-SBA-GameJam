@@ -9,18 +9,20 @@ public class NightmarePitEvent : IBoardEvent
 
     private readonly MainSceneManager _sceneManager;
 
+    public StateTypes Target => StateTypes.Nightmare;
+    public int Delta { get; }
+
     public NightmarePitEvent(MainSceneManager sceneManager)
     {
         _sceneManager = sceneManager;
+        Delta = Random.Range(DeltaMin, DeltaMax + 1);
     }
 
     public IEnumerator Execute()
     {
-        int delta = Random.Range(DeltaMin, DeltaMax + 1);
+        _sceneManager.StateContainer.ApplyDeltaStats(new Dictionary<StateTypes, int> { { Target, Delta } });
 
-        _sceneManager.StateContainer.ApplyDeltaStats(new Dictionary<StateTypes, int> { { StateTypes.Nightmare, delta } });
-
-        Debug.Log($"[NightmarePit] Nightmare +{delta}");
+        Debug.Log($"[NightmarePit] Nightmare +{Delta}");
 
         yield return _sceneManager.RefreshStatesUI();
     }

@@ -17,19 +17,21 @@ public class StateChangeEvent : IBoardEvent
 
     private readonly MainSceneManager _sceneManager;
 
+    public StateTypes Target { get; }
+    public int Delta { get; }
+
     public StateChangeEvent(MainSceneManager sceneManager)
     {
         _sceneManager = sceneManager;
+        Target = EligibleStates[Random.Range(0, EligibleStates.Length)];
+        Delta = Random.Range(DeltaMin, DeltaMax + 1);
     }
 
     public IEnumerator Execute()
     {
-        StateTypes target = EligibleStates[Random.Range(0, EligibleStates.Length)];
-        int delta = Random.Range(DeltaMin, DeltaMax + 1);
+        _sceneManager.StateContainer.ApplyDeltaStats(new Dictionary<StateTypes, int> { { Target, Delta } });
 
-        _sceneManager.StateContainer.ApplyDeltaStats(new Dictionary<StateTypes, int> { { target, delta } });
-
-        Debug.Log($"[StateChange] {target} {(delta >= 0 ? "+" : "")}{delta}");
+        Debug.Log($"[StateChange] {Target} {(Delta >= 0 ? "+" : "")}{Delta}");
 
         yield return _sceneManager.RefreshStatesUI();
         yield return _sceneManager.RefreshAffectionUI();
