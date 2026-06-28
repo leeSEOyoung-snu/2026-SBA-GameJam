@@ -18,9 +18,9 @@ MonoBehaviour:
   isTimeAttack: 0
   timeAttackSeconds: 60
   soloDelta:
-    first: 3
-    second: 2
-    third: 1
+    first: 7
+    second: 5
+    third: 3
     fourth: 0
   soloBattleTutorialText:
     soloWinCondition: "\uAC00\uC7A5 \uB9CE\uC774 \uCC0D\uC740 \uC0AC\uB78C\uC774

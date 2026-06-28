@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24327764fc9f51944ac33143a217b79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BokBokManager
-  successThreshold: 100
+  successThreshold: 200
   handVisuals:
   - {fileID: 1609726495}
   - {fileID: 337229914}

@@ -28,8 +28,8 @@ MonoBehaviour:
     soloWinCondition: 
     nightmareCondition: 
   oneVsThreeDelta:
-    oneWin: 3
-    threeWin: 2
+    oneWin: 7
+    threeWin: 5
   oneVsThreeTutorialText:
     oneWinCondition: "\uC9C4\uC9DC\uC778\uCC99 \uC5F0\uAE30\uD558\uB294 \uAC00\uC9DC
       \uD574\uCE58\uB97C \uBAA8\uB450 \uC7A1\uC544\uB77C! \uB9CC\uC57D \uC9C4\uC9DC

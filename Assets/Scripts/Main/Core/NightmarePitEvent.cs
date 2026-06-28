@@ -5,7 +5,7 @@ using UnityEngine;
 public class NightmarePitEvent : IBoardEvent
 {
     private const int DeltaMin = 5;
-    private const int DeltaMax = 15;
+    private const int DeltaMax = 10;
 
     private readonly MainSceneManager _sceneManager;
 

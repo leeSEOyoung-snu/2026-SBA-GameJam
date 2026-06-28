@@ -36,7 +36,7 @@ MonoBehaviour:
   twoVsTwoTutorialText:
     twoWinCondition: 
     nightmareCondition: 
-  cooperativeDelta: 3
+  cooperativeDelta: 7
   cooperativeTutorialText:
     coopWinCondition: "\uC81C\uD55C\uC2DC\uAC04 \uC548\uC5D0 10\uAC1C\uB97C \uBD84\uB9AC\uC218\uAC70\uD558\uB77C"
     nightmareCondition: "\uC2E4\uD328\uD558\uBA74 \uC2E4\uD328"

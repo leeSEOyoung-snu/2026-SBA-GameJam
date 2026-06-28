@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 0
   gameTitle: "\uC608\uCE21\uD574\uB77C! \uD55C\uAC15 \uB77C\uBA74"
+  desc: 
   isTimeAttack: 0
   timeAttackSeconds: 0
   soloDelta:
-    first: 3
-    second: 2
-    third: 1
+    first: 7
+    second: 5
+    third: 3
     fourth: 0
   soloBattleTutorialText:
     soloWinCondition: "\uB77C\uBA74\uC774 \uB053\uB294 \uB370 \uD544\uC694\uD55C

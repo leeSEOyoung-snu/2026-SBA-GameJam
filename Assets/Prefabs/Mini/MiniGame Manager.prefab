@@ -46,6 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameManager
   miniGameResultContainer: {fileID: 0}
+  tutorialShowSeconds: 5
+  resultShowSeconds: 5
+  audioManager: {fileID: 0}
+  gameStartClip: {fileID: 0}
+  gameFailClip: {fileID: 0}
+  bgmClip: {fileID: 0}
 --- !u!114 &6980558397719674376
 MonoBehaviour:
   m_ObjectHideFlags: 0

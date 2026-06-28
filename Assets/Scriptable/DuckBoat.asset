@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 2
   gameTitle: "\uC624\uB9AC\uBC30, \uD55C\uAC15\uC744 \uB2EC\uB824\uB77C! "
+  desc: 
   isTimeAttack: 0
   timeAttackSeconds: 0
   soloDelta:
@@ -30,7 +31,7 @@ MonoBehaviour:
   oneVsThreeTutorialText:
     oneWinCondition: 
     threeWinCondition: 
-  twoVsTwoDelta: 3
+  twoVsTwoDelta: 6
   twoVsTwoTutorialText:
     twoWinCondition: "\uC0C1\uB300\uBCF4\uB2E4 \uBA3C\uC800, \uAC15\uC744 \uAC74\uB108\uB77C.\uC624\uB978\uCABD
       \uBC84\uD2BC\uC744 \uC5F0\uD0C0\uD574 \uC55E\uC73C\uB85C \uB098\uAC00\uC790."

@@ -1,11 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class AffectionStealEvent : IBoardEvent
 {
     private const int StealMin = 5;
-    private const int StealMax = 15;
+    private const int StealMax = 10;
 
     private readonly MainSceneManager _sceneManager;
     private readonly IPlayerInputReader[] _players;
@@ -26,8 +27,17 @@ public class AffectionStealEvent : IBoardEvent
             .Select(kv => kv.Key)
             .ToArray();
 
+        // ThiefId = lowestPlayerIds[Random.Range(0, lowestPlayerIds.Length)];
+        // TargetId = PickHighestAffectionTarget(affectionById);
+        
+        // 꼴지가 랜덤 가져감
         ThiefId = lowestPlayerIds[Random.Range(0, lowestPlayerIds.Length)];
-        TargetId = PickHighestAffectionTarget(affectionById);
+        while (true)
+        {
+            TargetId = Random.Range(1, lowestPlayerIds.Length+1);
+            if (TargetId != ThiefId)
+                break;
+        }
     }
 
     public IEnumerator Execute()

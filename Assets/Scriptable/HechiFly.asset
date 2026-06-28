@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 4
   gameTitle: "\uB0A0\uC544\uB77C \uD574\uCE58V"
+  desc: 
   isTimeAttack: 1
-  timeAttackSeconds: 60
+  timeAttackSeconds: 30
   soloDelta:
     first: 0
     second: 0
@@ -34,7 +35,7 @@ MonoBehaviour:
   twoVsTwoTutorialText:
     twoWinCondition: 
     nightmareCondition: 
-  cooperativeDelta: 3
+  cooperativeDelta: 7
   cooperativeTutorialText:
     coopWinCondition: "\uBAA8\uB450 \uD798\uC744 \uD569\uCCD0 \uB85C\uBD07\uC744
       \uC870\uC885\uD574\uB77C. \uAC01\uAC01 \uD314\uACFC \uBC1C\uC744 \uD558\uB098\uC529
