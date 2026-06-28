@@ -199,6 +199,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6712141701198309339, guid: ad6f600774bda8d4e8892abc2c4ab2bd, type: 3}
+      propertyPath: m_Radius
+      value: 0.9721196
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712141701198309339, guid: ad6f600774bda8d4e8892abc2c4ab2bd, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.47211963
+      objectReference: {fileID: 0}
     - target: {fileID: 8601832686544063552, guid: ad6f600774bda8d4e8892abc2c4ab2bd, type: 3}
       propertyPath: flipXDefault
       value: 1
