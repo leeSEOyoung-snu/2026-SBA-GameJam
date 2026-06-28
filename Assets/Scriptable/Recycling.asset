@@ -38,5 +38,7 @@ MonoBehaviour:
     nightmareCondition: 
   cooperativeDelta: 7
   cooperativeTutorialText:
-    coopWinCondition: "\uC81C\uD55C\uC2DC\uAC04 \uC548\uC5D0 10\uAC1C\uB97C \uBD84\uB9AC\uC218\uAC70\uD558\uB77C"
-    nightmareCondition: "\uC2E4\uD328\uD558\uBA74 \uC2E4\uD328"
+    coopWinCondition: "\uC81C\uD55C\uC2DC\uAC04 \uC548\uC5D0 15\uAC1C\uB97C \uC54C\uB9DE\uAC8C
+      \uBD84\uB9AC\uD574\uB77C!"
+    nightmareCondition: "60\uCD08 \uB0B4\uC5D0 \uBD84\uB9AC\uD558\uC9C0 \uBABB\uD558\uBA74
+      \uC545\uBABD\uC774 5 \uC99D\uAC00\uD55C\uB2E4!"

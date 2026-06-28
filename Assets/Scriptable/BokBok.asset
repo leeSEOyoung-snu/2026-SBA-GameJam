@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameResultContainer
   type: 0
   gameTitle: "\uD574\uCE58\uB97C \uC4F0\uB2E4\uB4EC\uC5B4\uB77C!"
-  desc: 
+  desc: "\uC870\uC774\uCF58\uC744 \uD754\uB4E4\uC5B4 \uD574\uCE58\uB97C \uC4F0\uB2E4\uB4EC\uC5B4\uC8FC\uC790."
   isTimeAttack: 1
   timeAttackSeconds: 30
   soloDelta:
@@ -23,9 +23,11 @@ MonoBehaviour:
     third: 3
     fourth: 0
   soloBattleTutorialText:
-    soloWinCondition: "30\uCD08 \uC548\uC5D0 \uD574\uCE58\uB97C \uC4F0\uB2E4\uB4EC\uACE0\n\uD574\uCE58\uB97C
-      \uB9CC\uC871\uC2DC\uD0A4\uC790!"
-    nightmareCondition: "\uD574\uCE58\uB97C \uB9CC\uC871\uC2DC\uD0A4\uC9C0 \uBABB\uD558\uBA74\n\uD328\uBC30"
+    soloWinCondition: "\uAC00\uC7A5 \uB9CE\uC774 \uD574\uCE58\uB97C \uC4F0\uB2E4\uB4EC\uC740
+      \uC0AC\uB78C\uC774 \uC2B9\uB9AC\uD55C\uB2E4!"
+    nightmareCondition: "\uD569\uCCD0\uC11C 30\uCD08 \uC548\uC5D0 200\uD68C \uC774\uC0C1\uC744
+      \uC4F0\uB2E4\uB4EC\uC5B4\uC918\uC57C \uD55C\uB2E4! \uC2E4\uD574\uD558\uBA74
+      \uC545\uBABD\uC774 5 \uC99D\uAC00\uD55C\uB2E4."
   oneVsThreeDelta:
     oneWin: 0
     threeWin: 0
