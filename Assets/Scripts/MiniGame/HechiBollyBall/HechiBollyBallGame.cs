@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HechiBollyBallGame : OneVsThreeBase
@@ -8,6 +9,9 @@ public class HechiBollyBallGame : OneVsThreeBase
     [SerializeField] private GameObject hachiObject;
     [SerializeField] private GameObject[] playerObjects = new GameObject[3];
     [SerializeField] private BollyBall ball;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Vector3 hachiServeBallPos;
+    [SerializeField] private Vector3 threeServeBallPos;
 
     [SerializeField] private int   scoreToWin  = 3;
     [SerializeField] private float resetDelay  = 1.5f;
@@ -189,13 +193,21 @@ public class HechiBollyBallGame : OneVsThreeBase
 
         Debug.Log($"[BollyBall] 점수 — 해치: {_hachiScore} / 3명: {_threeScore}");
         OnScoreChanged?.Invoke(_hachiScore, _threeScore);
+        UpdateScoreText();
 
-        if (_hachiScore >= scoreToWin)      EndGame(hachiWins: true);
-        else if (_threeScore >= scoreToWin) EndGame(hachiWins: false);
-        else                                StartCoroutine(ResetRoutine());
+        // 진 쪽이 다음 서브 (해치가 득점 → 3인팀 서브, 3인팀이 득점 → 해치 서브)
+        bool hachiServes = !isHachi;
+        _ball.SetServer(hachiServes);
+        StartCoroutine(ResetRoutine(hachiServes));
     }
 
-    private IEnumerator ResetRoutine()
+    private void UpdateScoreText()
+    {
+        if (scoreText != null)
+            scoreText.text = $"{_hachiScore} : {_threeScore}";
+    }
+
+    private IEnumerator ResetRoutine(bool hachiServes = true)
     {
         yield return new WaitForSeconds(resetDelay);
 
@@ -208,7 +220,8 @@ public class HechiBollyBallGame : OneVsThreeBase
             ResetActor(obj, pos);
         }
 
-        _ball.ResetToPosition(_ballSpawnPos);
+        Vector3 ballPos = hachiServes ? hachiServeBallPos : threeServeBallPos;
+        _ball.ResetToPosition(ballPos);
 
         Debug.Log("[BollyBall] 전원 리셋 완료");
     }

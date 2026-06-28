@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3364236963251932738, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364236963251932738, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364236963251932738, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.0927
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364236963251932738, guid: 9334c7f6ab2775f4ea6fc42a21bf9484, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -95,8 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BollyBallCharacterController
   hachiXMin: -8.5
-  hachiXMax: 0
-  playerXMin: 0
+  hachiXMax: -0.6
+  playerXMin: 0.3
   playerXMax: 8.5
   yMin: -4.5
   yMax: 4.5

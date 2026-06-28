@@ -24,6 +24,7 @@ public class BollyBall : MonoBehaviour
     private Rigidbody2D _rb;
     public bool Scored { get; private set; }
     private bool _started;
+    private bool _hachiServes = true;
 
     private void Awake()
     {
@@ -36,13 +37,13 @@ public class BollyBall : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
         bool hitCharacter = col.gameObject.TryGetComponent<BollyBallCharacterController>(out var ctrl);
-        if (!_started && hitCharacter && ctrl.IsHachi)
+        if (!_started && hitCharacter && ctrl.IsHachi == _hachiServes)
         {
             _started = true;
             Unfreeze();
             SpawnHachiHitEffect(col);
-            LaunchFromHachi(col);
-            Debug.Log("[BollyBall] 해치가 공을 침 → 게임 시작!");
+            LaunchFromServer(col);
+            Debug.Log($"[BollyBall] {(ctrl.IsHachi ? "해치" : "3인팀")}가 공을 침 → 게임 시작!");
             return;
         }
 
@@ -79,6 +80,12 @@ public class BollyBall : MonoBehaviour
         Scored = false;
         _started = false;
         Freeze();
+    }
+
+    // 다음 서브권 설정 (true = 해치, false = 3인팀)
+    public void SetServer(bool hachiServes)
+    {
+        _hachiServes = hachiServes;
     }
 
     private void ApplyBounceFeel(Collision2D col, BollyBallCharacterController character)
@@ -131,7 +138,7 @@ public class BollyBall : MonoBehaviour
         _rb.angularVelocity = -_rb.linearVelocity.x * spinDegreesPerVelocity;
     }
 
-    private void LaunchFromHachi(Collision2D col)
+    private void LaunchFromServer(Collision2D col)
     {
         Vector2 dir = (transform.position - col.transform.position).normalized;
         if (dir.sqrMagnitude <= 0.01f)
@@ -142,7 +149,8 @@ public class BollyBall : MonoBehaviour
             dir = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
         }
 
-        dir.x = Mathf.Abs(dir.x);
+        // 해치 서브 → 오른쪽(상대방 쪽), 3인팀 서브 → 왼쪽(해치 쪽)
+        dir.x = _hachiServes ? Mathf.Abs(dir.x) : -Mathf.Abs(dir.x);
         _rb.linearVelocity = dir.normalized * Mathf.Min(launchSpeed + hachiBounceBoost, maxSpeed);
         ApplySpin();
     }
