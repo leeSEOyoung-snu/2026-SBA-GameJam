@@ -15,6 +15,10 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private PlayerUiCanvasManager playerCanvasManager;
     [SerializeField] private EvolutionDecidingCanvasManager evolutionDecidingCanvasManager;
 
+    [Header("오디오")]
+    [SerializeField] private AudioManager audioManager;
+    [SerializeField] private AudioClip bgmClip;
+
     public int[] PlayerIdByRanking
     {
         get
@@ -48,6 +52,9 @@ public class MainSceneManager : MonoBehaviour
         gameLoop.Init(board, piece);
         gameLoop.OnGameEnd += HandleGameEnd;
         _stateContainer = new StateContainer();
+
+        if (audioManager != null && bgmClip != null)
+            audioManager.PlayBgm(bgmClip);
     }
 
     private void HandleGameEnd()

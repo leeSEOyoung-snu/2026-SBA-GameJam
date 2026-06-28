@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.DOKill();
         bgmSource.volume = volume <= 0 ? defaultBgmVolume : volume;
         bgmSource.clip = clip;
+        bgmSource.loop = true;
         bgmSource.Play();
     }
 

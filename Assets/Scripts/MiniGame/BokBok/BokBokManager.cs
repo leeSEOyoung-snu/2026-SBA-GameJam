@@ -22,6 +22,9 @@ public class BokBokManager : SoloBattleBase
     [SerializeField] private BasicPlayerCanvasManager basicPlayerCanvasManager;
     [SerializeField] private TMP_Text goalCountText;
     [SerializeField] private SpriteRenderer bokBokSpriteRenderer;
+    [Header("오디오")]
+    [SerializeField] private AudioClip purrClip;
+
     [Header("복복 또잉 연출")]
     [SerializeField] private float boingHeight = 40f;
     [SerializeField] private float boingDuration = 0.45f;
@@ -79,6 +82,7 @@ public class BokBokManager : SoloBattleBase
         {
             if (!_inputs[i].Swing) continue;
 
+            MiniGameManager.Instance.Audio?.PlaySfx(purrClip);
             _swingCounts[i]++;
             Debug.Log($"[BokBok] Player {i + 1} 세트={_swingCounts[i]}"); 
             basicPlayerCanvasManager.UpdateStackCnt(i + 1, _swingCounts[i]);

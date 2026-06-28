@@ -20,6 +20,10 @@ public class HechiShootingGame : SoloBattleBase
     [Header("결과")]
     [SerializeField] private int hachiShotNightmareDelta = 5;
 
+    [Header("오디오")]
+    [SerializeField] private AudioClip shootingClip;
+    [SerializeField] private AudioClip successClip;
+
     private readonly int[] _scores = new int[5];
     private bool _gameOver;
     private bool _hachiKilledGame;
@@ -98,11 +102,13 @@ public class HechiShootingGame : SoloBattleBase
     private void OnNightmareHit(int playerId)
     {
         _scores[playerId]++;
+        MiniGameManager.Instance.Audio?.PlaySfx(shootingClip);
         Debug.Log($"[HechiShooting] Player {playerId} 점수: {_scores[playerId]}");
     }
 
     private void OnNightmareDestroyed(HechiShootingNightmare nightmare, int playerId)
     {
+        MiniGameManager.Instance.Audio?.PlaySfx(successClip);
         Destroy(nightmare.gameObject);
     }
 
