@@ -124,6 +124,9 @@ public class MainGameLoop : MonoBehaviour
             if (cursor.nextCells.Count == 0) { Debug.Log("[MovePhase] 마지막 칸 도달"); break; }
             cursor = cursor.nextCells[0];
             cellsToVisit.Add(cursor);
+
+            if (cursor == _board.StartCell)
+                break;
         }
         if (cellsToVisit.Count == 0) yield break;
 
