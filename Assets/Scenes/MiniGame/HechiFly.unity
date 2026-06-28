@@ -173,16 +173,24 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8e0bb5ee926e56a44ad7b6b94582652c, type: 2}
     - target: {fileID: 6980558397719674376, guid: 0302f30c84487f14691a187d96071131, type: 3}
       propertyPath: effects.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6980558397719674376, guid: 0302f30c84487f14691a187d96071131, type: 3}
       propertyPath: effects.Array.data[1].id
       value: Thrust
       objectReference: {fileID: 0}
     - target: {fileID: 6980558397719674376, guid: 0302f30c84487f14691a187d96071131, type: 3}
+      propertyPath: effects.Array.data[2].id
+      value: ThrustJet
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980558397719674376, guid: 0302f30c84487f14691a187d96071131, type: 3}
       propertyPath: effects.Array.data[1].particlePrefab
       value: 
       objectReference: {fileID: 7382374352441890335, guid: 237d50d0201fe4bc5a4cb50abfb80be9, type: 3}
+    - target: {fileID: 6980558397719674376, guid: 0302f30c84487f14691a187d96071131, type: 3}
+      propertyPath: effects.Array.data[2].particlePrefab
+      value: 
+      objectReference: {fileID: 8451435257867319667, guid: d80b3c720a5386745a4a870a28828ba9, type: 3}
     - target: {fileID: 9051769130077284831, guid: 0302f30c84487f14691a187d96071131, type: 3}
       propertyPath: m_Name
       value: MiniGame Manager
