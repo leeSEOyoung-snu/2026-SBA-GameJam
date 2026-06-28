@@ -2328,6 +2328,8 @@ MonoBehaviour:
   stateAmountText: {fileID: 5748389334564864371}
   affectionStealInputDesc: {fileID: 8835882827425030545}
   affectionStealThiefPortrait: {fileID: 4471522446173471303}
+  affectionStealThiefPortraitImage: {fileID: 3850695952664890946}
+  affectionStealTargetPortraitImage: {fileID: 3529120724264270223}
   affectionStealThiefCount:
     countGroup: {fileID: 477278919399827490}
     signText: {fileID: 213830674797676881}

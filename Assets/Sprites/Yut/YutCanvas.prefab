@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3db7d70bb414b7f9a32fc7121d75c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
+  yutThrowClip: {fileID: 0}
   players:
   - playerImage: {fileID: 4746134847082517260}
     throwingSprite: {fileID: 4276202656436764624, guid: ef1fbd87e605a4091a6dac1beca0c805, type: 3}

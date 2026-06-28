@@ -62,6 +62,8 @@ public class EventCanvas : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stateAmountText;
     [SerializeField] private GameObject affectionStealInputDesc;
     [SerializeField] private RectTransform affectionStealThiefPortrait;
+    [SerializeField] private Image affectionStealThiefPortraitImage;
+    [SerializeField] private Image affectionStealTargetPortraitImage;
     [SerializeField] private AffectionStealCountView affectionStealThiefCount;
     [SerializeField] private AffectionStealCountView affectionStealTargetCount;
 
@@ -124,9 +126,9 @@ public class EventCanvas : MonoBehaviour
 
     public Sequence Open(CellType cellType, StateContainer stateContainer, IBoardEvent boardEvent)
     {
-        ApplyEventData(cellType, stateContainer, boardEvent);
         ResetView();
         KillActiveSequence();
+        ApplyEventData(cellType, stateContainer, boardEvent);
 
         _activeSequence = DOTween.Sequence();
         _activeSequence.Append(eventType.DOAnchorPosX(eventTypeOpenPosX, eventTypeMoveDuration).SetEase(openEase));
@@ -235,10 +237,17 @@ public class EventCanvas : MonoBehaviour
 
     private void ApplyAffectionStealImage(StateContainer stateContainer, IBoardEvent boardEvent)
     {
-        int playerId = boardEvent is AffectionStealEvent affectionStealEvent
+        AffectionStealEvent affectionStealEvent = boardEvent as AffectionStealEvent;
+        int thiefId = affectionStealEvent != null
             ? affectionStealEvent.ThiefId
             : GetLowestAffectionPlayerId(stateContainer.AffectionById);
-        if (!_affectionStealSpritesByPlayerId.TryGetValue(playerId, out Sprite[] sprites) || sprites.Length == 0)
+        int targetId = affectionStealEvent != null
+            ? affectionStealEvent.TargetId
+            : GetHighestAffectionTargetId(stateContainer.AffectionById, thiefId);
+
+        SetAffectionStealPortraits(thiefId, targetId);
+
+        if (!_affectionStealSpritesByPlayerId.TryGetValue(thiefId, out Sprite[] sprites) || sprites.Length == 0)
         {
             eventImg.sprite = null;
             return;
@@ -260,6 +269,22 @@ public class EventCanvas : MonoBehaviour
             .SetLoops(-1);
     }
 
+    private void SetAffectionStealPortraits(int thiefId, int targetId)
+    {
+        if (affectionStealThiefPortraitImage != null)
+            affectionStealThiefPortraitImage.sprite = GetAffectionStealStaticSprite(thiefId);
+
+        if (affectionStealTargetPortraitImage != null)
+            affectionStealTargetPortraitImage.sprite = GetAffectionStealStaticSprite(targetId);
+    }
+
+    private Sprite GetAffectionStealStaticSprite(int playerId)
+    {
+        return _affectionStealSpritesByPlayerId.TryGetValue(playerId, out Sprite[] sprites) && sprites.Length > 0
+            ? sprites[0]
+            : null;
+    }
+
     private int GetLowestAffectionPlayerId(Dictionary<int, int> affectionById)
     {
         int minAffection = affectionById.Min(pair => pair.Value);
@@ -269,6 +294,19 @@ public class EventCanvas : MonoBehaviour
             .ToList();
 
         return lowestPlayerIds[Random.Range(0, lowestPlayerIds.Count)];
+    }
+
+    private int GetHighestAffectionTargetId(Dictionary<int, int> affectionById, int thiefId)
+    {
+        int maxAffection = affectionById
+            .Where(pair => pair.Key != thiefId)
+            .Max(pair => pair.Value);
+        List<int> highestPlayerIds = affectionById
+            .Where(pair => pair.Key != thiefId && pair.Value == maxAffection)
+            .Select(pair => pair.Key)
+            .ToList();
+
+        return highestPlayerIds[Random.Range(0, highestPlayerIds.Count)];
     }
 
     private void InitAffectionSpriteMap()
@@ -307,6 +345,12 @@ public class EventCanvas : MonoBehaviour
         _currentMainEvent = mainEvent;
         SetMainEventHidden(affectionStealMainEvent);
         SetMainEventHidden(stateChangeMainEvent);
+
+        if (_currentMainEvent == null)
+            return;
+
+        _currentMainEvent.gameObject.SetActive(true);
+        _currentMainEvent.alpha = 0f;
     }
 
     private static void SetMainEventHidden(CanvasGroup mainEvent)
@@ -317,6 +361,7 @@ public class EventCanvas : MonoBehaviour
         mainEvent.alpha = 0f;
         mainEvent.interactable = false;
         mainEvent.blocksRaycasts = false;
+        mainEvent.gameObject.SetActive(false);
     }
 
     private void ResetAffectionStealResultView()
