@@ -337,12 +337,12 @@ MonoBehaviour:
   chaserPrefab: {fileID: 1227230369347836161, guid: 02ef974768bc0a64cbd10cdd6e3d58e9, type: 3}
   spawnRadius: 12
   minSpawnDistance: 4
-  largeInterval: 4
-  turretInterval: 6
-  chaserInterval: 8
-  maxLarge: 3
-  maxTurret: 2
-  maxChaser: 2
+  largeInterval: 2
+  turretInterval: 3
+  chaserInterval: 4
+  maxLarge: 6
+  maxTurret: 4
+  maxChaser: 4
   frontBlockAngle: 60
   minVelocityForBlock: 1
   cameraEdgeMargin: 1
