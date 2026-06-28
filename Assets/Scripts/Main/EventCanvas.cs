@@ -61,6 +61,7 @@ public class EventCanvas : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stateSignText;
     [SerializeField] private TextMeshProUGUI stateAmountText;
     [SerializeField] private GameObject affectionStealInputDesc;
+    [SerializeField] private RectTransform affectionStealThiefPortrait;
     [SerializeField] private AffectionStealCountView affectionStealThiefCount;
     [SerializeField] private AffectionStealCountView affectionStealTargetCount;
 
@@ -79,6 +80,8 @@ public class EventCanvas : MonoBehaviour
     [SerializeField] private Ease openEase = Ease.OutQuad;
     [SerializeField] private float affectionStealResultRevealDelay = 0.2f;
     [SerializeField] private float affectionStealResultDisplayDuration = 2f;
+    [SerializeField] private float affectionStealPunchScale = 0.2f;
+    [SerializeField] private float affectionStealPunchDuration = 0.25f;
 
     [Header("Close Timing")]
     [SerializeField] private float closeDuration = 0.2f;
@@ -100,11 +103,15 @@ public class EventCanvas : MonoBehaviour
     private Sequence _activeSequence;
     private Sequence _affectionImageSequence;
     private CanvasGroup _currentMainEvent;
+    private Vector3 _affectionStealThiefPortraitBaseScale = Vector3.one;
 
     public float DisplayDuration => displayDuration;
 
     private void Awake()
     {
+        if (affectionStealThiefPortrait != null)
+            _affectionStealThiefPortraitBaseScale = affectionStealThiefPortrait.localScale;
+
         InitAffectionSpriteMap();
         InitStateIconMap();
         ResetView();
@@ -152,6 +159,8 @@ public class EventCanvas : MonoBehaviour
 
     public IEnumerator PlayAffectionStealResult(AffectionStealEvent affectionStealEvent)
     {
+        PunchAffectionStealThiefPortrait();
+
         if (affectionStealInputDesc != null)
             affectionStealInputDesc.SetActive(false);
 
@@ -317,6 +326,26 @@ public class EventCanvas : MonoBehaviour
 
         affectionStealThiefCount.Reset();
         affectionStealTargetCount.Reset();
+
+        if (affectionStealThiefPortrait != null)
+        {
+            affectionStealThiefPortrait.DOKill();
+            affectionStealThiefPortrait.localScale = _affectionStealThiefPortraitBaseScale;
+        }
+    }
+
+    private void PunchAffectionStealThiefPortrait()
+    {
+        if (affectionStealThiefPortrait == null)
+            return;
+
+        affectionStealThiefPortrait.DOKill();
+        affectionStealThiefPortrait.localScale = _affectionStealThiefPortraitBaseScale;
+        affectionStealThiefPortrait.DOPunchScale(
+            Vector3.one * affectionStealPunchScale,
+            affectionStealPunchDuration,
+            8,
+            1f);
     }
 
     private void KillSequences()

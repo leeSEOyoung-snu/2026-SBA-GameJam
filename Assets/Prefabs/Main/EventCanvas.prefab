@@ -1431,8 +1431,8 @@ RectTransform:
   m_GameObject: {fileID: 5799245469611783689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8897649315855630551}
   - {fileID: 1503585238217742611}
@@ -1441,7 +1441,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 12, y: 66}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &477278919399827490
@@ -1959,8 +1959,8 @@ RectTransform:
   m_GameObject: {fileID: 8003606366630542788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8067758226424634327}
   - {fileID: 5291596482001545794}
@@ -1969,7 +1969,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -23, y: 65}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &713454851254587185
@@ -2327,6 +2327,7 @@ MonoBehaviour:
   stateSignText: {fileID: 4909978263756032101}
   stateAmountText: {fileID: 5748389334564864371}
   affectionStealInputDesc: {fileID: 8835882827425030545}
+  affectionStealThiefPortrait: {fileID: 4471522446173471303}
   affectionStealThiefCount:
     countGroup: {fileID: 477278919399827490}
     signText: {fileID: 213830674797676881}
@@ -2347,6 +2348,8 @@ MonoBehaviour:
   openEase: 6
   affectionStealResultRevealDelay: 0.2
   affectionStealResultDisplayDuration: 2
+  affectionStealPunchScale: 0.2
+  affectionStealPunchDuration: 0.25
   closeDuration: 0.2
   closeEase: 5
   affectionStealText: "\uD638\uAC10\uB3C4 \uBE8F\uAE30!"
