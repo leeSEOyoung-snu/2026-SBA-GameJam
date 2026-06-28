@@ -28,6 +28,8 @@ public class MainSceneManager : MonoBehaviour
     }
     
     public StateContainer StateContainer => _stateContainer;
+    public int[] WinnerPlayerIds { get; private set; } = Array.Empty<int>();
+    public int WinningAffection { get; private set; }
 
     private StateContainer _stateContainer;
 
@@ -51,10 +53,31 @@ public class MainSceneManager : MonoBehaviour
     private void HandleGameEnd()
     {
         Debug.Log("[MainSceneManager] 게임 종료!");
+        SettleWinners();
         // TODO: 엔딩 로직 연결
     }
     
     
+
+    private void SettleWinners()
+    {
+        var affectionById = _stateContainer.AffectionById;
+        WinningAffection = affectionById.Values.Max();
+        WinnerPlayerIds = affectionById
+            .Where(kv => kv.Value == WinningAffection)
+            .OrderBy(kv => kv.Key)
+            .Select(kv => kv.Key)
+            .ToArray();
+
+        string winners = string.Join(", ", WinnerPlayerIds.Select(id => $"{id}P"));
+        string ranking = string.Join(" / ", affectionById
+            .OrderByDescending(kv => kv.Value)
+            .ThenBy(kv => kv.Key)
+            .Select(kv => $"{kv.Key}P:{kv.Value}"));
+
+        Debug.Log($"[MainSceneManager] 우승자: {winners} (호감도 {WinningAffection})");
+        Debug.Log($"[MainSceneManager] 최종 순위: {ranking}");
+    }
 
     private void OnMiniGameQuited(Dictionary<StateTypes, int> deltaStates)
     {
@@ -118,17 +141,11 @@ public class MainSceneManager : MonoBehaviour
             }
         }
 
-        // TODO: 절망 어떻게 처리하죠
         // 동점자 처리
         if (possibleHighestStateTypes.Count > 1)
         {
-            if (possibleHighestStateTypes.Contains(StateTypes.Nightmare))
-                _resolvedHighestState = StateTypes.Nightmare;
-            else
-            {
-                yield return evolutionDecidingCanvasManager.DecideEvolutionStateType(possibleHighestStateTypes);
-                _resolvedHighestState = evolutionDecidingCanvasManager.DecidedStateType;
-            }
+            yield return evolutionDecidingCanvasManager.DecideEvolutionStateType(possibleHighestStateTypes);
+            _resolvedHighestState = evolutionDecidingCanvasManager.DecidedStateType;
         }
         else
         {
